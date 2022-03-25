@@ -9,6 +9,7 @@
     onMount(() => {
         context.engine = new Engine(context.canvas, true);
         context.scene = new Scene(context.engine);
+        context.scene.onReadyObservable.addOnce(() => context.render());
     });
 
     onDestroy(() => context.engine?.dispose());
