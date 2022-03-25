@@ -1,0 +1,7 @@
+{
+    "name": "@freki/3d",
+    "version": "0.0.1",
+    "description": "Freki 3D wrapper for babylon",
+    "author": "Neil Jayson Aldea",
+    "license": "UNLICENSED"
+}
