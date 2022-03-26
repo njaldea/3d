@@ -1,14 +1,8 @@
-import material from './material';
-import mesh from './mesh'
+import * as material from './material';
+import * as mesh from './mesh';
 
-import camera from './camera';
-import lights from './lights';
+import * as camera from './camera';
+import * as lights from './lights';
 import Canvas from './Canvas.svelte';
 
-export {
-    mesh,
-    material,
-    lights,
-    camera,
-    Canvas
-}
+export { mesh, material, lights, camera, Canvas };

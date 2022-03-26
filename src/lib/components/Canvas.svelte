@@ -3,6 +3,7 @@
 
     import { Engine, Scene } from 'babylonjs';
     import { onDestroy, onMount } from 'svelte';
+    import TransformNode from './TransformNode.svelte';
 
     const context = init();
 
@@ -19,7 +20,9 @@
 
 <canvas bind:this={context.canvas} />
 {#if context.canvas != null}
-    <slot />
+    <TransformNode id="canvas">
+        <slot />
+    </TransformNode>
 {/if}
 
 <style>

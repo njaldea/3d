@@ -6,7 +6,9 @@
 
     import { Box, Ground } from '$lib/components/mesh';
     import { Standard as StandardMaterial, Ref as RefMaterial } from '$lib/components/material';
+    import TransformNode from '$lib/components/TransformNode.svelte';
 
+    let target = '';
     let intensity = 0.3;
     let direction: [number, number, number] = [0, 1, 0];
     let position: [number, number, number] = [0, 0.5, 0];
@@ -19,11 +21,11 @@
 <Canvas>
     <StandardMaterial id="material" useLogarithmicDepth alpha={0.7} color={[255, 0, 0]} />
 
-    <ArcRotateCamera id="camera" target={'box1'} />
+    <ArcRotateCamera id="camera" {target} />
     <HemisphericLight id="light" {intensity} {direction} />
 
     <Ground id="ground">
-        <StandardMaterial id="ground" alpha={1} color={[0, 0, 128]} />
+        <StandardMaterial id="ground" useLogarithmicDepth alpha={1} color={[0, 0, 128]} />
     </Ground>
 
     <Box id="box1" {position} {rotation}>
@@ -32,12 +34,19 @@
     <Box id="box2" position={inversepos} rotation={inverserot}>
         <RefMaterial id="material" />
     </Box>
-    <Box id="box3" position={[5, 2.5, 5]} {rotation} scaling={[5, 5, 5]}>
-        <RefMaterial id="material" />
-    </Box>
+
+    <TransformNode id="group1" {rotation}>
+        <Box id="box3" position={[5, 2.5, 5]} scaling={[5, 5, 5]}>
+            <RefMaterial id="material" />
+        </Box>
+        <Box id="box4" position={[10, 2.5, 10]} scaling={[5, 5, 5]}>
+            <RefMaterial id="material" />
+        </Box>
+    </TransformNode>
 </Canvas>
 
 <div>
+    <input type="text" bind:value={target} />
     <button on:click={() => (position = position)}>click</button>
     <input type="range" min="0" max="1" step="0.01" bind:value={intensity} />
     <br />

@@ -8,7 +8,7 @@
 
     export let id: string;
     export let color: [number, number, number] = [0.3, 0.3, 0.3];
-    export let alpha: number = 1.0;
+    export let alpha = 1.0;
     export let useLogarithmicDepth = false;
 
     const material = new StandardMaterial(id, context.scene);

@@ -62,9 +62,9 @@
 
     function extend(v: number) {
         if (box1 != null) {
-            // box1.scaling.x = value;
-            // box1.rotation.y = value;
-            box1.position.x = value;
+            // box1.scaling.x = v;
+            // box1.rotation.y = v;
+            box1.position.x = v;
             render();
         }
     }

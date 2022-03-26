@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { getContext, setCurrentMesh } from '$lib/context';
+    import { getContext, meshSetup } from '$lib/context';
     import { MeshBuilder } from 'babylonjs';
-    import { onDestroy } from 'svelte';
 
     const context = getContext();
 
@@ -18,8 +17,7 @@
         context.scene
     );
 
-    setCurrentMesh(ground);
-    onDestroy(() => ground.dispose());
+    meshSetup(ground);
 </script>
 
 <slot />

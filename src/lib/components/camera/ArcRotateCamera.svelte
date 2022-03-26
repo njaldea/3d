@@ -22,7 +22,8 @@
         context.camera.update();
     });
 
-    export let target: string = '';
+    export let target = '';
+
     function retarget(t: string) {
         if (t) {
             const mesh = context.scene.getMeshByID(t);
@@ -37,6 +38,19 @@
     $: retarget(target);
 
     context.scene.onPointerObservable.add(() => context.camera.update());
+    context.scene.onReadyObservable.addOnce(() => {
+        context.scene.onNewMeshAddedObservable.add((mesh) => {
+            if (target && mesh.id === target) {
+                camera.setTarget(mesh);
+            }
+        });
+
+        context.scene.onMeshRemovedObservable.add((mesh) => {
+            if (target && mesh.id === target) {
+                camera.setTarget(Vector3.Zero());
+            }
+        });
+    });
     context.camera = camera;
 
     onDestroy(() => {

@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { getContext, setCurrentMesh } from '$lib/context';
+    import { getContext, meshSetup } from '$lib/context';
     import { MeshBuilder } from 'babylonjs';
-    import { onDestroy } from 'svelte';
 
     const context = getContext();
 
@@ -31,9 +30,7 @@
     $: box.scaling.y = context.test(box.scaling.y, scaling[1]);
     $: box.scaling.z = context.test(box.scaling.z, scaling[2]);
 
-    setCurrentMesh(box);
-
-    onDestroy(() => box.dispose());
+    meshSetup(box);
 </script>
 
 <slot />
