@@ -1,0 +1,17 @@
+{
+  "name": "@freki/3d",
+  "version": "0.0.3",
+  "author": {
+    "name": "Neil Jayson Aldea",
+    "email": "njaldea@gmail.com"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^4.2.2",
+    "svelte": "^3.44.0"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "svelte": "./index.js"
+}

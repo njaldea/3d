@@ -1,6 +1,6 @@
 <script lang="ts">
     import { init } from '$lib/context';
-    import TransformNode from './TransformNode.svelte';
+    import TransformNode from './core/TransformNode.svelte';
 
     const context = init();
 </script>

@@ -6,7 +6,7 @@
 
     import { Box, Ground } from '$lib/components/mesh';
     import { StandardMaterial, RefMaterial } from '$lib/components/material';
-    import TransformNode from '$lib/components/TransformNode.svelte';
+    import TransformNode from '$lib/components/core/TransformNode.svelte';
 
     let target = '';
     let intensity = 0.3;

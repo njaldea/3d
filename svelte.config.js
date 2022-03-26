@@ -11,8 +11,7 @@ const config = {
         adapter: adapter()
     },
     package: {
-        dir: 'bundle/package'
-        // exports: (filename) => filename === 'index.ts'
+        exports: (filename) => filename === 'index.ts'
     },
     routes: (filepath) => {
         if (!/(?:(?:^_|\/_)|(?:^\.|\/\.)(?!well-known))/.test(filepath)) {
