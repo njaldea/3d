@@ -38,7 +38,6 @@
 
     context.scene.onPointerObservable.add(() => context.camera.update());
     context.camera = camera;
-    context.render();
 
     onDestroy(() => {
         context.camera.dispose();
