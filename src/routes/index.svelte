@@ -1,98 +1,78 @@
 <script lang="ts">
-    import * as BABYLON from 'babylonjs';
-    let canvas: HTMLCanvasElement;
+    import ArcRotateCamera from '$lib/components/camera/ArcRotateCamera.svelte';
 
-    import { onMount } from 'svelte';
-    let engine: BABYLON.Engine;
-    let scene: BABYLON.Scene;
+    import Canvas from '$lib/components/Canvas.svelte';
+    import HemisphericLight from '$lib/components/lights/HemisphericLight.svelte';
 
-    let value = 5;
-    let box1: BABYLON.Mesh;
+    import { Box, Ground } from '$lib/components/mesh';
+    import { Standard as StandardMaterial, Ref as RefMaterial } from '$lib/components/material';
+    import TransformNode from '$lib/components/TransformNode.svelte';
 
-    const render = () => scene && requestAnimationFrame(() => scene.render());
+    let target = '';
+    let intensity = 0.3;
+    let direction: [number, number, number] = [0, 1, 0];
+    let position: [number, number, number] = [0, 0.5, 0];
+    let rotation: [number, number, number] = [0, 0, 0];
 
-    onMount(() => {
-        engine = new BABYLON.Engine(canvas, true);
-        scene = new BABYLON.Scene(engine);
-        scene.clearColor = new BABYLON.Color4(0.9, 0.3, 0.3, 1);
-
-        scene.onReadyObservable.add(render);
-
-        const camera = new BABYLON.ArcRotateCamera(
-            'Camera',
-            Math.PI / 2,
-            Math.PI / 2,
-            10,
-            new BABYLON.Vector3(10, 10, -30),
-            scene
-        );
-        camera.setTarget(BABYLON.Vector3.Zero());
-        camera.attachControl(canvas, true, false);
-        camera.onViewMatrixChangedObservable.add(() => {
-            render();
-            camera.update();
-        });
-
-        scene.onPointerObservable.add(() => camera.update());
-
-        const light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, 1, -15), scene);
-        light.intensity = 0.7;
-
-        const material = new BABYLON.StandardMaterial('material', scene);
-        material.emissiveColor = new BABYLON.Color3(0.3, 0.3, 0.3);
-        material.alpha = 0.4;
-
-        function createBox(x: number, z: number) {
-            const box = BABYLON.MeshBuilder.CreateBox(
-                'cube',
-                { height: 5, width: 5, depth: 5 },
-                scene
-            );
-            box.material = material;
-            box.position.x = x;
-            box.position.y = 0 + 2.5;
-            box.position.z = z;
-            return box;
-        }
-        box1 = createBox(0, 0);
-        camera.setTarget(box1);
-        createBox(2.5, 2.5);
-        render();
-    });
-
-    function extend(v: number) {
-        if (box1 != null) {
-            // box1.scaling.x = v;
-            // box1.rotation.y = v;
-            box1.position.x = v;
-            render();
-        }
-    }
-
-    $: extend(value);
+    $: inversepos = [-position[0], -position[1], -position[2]] as [number, number, number];
+    $: inverserot = [-rotation[0], -rotation[1], -rotation[2]] as [number, number, number];
 </script>
 
-<svelte:window
-    on:resize={() => {
-        console.log('window resize');
-        engine && engine.resize();
-        scene && scene.render();
-    }}
-/>
+<Canvas>
+    <StandardMaterial id="material" useLogarithmicDepth alpha={0.7} color={[255, 0, 0]} />
+
+    <ArcRotateCamera id="camera" {target} />
+    <HemisphericLight id="light" {intensity} {direction} />
+
+    <TransformNode id="groundgroup" position={[0, -0.0001, 0]}>
+        <Ground id="ground">
+            <StandardMaterial id="ground" useLogarithmicDepth alpha={1} color={[0, 0, 128]} />
+        </Ground>
+    </TransformNode>
+
+    <Box id="box1" {position} {rotation}>
+        <RefMaterial id="material" />
+    </Box>
+    <Box id="box2" position={inversepos} rotation={inverserot}>
+        <RefMaterial id="material" />
+    </Box>
+
+    <TransformNode id="group1" {rotation}>
+        <Box id="box3" position={[5, 2.5, 5]} scaling={[5, 5, 5]}>
+            <RefMaterial id="material" />
+        </Box>
+        <Box id="box4" position={[10, 2.5, 10]} scaling={[5, 5, 5]}>
+            <RefMaterial id="material" />
+        </Box>
+    </TransformNode>
+</Canvas>
 
 <div>
-    <button on:click={render}>Render</button>
-    <input type="range" min={0.1} max={10.0} step={0.001} bind:value />
+    <input type="text" bind:value={target} />
+    <button on:click={() => (position = position)}>click</button>
+    <input type="range" min="0" max="1" step="0.01" bind:value={intensity} />
+    <br />
+    <input type="range" min="-10" max="10" step="0.01" bind:value={direction[0]} />
+    <input type="range" min="-10" max="10" step="0.01" bind:value={direction[1]} />
+    <input type="range" min="-10" max="10" step="0.01" bind:value={direction[2]} />
+    <br />
+    <input type="range" min="-10" max="10" step="0.01" bind:value={position[0]} />
+    <input type="range" min="-10" max="10" step="0.01" bind:value={position[1]} />
+    <input type="range" min="-10" max="10" step="0.01" bind:value={position[2]} />
+    <br />
+    <input type="range" min="-10" max="10" step="0.01" bind:value={rotation[0]} />
+    <input type="range" min="-10" max="10" step="0.01" bind:value={rotation[1]} />
+    <input type="range" min="-10" max="10" step="0.01" bind:value={rotation[2]} />
 </div>
-<canvas bind:this={canvas} />
 
 <style>
     div {
-        width: 50px;
         position: absolute;
-    }
-    canvas {
-        width: 100%;
-        height: 100%;
+        display: flex;
+        flex-direction: column;
+        top: 0;
+        left: 0;
+        padding-top: 10px;
+        padding-left: 10px;
     }
 </style>

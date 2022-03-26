@@ -1,11 +1,15 @@
 <script lang="ts">
-    import { getContext, meshSetup } from '$lib/context';
-    import * as BABYLON from 'babylonjs';
+    import MeshComponent from './Mesh.svelte';
+    import { getContext } from '$lib/context';
+    import { MeshBuilder } from '@babylonjs/core';
+    import type { Mesh } from '@babylonjs/core';
 
     const context = getContext();
 
     export let id: string;
-    const ground = BABYLON.MeshBuilder.CreateGround(
+    export let apply: (m: Mesh) => void = null;
+
+    const ground = MeshBuilder.CreateGround(
         id,
         {
             width: 10000,
@@ -16,8 +20,8 @@
         },
         context.scene
     );
-
-    meshSetup(ground);
 </script>
 
-<slot />
+<MeshComponent mesh={ground} {apply}>
+    <slot />
+</MeshComponent>

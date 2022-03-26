@@ -1,19 +1,58 @@
-import type { Engine, Scene, Camera, Mesh, Material, Node } from 'babylonjs';
-import { setContext as set, getContext as get, onDestroy } from 'svelte';
+import { Engine, Scene } from '@babylonjs/core';
+import type { Node, Camera, Mesh, Material } from '@babylonjs/core';
 
-type Context = {
+import { getContext as get, setContext, onDestroy, onMount, afterUpdate } from 'svelte';
+
+class Context {
     canvas: HTMLCanvasElement;
     engine: Engine;
     scene: Scene;
     camera: Camera;
-    frame: null | number;
-    render(): void;
-    resize(): void;
+    private frame: number | null;
+    private shouldRender = false;
+
+    render() {
+        this.markDirty();
+        this.renderCheck();
+    }
+
+    renderCheck() {
+        if (this.camera && this.shouldRender && !this.frame) {
+            this.frame = requestAnimationFrame(() => {
+                this.frame = null;
+                this.shouldRender = false;
+                console.log('render check');
+                this.scene.render();
+            });
+        }
+    }
+
+    markDirty() {
+        this.shouldRender = true;
+    }
+
+    resize() {
+        this.engine.resize();
+        this.markDirty();
+    }
+
     test<Primitive extends string | number | boolean>(
-        current: Primitive,
+        curval: Primitive,
         newval: Primitive
-    ): Primitive;
-};
+    ): Primitive {
+        if (curval != newval) {
+            this.markDirty();
+        }
+        return newval;
+    }
+
+    destroy() {
+        if (this.frame) {
+            cancelAnimationFrame(this.frame);
+            this.frame = null;
+        }
+    }
+}
 
 const tags = {
     base: Symbol(),
@@ -22,40 +61,22 @@ const tags = {
 };
 
 export const init = () => {
-    const context: Context = {
-        canvas: null,
-        engine: null,
-        scene: null,
-        camera: null,
-        frame: null,
-        render() {
-            if (this.camera && !this.frame) {
-                this.frame = requestAnimationFrame(() => {
-                    this.frame = null;
-                    console.log('rendered');
-                    this.scene.render();
-                });
-            }
-        },
-        resize() {
-            this.engine.resize();
-            this.render();
-        },
-        test<Primitive>(current: Primitive, newval: Primitive): Primitive {
-            if (current != newval) {
-                this.render();
-            }
-            return newval;
-        }
-    };
-    set(tags.base, context);
-    return context;
-};
+    const context = new Context();
+    setContext(tags.base, context);
 
-export const meshSetup = (node: Mesh) => {
-    node.parent = getParent();
-    setCurrentMesh(node);
-    onDestroy(() => node.dispose());
+    onMount(() => {
+        context.engine = new Engine(context.canvas, true);
+        context.scene = new Scene(context.engine);
+        context.scene.onReadyObservable.addOnce(() => {
+            context.render();
+        });
+    });
+
+    onDestroy(() => context.engine?.dispose());
+
+    afterUpdate(() => context.renderCheck());
+
+    return context;
 };
 
 export const getContext = () => {
@@ -63,7 +84,7 @@ export const getContext = () => {
 };
 
 export const setCurrentMesh = (mesh: Mesh) => {
-    set(tags.mesh, mesh);
+    setContext(tags.mesh, mesh);
 };
 
 export const setMaterial = (material: Material) => {
@@ -73,12 +94,8 @@ export const setMaterial = (material: Material) => {
     }
 };
 
-export const getCurrentMesh = () => {
-    return get(tags.mesh) as Mesh;
-};
-
 export const setParent = (node: Node) => {
-    set(tags.parent, node);
+    setContext(tags.parent, node);
 };
 
 export const getParent = () => {

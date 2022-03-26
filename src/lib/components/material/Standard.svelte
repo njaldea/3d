@@ -1,7 +1,7 @@
 <script lang="ts">
     import { getContext, setMaterial } from '$lib/context';
+    import { StandardMaterial } from '@babylonjs/core';
     import { onDestroy } from 'svelte';
-    import * as BABYLON from 'babylonjs';
 
     const context = getContext();
 
@@ -10,7 +10,9 @@
     export let alpha = 1.0;
     export let useLogarithmicDepth = false;
 
-    const material = new BABYLON.StandardMaterial(id, context.scene);
+    export let apply: (m: StandardMaterial) => void = null;
+
+    const material = new StandardMaterial(id, context.scene);
     $: material.emissiveColor.r = context.test(material.emissiveColor.r, color[0]);
     $: material.emissiveColor.g = context.test(material.emissiveColor.g, color[1]);
     $: material.emissiveColor.b = context.test(material.emissiveColor.b, color[2]);
@@ -19,6 +21,10 @@
         material.useLogarithmicDepth,
         useLogarithmicDepth
     );
+
+    if (apply) {
+        apply(material);
+    }
 
     setMaterial(material);
     onDestroy(() => material.dispose());
