@@ -8,29 +8,29 @@ const config = {
     preprocess: preprocess(),
 
     kit: {
-        adapter: adapter()
-    },
-    package: {
-        exports: (filename) => filename === 'index.ts'
-    },
-    routes: (filepath) => {
-        if (!/(?:(?:^_|\/_)|(?:^\.|\/\.)(?!well-known))/.test(filepath)) {
-            if (filepath.endsWith('.svelte')) {
-                filepath = filepath.slice('src/routes/'.length);
-                if (filepath.endsWith('index.svelte')) {
-                    console.log(
-                        '  - http://localhost:3000/' + filepath.slice(0, -'index.svelte'.length)
-                    );
-                } else {
-                    console.log(
-                        '  - http://localhost:3000/' + filepath.slice(0, -'.svelte'.length)
-                    );
+        adapter: adapter(),
+        package: {
+            exports: (filename) => filename === 'index.ts'
+        },
+        routes: (filepath) => {
+            if (!/(?:(?:^_|\/_)|(?:^\.|\/\.)(?!well-known))/.test(filepath)) {
+                if (filepath.endsWith('.svelte')) {
+                    filepath = filepath.slice('src/routes/'.length);
+                    if (filepath.endsWith('index.svelte')) {
+                        console.log(
+                            '  - http://localhost:3000/' + filepath.slice(0, -'index.svelte'.length)
+                        );
+                    } else {
+                        console.log(
+                            '  - http://localhost:3000/' + filepath.slice(0, -'.svelte'.length)
+                        );
+                    }
                 }
+                return true;
             }
-            return true;
+            return false;
         }
-        return false;
-    }
+    },
 };
 
 export default config;

@@ -1,3 +1,4 @@
 import Node from './Node.svelte';
 import TransformNode from './TransformNode.svelte';
-export { Node, TransformNode };
+import MeshActionManager from './MeshActionManager.svelte';
+export { Node, TransformNode, MeshActionManager };

@@ -1,4 +1,4 @@
-import { Engine, Scene } from '@babylonjs/core';
+import { ActionManager, Engine, Scene } from '@babylonjs/core';
 import type { Node, Mesh, Material } from '@babylonjs/core';
 
 import { getContext as get, setContext, onDestroy, onMount, afterUpdate } from 'svelte';
@@ -94,6 +94,10 @@ export const init = () => {
 
 export const getContext = () => {
     return get(tags.base) as Context;
+};
+
+export const getCurrentMesh = () => {
+    return get(tags.mesh) as Mesh;
 };
 
 export const setCurrentMesh = (mesh: Mesh) => {

@@ -6,7 +6,9 @@
 
     import { Box, Ground } from '$lib/components/mesh';
     import { StandardMaterial, RefMaterial } from '$lib/components/material';
-    import TransformNode from '$lib/components/core/TransformNode.svelte';
+    import { TransformNode, MeshActionManager } from '$lib/components/core';
+
+    import HighlightLayer from '$lib/components/effects/HighlightLayer.svelte';
 
     let target = '';
     let intensity = 0.3;
@@ -14,9 +16,27 @@
     let position: [number, number, number] = [0, 0.5, 0];
     let rotation: [number, number, number] = [0, 0, 0];
     let scaling: [number, number, number] = [5, 5, 5];
+    let color: [number, number, number] = [0, 1, 0];
 
     $: inversepos = [-position[0], -position[1], -position[2]] as [number, number, number];
     $: inverserot = [-rotation[0], -rotation[1], -rotation[2]] as [number, number, number];
+
+    let toggle = true;
+    function click() {
+        toggle = !toggle;
+    }
+
+    let highlighted: string[] = [];
+
+    function hoverIn({ detail: { id } }: { detail: { id: string } }) {
+        if (!highlighted.includes(id)) {
+            highlighted = [...highlighted, id];
+        }
+    }
+
+    function hoverOut({ detail: { id } }: { detail: { id: string } }) {
+        highlighted = highlighted.filter((i) => i !== id);
+    }
 </script>
 
 <Canvas>
@@ -31,6 +51,8 @@
     />
     <HemisphericLight id="light" {intensity} {direction} />
 
+    <HighlightLayer id="highlight1" {highlighted} {color} />
+
     <TransformNode id="groundgroup" position={[0, -0.001, 0]} disabled>
         <Ground id="ground">
             <StandardMaterial id="ground" useLogarithmicDepth alpha={1} color={[0, 0, 128]} />
@@ -39,17 +61,23 @@
 
     <Box id="box1" {position} {rotation}>
         <RefMaterial id="material" />
+        <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} />
     </Box>
     <Box id="box2" position={inversepos} rotation={inverserot}>
         <RefMaterial id="material" />
+        <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} />
     </Box>
 
     <TransformNode id="group1" {rotation} {scaling}>
         <Box id="box3" position={[2, 0.5, 2]} scaling={[1, 1, 1]}>
             <RefMaterial id="material" />
+            {#if toggle}
+                <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} />
+            {/if}
         </Box>
         <Box id="box4" position={[3, 0.5, 3]} scaling={[1, 1, 1]}>
             <RefMaterial id="material" />
+            <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} />
         </Box>
     </TransformNode>
 </Canvas>
@@ -62,7 +90,11 @@
             </option>
         {/each}
     </select>
-    <button on:click={() => (position = position)}>click</button>
+    <button on:click={click}>onHover Box3: {toggle}</button>
+    <input type="range" min="0" max="1" step="0.001" bind:value={color[0]} />
+    <input type="range" min="0" max="1" step="0.001" bind:value={color[1]} />
+    <input type="range" min="0" max="1" step="0.001" bind:value={color[2]} />
+    <br />
     <input type="range" min="0" max="1" step="0.01" bind:value={intensity} />
     <br />
     <input type="range" min="-10" max="10" step="0.01" bind:value={direction[0]} />
