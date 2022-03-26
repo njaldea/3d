@@ -1,11 +1,11 @@
 <script lang="ts">
     import { getContext, meshSetup } from '$lib/context';
-    import { MeshBuilder } from 'babylonjs';
+    import * as BABYLON from 'babylonjs';
 
     const context = getContext();
 
     export let id: string;
-    const ground = MeshBuilder.CreateGround(
+    const ground = BABYLON.MeshBuilder.CreateGround(
         id,
         {
             width: 10000,

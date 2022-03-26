@@ -1,4 +1,4 @@
-import type { Engine, Scene, Camera, Mesh, Node } from 'babylonjs';
+import type { Engine, Scene, Camera, Mesh, Material, Node } from 'babylonjs';
 import { setContext as set, getContext as get, onDestroy } from 'svelte';
 
 type Context = {
@@ -64,6 +64,13 @@ export const getContext = () => {
 
 export const setCurrentMesh = (mesh: Mesh) => {
     set(tags.mesh, mesh);
+};
+
+export const setMaterial = (material: Material) => {
+    const mesh = get(tags.mesh) as Mesh;
+    if (mesh) {
+        mesh.material = material;
+    }
 };
 
 export const getCurrentMesh = () => {

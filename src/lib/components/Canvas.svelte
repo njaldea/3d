@@ -1,15 +1,14 @@
 <script lang="ts">
     import { init } from '$lib/context';
-
-    import { Engine, Scene } from 'babylonjs';
     import { onDestroy, onMount } from 'svelte';
     import TransformNode from './TransformNode.svelte';
+    import * as BABYLON from 'babylonjs';
 
     const context = init();
 
     onMount(() => {
-        context.engine = new Engine(context.canvas, true);
-        context.scene = new Scene(context.engine);
+        context.engine = new BABYLON.Engine(context.canvas, true);
+        context.scene = new BABYLON.Scene(context.engine);
         context.scene.onReadyObservable.addOnce(() => context.render());
     });
 

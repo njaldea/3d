@@ -1,6 +1,6 @@
 <script lang="ts">
     import { getContext, meshSetup } from '$lib/context';
-    import { MeshBuilder } from 'babylonjs';
+    import * as BABYLON from 'babylonjs';
 
     const context = getContext();
 
@@ -10,7 +10,7 @@
     export let rotation: [number, number, number] = [0, 0, 0];
     export let scaling: [number, number, number] = [1, 1, 1];
 
-    const box = MeshBuilder.CreateBox(
+    const box = BABYLON.MeshBuilder.CreateBox(
         id,
         {
             depth: size[0],

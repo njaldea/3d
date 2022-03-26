@@ -1,13 +1,13 @@
 <script lang="ts">
     import { getContext, getParent, setParent } from '$lib/context';
-    import { TransformNode } from 'babylonjs';
+    import * as BABYLON from 'babylonjs';
 
     export let id: string;
     export let position: [number, number, number] = [0, 0, 0];
     export let rotation: [number, number, number] = [0, 0, 0];
 
     const context = getContext();
-    const node = new TransformNode(id, context.scene);
+    const node = new BABYLON.TransformNode(id, context.scene);
 
     $: node.position.x = context.test(node.position.x, position[0]);
     $: node.position.y = context.test(node.position.y, position[1]);
