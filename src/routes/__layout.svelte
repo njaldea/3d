@@ -8,11 +8,4 @@
         margin: 0px;
         padding: 0px;
     }
-
-    :global(html),
-    :global(body),
-    :global(body > div) {
-        width: 100%;
-        height: 100%;
-    }
 </style>

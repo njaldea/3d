@@ -8,8 +8,13 @@ class Context {
     engine: Engine;
     scene: Scene;
     camera: Camera;
+
     private frame: number | null;
     private shouldRender = false;
+
+    // render loop currently needed for keyboard controls
+    // as event is not fired on "held" keys
+    private renderLoop = false;
 
     render() {
         this.markDirty();
@@ -23,8 +28,21 @@ class Context {
                 this.shouldRender = false;
                 console.log('render check');
                 this.scene.render();
+
+                if (this.renderLoop) {
+                    this.render();
+                }
             });
         }
+    }
+
+    renderLoopStart() {
+        this.renderLoop = true;
+        this.render();
+    }
+
+    renderLoopStop() {
+        this.renderLoop = false;
     }
 
     markDirty() {
@@ -33,7 +51,7 @@ class Context {
 
     resize() {
         this.engine.resize();
-        this.markDirty();
+        this.render();
     }
 
     test<Primitive extends string | number | boolean>(

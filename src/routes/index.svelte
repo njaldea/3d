@@ -5,7 +5,7 @@
     import HemisphericLight from '$lib/components/lights/HemisphericLight.svelte';
 
     import { Box, Ground } from '$lib/components/mesh';
-    import { Standard as StandardMaterial, Ref as RefMaterial } from '$lib/components/material';
+    import { StandardMaterial, RefMaterial } from '$lib/components/material';
     import TransformNode from '$lib/components/TransformNode.svelte';
 
     let target = '';
@@ -21,7 +21,7 @@
 <Canvas>
     <StandardMaterial id="material" useLogarithmicDepth alpha={0.7} color={[255, 0, 0]} />
 
-    <ArcRotateCamera id="camera" {target} />
+    <ArcRotateCamera id="camera" {target} sensibility={[2000, 2000]} />
     <HemisphericLight id="light" {intensity} {direction} />
 
     <TransformNode id="groundgroup" position={[0, -0.0001, 0]}>
