@@ -8,9 +8,11 @@
 
     export let id: string;
     export let size: [number, number, number] = [1, 1, 1];
-    export let position: [number, number, number] = [0, 0, 0];
-    export let rotation: [number, number, number] = [0, 0, 0];
-    export let scaling: [number, number, number] = [1, 1, 1];
+    export let position: [number, number, number] = undefined;
+    export let rotation: [number, number, number] = undefined;
+    export let scaling: [number, number, number] = undefined;
+    export let disabled: boolean = undefined;
+
     export let apply: (m: Mesh) => void = null;
 
     const box = MeshBuilder.CreateBox(
@@ -24,6 +26,6 @@
     );
 </script>
 
-<MeshComponent mesh={box} {position} {rotation} {scaling} {apply}>
+<MeshComponent mesh={box} {position} {rotation} {scaling} {apply} {disabled}>
     <slot />
 </MeshComponent>

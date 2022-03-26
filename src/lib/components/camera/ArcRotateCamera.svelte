@@ -7,6 +7,9 @@
 
     export let id: string;
     export let sensibility: [number, number] = [1000, 1000];
+    export let alphalimit: [number | null, number | null] = [null, null];
+    export let betalimit: [number | null, number | null] = [null, null];
+    export let radiuslimit: [number | null, number | null] = [null, null];
 
     const camera = new ArcRotateCamera(
         id,
@@ -23,12 +26,14 @@
     camera.keysDown = [83];
     camera.keysLeft = [65];
     camera.keysRight = [68];
-    camera.lowerRadiusLimit = 0.1;
-    camera.lowerBetaLimit = 0;
-    camera.upperBetaLimit = Math.PI / 2 - 0.1;
+
+    $: camera.lowerAlphaLimit = context.test(camera.lowerAlphaLimit, alphalimit[0]);
+    $: camera.upperAlphaLimit = context.test(camera.upperAlphaLimit, alphalimit[1]);
+    $: camera.lowerBetaLimit = context.test(camera.lowerBetaLimit, betalimit[0]);
+    $: camera.upperBetaLimit = context.test(camera.upperBetaLimit, betalimit[1]);
+    $: camera.lowerRadiusLimit = context.test(camera.lowerRadiusLimit, radiuslimit[0]);
+    $: camera.upperRadiusLimit = context.test(camera.upperRadiusLimit, radiuslimit[1]);
     camera.wheelPrecision = 50;
-    // camera.lowerAlphaLimit = Math.PI;
-    // camera.upperAlphaLimit = Math.PI * 2;
 
     $: camera.angularSensibilityX = context.test(camera.angularSensibilityX, sensibility[0]);
     $: camera.angularSensibilityY = context.test(camera.angularSensibilityY, sensibility[1]);
@@ -40,16 +45,18 @@
             const mesh = context.scene.getMeshByID(t);
             if (mesh) {
                 camera.setTarget(mesh);
+                context.render();
                 return;
             }
         }
         camera.setTarget(Vector3.Zero());
+        context.render();
     }
 
     $: retarget(target);
 
     function onPointerUpdate() {
-        context.camera.update();
+        camera.update();
     }
 
     function onKeyboardUpdate(info: KeyboardInfo) {
@@ -67,7 +74,7 @@
 
     function onViewUpdate() {
         context.render();
-        context.camera.update();
+        camera.update();
     }
 
     camera.onViewMatrixChangedObservable.add(onViewUpdate);
@@ -87,14 +94,12 @@
             }
         });
     });
-    context.camera = camera;
     context.render();
 
     onDestroy(() => {
         context.scene.onKeyboardObservable.removeCallback(onKeyboardUpdate);
         context.scene.onPointerObservable.removeCallback(onPointerUpdate);
         camera.onViewMatrixChangedObservable.removeCallback(onViewUpdate);
-        context.camera.dispose();
-        context.camera = null;
+        camera.dispose();
     });
 </script>

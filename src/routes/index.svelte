@@ -13,6 +13,7 @@
     let direction: [number, number, number] = [0, 1, 0];
     let position: [number, number, number] = [0, 0.5, 0];
     let rotation: [number, number, number] = [0, 0, 0];
+    let scaling: [number, number, number] = [5, 5, 5];
 
     $: inversepos = [-position[0], -position[1], -position[2]] as [number, number, number];
     $: inverserot = [-rotation[0], -rotation[1], -rotation[2]] as [number, number, number];
@@ -21,10 +22,16 @@
 <Canvas>
     <StandardMaterial id="material" useLogarithmicDepth alpha={0.7} color={[255, 0, 0]} />
 
-    <ArcRotateCamera id="camera" {target} sensibility={[2000, 2000]} />
+    <ArcRotateCamera
+        id="camera"
+        {target}
+        sensibility={[2000, 2000]}
+        betalimit={[0, Math.PI / 2 - 0.1]}
+        radiuslimit={[0.1, 50]}
+    />
     <HemisphericLight id="light" {intensity} {direction} />
 
-    <TransformNode id="groundgroup" position={[0, -0.0001, 0]}>
+    <TransformNode id="groundgroup" position={[0, -0.001, 0]} disabled>
         <Ground id="ground">
             <StandardMaterial id="ground" useLogarithmicDepth alpha={1} color={[0, 0, 128]} />
         </Ground>
@@ -37,18 +44,24 @@
         <RefMaterial id="material" />
     </Box>
 
-    <TransformNode id="group1" {rotation}>
-        <Box id="box3" position={[5, 2.5, 5]} scaling={[5, 5, 5]}>
+    <TransformNode id="group1" {rotation} {scaling}>
+        <Box id="box3" position={[2, 0.5, 2]} scaling={[1, 1, 1]}>
             <RefMaterial id="material" />
         </Box>
-        <Box id="box4" position={[10, 2.5, 10]} scaling={[5, 5, 5]}>
+        <Box id="box4" position={[3, 0.5, 3]} scaling={[1, 1, 1]}>
             <RefMaterial id="material" />
         </Box>
     </TransformNode>
 </Canvas>
 
 <div>
-    <input type="text" bind:value={target} />
+    <select bind:value={target}>
+        {#each ['', 'box1', 'box2', 'box3', 'box4', 'group1'] as id}
+            <option value={id}>
+                {id}
+            </option>
+        {/each}
+    </select>
     <button on:click={() => (position = position)}>click</button>
     <input type="range" min="0" max="1" step="0.01" bind:value={intensity} />
     <br />
@@ -63,6 +76,10 @@
     <input type="range" min="-10" max="10" step="0.01" bind:value={rotation[0]} />
     <input type="range" min="-10" max="10" step="0.01" bind:value={rotation[1]} />
     <input type="range" min="-10" max="10" step="0.01" bind:value={rotation[2]} />
+    <br />
+    <input type="range" min="0.001" max="10" step="0.01" bind:value={scaling[0]} />
+    <input type="range" min="0.001" max="10" step="0.01" bind:value={scaling[1]} />
+    <input type="range" min="0.001" max="10" step="0.01" bind:value={scaling[2]} />
 </div>
 
 <style>

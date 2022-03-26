@@ -4,5 +4,5 @@
     const context = getContext();
     export let id: string;
 
-    setMaterial(context.scene.getMaterialByID(id));
+    $: setMaterial(context.scene.getMaterialByID(id));
 </script>

@@ -1,5 +1,5 @@
 import { Engine, Scene } from '@babylonjs/core';
-import type { Node, Camera, Mesh, Material } from '@babylonjs/core';
+import type { Node, Mesh, Material } from '@babylonjs/core';
 
 import { getContext as get, setContext, onDestroy, onMount, afterUpdate } from 'svelte';
 
@@ -7,7 +7,6 @@ class Context {
     canvas: HTMLCanvasElement;
     engine: Engine;
     scene: Scene;
-    camera: Camera;
 
     private frame: number | null;
     private shouldRender = false;
@@ -17,12 +16,12 @@ class Context {
     private renderLoop = false;
 
     render() {
-        this.markDirty();
+        this.shouldRender = true;
         this.renderCheck();
     }
 
     renderCheck() {
-        if (this.camera && this.shouldRender && !this.frame) {
+        if (this.shouldRender && !this.frame) {
             this.frame = requestAnimationFrame(() => {
                 this.frame = null;
                 this.shouldRender = false;
@@ -45,10 +44,6 @@ class Context {
         this.renderLoop = false;
     }
 
-    markDirty() {
-        this.shouldRender = true;
-    }
-
     resize() {
         this.engine.resize();
         this.render();
@@ -59,7 +54,7 @@ class Context {
         newval: Primitive
     ): Primitive {
         if (curval != newval) {
-            this.markDirty();
+            this.shouldRender = true;
         }
         return newval;
     }

@@ -6,6 +6,11 @@
 
     const context = getContext();
 
+    export let position: [number, number, number] = undefined;
+    export let rotation: [number, number, number] = undefined;
+    export let scaling: [number, number, number] = undefined;
+    export let disabled: boolean = undefined;
+
     export let id: string;
     export let apply: (m: Mesh) => void = null;
 
@@ -22,6 +27,6 @@
     );
 </script>
 
-<MeshComponent mesh={ground} {apply}>
+<MeshComponent mesh={ground} {apply} {position} {rotation} {scaling} {disabled}>
     <slot />
 </MeshComponent>
