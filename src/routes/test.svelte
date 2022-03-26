@@ -1,8 +1,8 @@
 <script lang="ts">
-    import ArcRotateCamera from '$lib/components/ArcRotateCamera.svelte';
+    import ArcRotateCamera from '$lib/components/camera/ArcRotateCamera.svelte';
 
     import Canvas from '$lib/components/Canvas.svelte';
-    import HemisphericLight from '$lib/components/HemisphericLight.svelte';
+    import HemisphericLight from '$lib/components/lights/HemisphericLight.svelte';
 
     import { Box, Ground } from '$lib/components/mesh';
     import { Standard as StandardMaterial, Ref as RefMaterial } from '$lib/components/material';
