@@ -1,4 +1,4 @@
-import { ActionManager, Engine, Scene } from '@babylonjs/core';
+import { Camera, Engine, Scene } from '@babylonjs/core';
 import type { Node, Mesh, Material } from '@babylonjs/core';
 
 import { getContext as get, setContext, onDestroy, onMount, afterUpdate } from 'svelte';
@@ -70,7 +70,8 @@ class Context {
 const tags = {
     base: Symbol(),
     mesh: Symbol(),
-    parent: Symbol()
+    camera: Symbol(),
+    parent: Symbol(),
 };
 
 export const init = () => {
@@ -117,4 +118,12 @@ export const setParent = (node: Node) => {
 
 export const getParent = () => {
     return get(tags.parent) as Node;
+};
+
+export const setCurrentCamera = (camera: Camera) => {
+    setContext(tags.camera, camera);
+};
+
+export const getCurrentCamera = () => {
+    return get(tags.camera) as Camera;
 };

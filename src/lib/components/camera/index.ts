@@ -1,2 +1,2 @@
-import ArcRotateCamera from './ArcRotateCamera.svelte';
-export { ArcRotateCamera };
+import * as arcrotate from './arcrotate';
+export { arcrotate };

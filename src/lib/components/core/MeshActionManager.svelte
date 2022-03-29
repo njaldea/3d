@@ -20,17 +20,23 @@
         dispatch('hoverOut', { id: mesh.id });
     };
 
-    mesh.actionManager.registerAction(
-        new ExecuteCodeAction(ActionManager.OnPointerOverTrigger, hoverIn)
-    );
+    const pick = () => {
+        console.log('pick');
+        dispatch('pick', { id: mesh.id });
+    };
 
-    mesh.actionManager.registerAction(
-        new ExecuteCodeAction(ActionManager.OnPointerOutTrigger, hoverOut)
-    );
+    const trigger_hoverin = new ExecuteCodeAction(ActionManager.OnPointerOverTrigger, hoverIn);
+    const trigger_hoverout = new ExecuteCodeAction(ActionManager.OnPointerOutTrigger, hoverOut);
+    const trigger_pick = new ExecuteCodeAction(ActionManager.OnLeftPickTrigger, pick);
+
+    mesh.actionManager.registerAction(trigger_hoverin);
+    mesh.actionManager.registerAction(trigger_hoverout);
+    mesh.actionManager.registerAction(trigger_pick);
 
     onDestroy(() => {
         hoverOut();
-        mesh.actionManager.dispose();
-        mesh.actionManager = null;
+        mesh.actionManager.unregisterAction(trigger_hoverin);
+        mesh.actionManager.unregisterAction(trigger_hoverout);
+        mesh.actionManager.unregisterAction(trigger_pick);
     });
 </script>

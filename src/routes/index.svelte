@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ArcRotateCamera from '$lib/components/camera/ArcRotateCamera.svelte';
+    import { Camera, KeyboardControl, Target } from '$lib/components/camera/arcrotate';
 
     import Canvas from '$lib/components/Canvas.svelte';
     import HemisphericLight from '$lib/components/lights/HemisphericLight.svelte';
@@ -21,39 +21,52 @@
     $: inversepos = [-position[0], -position[1], -position[2]] as [number, number, number];
     $: inverserot = [-rotation[0], -rotation[1], -rotation[2]] as [number, number, number];
 
+    let hovered: string[] = [];
+    let picked: string[] = [];
     let toggle = true;
     function click() {
         toggle = !toggle;
+        picked = [];
     }
 
-    let highlighted: string[] = [];
-
     function hoverIn({ detail: { id } }: { detail: { id: string } }) {
-        if (!highlighted.includes(id)) {
-            highlighted = [...highlighted, id];
+        if (!hovered.includes(id)) {
+            hovered = [...hovered, id];
         }
     }
 
     function hoverOut({ detail: { id } }: { detail: { id: string } }) {
-        highlighted = highlighted.filter((i) => i !== id);
+        hovered = hovered.filter((i) => i !== id);
     }
+
+    function pick({ detail: { id } }: { detail: { id: string } }) {
+        if (!picked.includes(id)) {
+            picked = [...picked, id];
+        }
+    }
+
+    $: highlighted = [...new Set(hovered.concat(picked))];
 </script>
 
 <Canvas>
     <StandardMaterial id="material" useLogarithmicDepth alpha={0.7} color={[255, 0, 0]} />
 
-    <ArcRotateCamera
+    <Camera
         id="camera"
-        {target}
         sensibility={[2000, 2000]}
         betalimit={[0, Math.PI / 2 - 0.1]}
         radiuslimit={[0.1, 50]}
-    />
+    >
+        {#if toggle}
+            <Target {target} />
+        {/if}
+        <KeyboardControl />
+    </Camera>
     <HemisphericLight id="light" {intensity} {direction} />
 
     <HighlightLayer id="highlight1" {highlighted} {color} />
 
-    <TransformNode id="groundgroup" position={[0, -0.001, 0]} disabled>
+    <TransformNode id="groundgroup" position={[0, -0.001, 0]} disabled={false}>
         <Ground id="ground">
             <StandardMaterial id="ground" useLogarithmicDepth alpha={1} color={[0, 0, 128]} />
         </Ground>
@@ -61,23 +74,23 @@
 
     <Box id="box1" {position} {rotation}>
         <RefMaterial id="material" />
-        <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} />
+        <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} on:pick={pick} />
     </Box>
     <Box id="box2" position={inversepos} rotation={inverserot}>
         <RefMaterial id="material" />
-        <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} />
+        <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} on:pick={pick} />
     </Box>
 
     <TransformNode id="group1" {rotation} {scaling}>
         <Box id="box3" position={[2, 0.5, 2]} scaling={[1, 1, 1]}>
             <RefMaterial id="material" />
             {#if toggle}
-                <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} />
+                <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} on:pick={pick} />
             {/if}
         </Box>
         <Box id="box4" position={[3, 0.5, 3]} scaling={[1, 1, 1]}>
             <RefMaterial id="material" />
-            <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} />
+            <MeshActionManager on:hoverIn={hoverIn} on:hoverOut={hoverOut} on:pick={pick} />
         </Box>
     </TransformNode>
 </Canvas>
