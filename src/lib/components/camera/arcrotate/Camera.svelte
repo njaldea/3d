@@ -33,22 +33,23 @@
     $: camera.angularSensibilityX = context.test(camera.angularSensibilityX, sensibility[0]);
     $: camera.angularSensibilityY = context.test(camera.angularSensibilityY, sensibility[1]);
 
-    function onPointerUpdate() {
-        camera.update();
-    }
-
     function onViewUpdate() {
         context.render();
+    }
+
+    function updateCamera() {
         camera.update();
     }
 
     camera.onViewMatrixChangedObservable.add(onViewUpdate);
-    context.scene.onPointerObservable.add(onPointerUpdate);
+    context.scene.onAfterRenderObservable.add(updateCamera);
+    context.scene.onPointerObservable.add(updateCamera);
 
     context.render();
 
     onDestroy(() => {
-        context.scene.onPointerObservable.removeCallback(onPointerUpdate);
+        context.scene.onPointerObservable.removeCallback(updateCamera);
+        context.scene.onAfterRenderObservable.removeCallback(updateCamera);
         camera.onViewMatrixChangedObservable.removeCallback(onViewUpdate);
         camera.dispose();
     });

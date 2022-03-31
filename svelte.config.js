@@ -30,7 +30,7 @@ const config = {
             }
             return false;
         }
-    },
+    }
 };
 
 export default config;

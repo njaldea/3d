@@ -1,23 +1,23 @@
 {
-  "name": "@freki/3d",
-  "version": "0.0.4",
-  "author": {
-    "name": "Neil Jayson Aldea",
-    "email": "njaldea@gmail.com"
-  },
-  "dependencies": {
-    "@babylonjs/core": "^4.2.2",
-    "svelte": "^3.44.0"
-  },
-  "keywords": [
-    "svelte",
-    "babylonjs",
-    "3D"
-  ],
-  "type": "module",
-  "exports": {
-    "./package.json": "./package.json",
-    ".": "./index.js"
-  },
-  "svelte": "./index.js"
+    "name": "@freki/3d",
+    "version": "0.0.4",
+    "author": {
+        "name": "Neil Jayson Aldea",
+        "email": "njaldea@gmail.com"
+    },
+    "dependencies": {
+        "@babylonjs/core": "^4.2.2",
+        "svelte": "^3.44.0"
+    },
+    "keywords": [
+        "svelte",
+        "babylonjs",
+        "3D"
+    ],
+    "type": "module",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": "./index.js"
+    },
+    "svelte": "./index.js"
 }

@@ -59,8 +59,8 @@
     >
         {#if toggle}
             <Target {target} />
+            <KeyboardControl />
         {/if}
-        <KeyboardControl />
     </Camera>
     <HemisphericLight id="light" {intensity} {direction} />
 

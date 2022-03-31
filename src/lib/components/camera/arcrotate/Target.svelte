@@ -1,54 +1,67 @@
 <script lang="ts">
     import { getContext, getCurrentCamera } from '$lib/context';
-    import { Vector3 } from '@babylonjs/core';
-    import type { AbstractMesh, ArcRotateCamera } from '@babylonjs/core';
     import { onDestroy } from 'svelte';
+    import type { AbstractMesh, ArcRotateCamera } from '@babylonjs/core';
 
     const context = getContext();
     const camera = getCurrentCamera() as ArcRotateCamera;
 
     export let target = '';
 
+    // Once camera targets a mesh, 3~4 frames are rendered to achieve final result.
+    // I think this is due to update in target position does not necessarily update the camera.
+
     function render() {
+        camera.update();
         context.render();
     }
 
-    camera.onMeshTargetChangedObservable.add(render);
+    let currentMesh: AbstractMesh = null;
 
-    function retarget(t: string) {
-        if (t) {
-            const mesh = context.scene.getMeshByID(t);
-            if (mesh) {
-                camera.setTarget(mesh);
+    function setTarget(mesh: AbstractMesh) {
+        if (mesh != currentMesh) {
+            if (currentMesh) {
+                currentMesh.onAfterWorldMatrixUpdateObservable.removeCallback(render);
             }
-        } else {
-            camera.setTarget(Vector3.Zero());
+            if (mesh) {
+                mesh.onAfterWorldMatrixUpdateObservable.add(render);
+                camera.setTarget(mesh);
+                render();
+            } else if (currentMesh) {
+                camera.setTarget(currentMesh.position.clone());
+            }
+            currentMesh = mesh;
         }
     }
 
-    $: retarget(target);
+    function unsetTarget() {
+        if (currentMesh) {
+            currentMesh.onAfterWorldMatrixUpdateObservable.removeCallback(render);
+            camera.setTarget(currentMesh.position.clone());
+            currentMesh = null;
+        }
+    }
+
+    $: setTarget(context.scene.getMeshByID(target));
 
     function onMeshAdded(mesh: AbstractMesh) {
-        if (target && mesh.id === target) {
-            camera.setTarget(mesh);
+        if (mesh.id === target) {
+            setTarget(mesh);
         }
     }
 
     function onMeshRemoved(mesh: AbstractMesh) {
-        if (target && mesh.id === target) {
-            camera.setTarget(Vector3.Zero());
+        if (mesh.id === target && currentMesh == mesh) {
+            unsetTarget();
         }
     }
 
-    context.scene.onReadyObservable.addOnce(() => {
-        context.scene.onNewMeshAddedObservable.add(onMeshAdded);
-        context.scene.onMeshRemovedObservable.add(onMeshRemoved);
-    });
+    context.scene.onNewMeshAddedObservable.add(onMeshAdded);
+    context.scene.onMeshRemovedObservable.add(onMeshRemoved);
 
     onDestroy(() => {
-        camera.onMeshTargetChangedObservable.add(render);
-        context.scene.onNewMeshAddedObservable.removeCallback(onMeshAdded);
         context.scene.onMeshRemovedObservable.removeCallback(onMeshRemoved);
-        camera.setTarget(Vector3.Zero());
+        context.scene.onNewMeshAddedObservable.removeCallback(onMeshAdded);
+        unsetTarget();
     });
 </script>

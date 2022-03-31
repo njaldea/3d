@@ -27,5 +27,12 @@
 
     context.scene.onKeyboardObservable.add(onKeyboardUpdate);
 
-    onDestroy(() => context.scene.onKeyboardObservable.removeCallback(onKeyboardUpdate));
+    onDestroy(() => {
+        context.scene.onKeyboardObservable.removeCallback(onKeyboardUpdate);
+        camera.inputs.remove(camera.inputs.attached.keyboard);
+        camera.keysUp = [];
+        camera.keysDown = [];
+        camera.keysLeft = [];
+        camera.keysRight = [];
+    });
 </script>
