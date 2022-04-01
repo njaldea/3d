@@ -1,5 +1,3 @@
-import Box from './Box.svelte';
-import Ground from './Ground.svelte';
-import Mesh from './Mesh.svelte';
-
-export { Box, Ground, Mesh };
+export { default as Box } from './Box.svelte';
+export { default as Ground } from './Ground.svelte';
+export { default as Mesh } from './Mesh.svelte';

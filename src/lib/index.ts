@@ -1,4 +1,2 @@
-import * as context from './context';
-import * as components from './components';
-
-export { context, components };
+export * as context from './context';
+export * as components from './components';

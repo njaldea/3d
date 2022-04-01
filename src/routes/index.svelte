@@ -1,14 +1,12 @@
 <script lang="ts">
-    import { Camera, KeyboardControl, Target } from '$lib/components/camera/arcrotate';
-
-    import Canvas from '$lib/components/Canvas.svelte';
-    import HemisphericLight from '$lib/components/lights/HemisphericLight.svelte';
-
-    import { Box, Ground } from '$lib/components/mesh';
-    import { StandardMaterial, RefMaterial } from '$lib/components/material';
-    import { TransformNode, MeshActionManager } from '$lib/components/core';
-
-    import HighlightLayer from '$lib/components/effects/HighlightLayer.svelte';
+    import { components as FREKI } from '$lib';
+    const { Canvas } = FREKI;
+    const { Camera, KeyboardControl, Target } = FREKI.camera.arcrotate;
+    const { HemisphericLight } = FREKI.lights;
+    const { Box, Ground } = FREKI.mesh;
+    const { StandardMaterial, RefMaterial } = FREKI.material;
+    const { TransformNode, MeshActionManager } = FREKI.core;
+    const { HighlightLayer } = FREKI.effects;
 
     let target = '';
     let intensity = 0.3;

@@ -1,2 +1,1 @@
-import HighlightLayer from './HighlightLayer.svelte';
-export { HighlightLayer };
+export { default as HighlightLayer } from './HighlightLayer.svelte';

@@ -1,2 +1,1 @@
-import HemisphericLight from './HemisphericLight.svelte';
-export { HemisphericLight };
+export { default as HemisphericLight } from './HemisphericLight.svelte';

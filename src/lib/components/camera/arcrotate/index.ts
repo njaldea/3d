@@ -1,4 +1,3 @@
-import Camera from './Camera.svelte';
-import KeyboardControl from './KeyboardControl.svelte';
-import Target from './Target.svelte';
-export { Camera, KeyboardControl, Target };
+export { default as Camera } from './Camera.svelte';
+export { default as KeyboardControl } from './KeyboardControl.svelte';
+export { default as Target } from './Target.svelte';

@@ -1,4 +1,2 @@
-import RefMaterial from './RefMaterial.svelte';
-import StandardMaterial from './StandardMaterial.svelte';
-
-export { RefMaterial, StandardMaterial };
+export { default as RefMaterial } from './RefMaterial.svelte';
+export { default as StandardMaterial } from './StandardMaterial.svelte';
