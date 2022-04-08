@@ -1,5 +1,6 @@
 <script lang="ts">
     import { components as FREKI } from '$lib';
+    import UI from '$lib/components/gui/DynamicTexture.svelte';
     const { Box } = FREKI.mesh;
     const { Action, Hover, Highlight } = FREKI.action;
 
@@ -16,6 +17,7 @@
     <Action>
         <Hover>
             <Highlight {color} />
+            <UI id={`${id}-ui`} text={id} />
         </Hover>
     </Action>
 </Box>

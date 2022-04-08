@@ -1,13 +1,31 @@
 {
     "name": "@nil-/3d",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "author": {
         "name": "Neil Jayson Aldea",
         "email": "njaldea@gmail.com"
     },
     "dependencies": {
-        "@babylonjs/core": "^4.2.2",
-        "svelte": "^3.44.0"
+        "@babylonjs/core": "^5.1.0",
+        "svelte": "^3.47.0"
+    },
+    "devDependencies": {
+        "@babylonjs/gui": "^5.1.0",
+        "@playwright/test": "^1.20.2",
+        "@sveltejs/adapter-auto": "next",
+        "@sveltejs/kit": "next",
+        "@typescript-eslint/eslint-plugin": "^5.18.0",
+        "@typescript-eslint/parser": "^5.18.0",
+        "eslint": "^8.13.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-svelte3": "^3.4.1",
+        "prettier": "^2.6.2",
+        "prettier-plugin-svelte": "^2.7.0",
+        "svelte-check": "^2.5.0",
+        "svelte-preprocess": "^4.10.5",
+        "svelte2tsx": "^0.5.7",
+        "tslib": "^2.3.1",
+        "typescript": "~4.6.3"
     },
     "keywords": [
         "svelte",
@@ -17,6 +35,31 @@
     "type": "module",
     "exports": {
         "./package.json": "./package.json",
+        "./components/Canvas.svelte": "./components/Canvas.svelte",
+        "./components/action/Action.svelte": "./components/action/Action.svelte",
+        "./components/action/Highlight.svelte": "./components/action/Highlight.svelte",
+        "./components/action/Hover.svelte": "./components/action/Hover.svelte",
+        "./components/action": "./components/action/index.js",
+        "./components/camera/arcrotate/Camera.svelte": "./components/camera/arcrotate/Camera.svelte",
+        "./components/camera/arcrotate/KeyboardControl.svelte": "./components/camera/arcrotate/KeyboardControl.svelte",
+        "./components/camera/arcrotate/Target.svelte": "./components/camera/arcrotate/Target.svelte",
+        "./components/camera/arcrotate": "./components/camera/arcrotate/index.js",
+        "./components/camera": "./components/camera/index.js",
+        "./components/gui/DynamicTexture.svelte": "./components/gui/DynamicTexture.svelte",
+        "./components": "./components/index.js",
+        "./components/lights/HemisphericLight.svelte": "./components/lights/HemisphericLight.svelte",
+        "./components/lights": "./components/lights/index.js",
+        "./components/material/RefMaterial.svelte": "./components/material/RefMaterial.svelte",
+        "./components/material/StandardMaterial.svelte": "./components/material/StandardMaterial.svelte",
+        "./components/material": "./components/material/index.js",
+        "./components/mesh/Box.svelte": "./components/mesh/Box.svelte",
+        "./components/mesh/Ground.svelte": "./components/mesh/Ground.svelte",
+        "./components/mesh/Mesh.svelte": "./components/mesh/Mesh.svelte",
+        "./components/mesh": "./components/mesh/index.js",
+        "./components/node/Node.svelte": "./components/node/Node.svelte",
+        "./components/node/TransformNode.svelte": "./components/node/TransformNode.svelte",
+        "./components/node": "./components/node/index.js",
+        "./context": "./context.js",
         ".": "./index.js"
     },
     "svelte": "./index.js"
