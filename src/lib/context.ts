@@ -3,45 +3,78 @@ import type { Node, AbstractMesh, Material } from '@babylonjs/core';
 
 import { getContext as get, setContext, onDestroy, onMount, afterUpdate } from 'svelte';
 
+const tags = {
+    base: Symbol(),
+    mesh: Symbol(),
+    camera: Symbol(),
+    parent: Symbol()
+};
+
 class Context {
     canvas: HTMLCanvasElement;
     engine: Engine;
     scene: Scene;
 
-    private frame: number | null;
+    private renderFunc: () => void;
     private shouldRender = false;
 
     // render loop currently needed for keyboard controls
     // as event is not fired on "held" keys
-    private renderLoop = false;
+    private loopEnabled = false;
+
+    constructor() {
+        this.canvas = null;
+        this.engine = null;
+        this.scene = null;
+        this.loopEnabled = false;
+        this.renderFunc = null;
+
+        setContext(tags.base, this);
+
+        onMount(() => {
+            this.engine = new Engine(this.canvas, true);
+            this.scene = new Scene(this.engine);
+            this.scene.onReadyObservable.addOnce(() => this.render());
+        });
+
+        onDestroy(() => {
+            if (this.renderFunc) {
+                this.engine.stopRenderLoop(this.renderFunc);
+                this.renderFunc = null;
+            }
+            this.engine?.dispose();
+        });
+        afterUpdate(() => this.renderCheck());
+    }
 
     render() {
         this.shouldRender = true;
         this.renderCheck();
     }
 
-    renderCheck() {
-        if (this.shouldRender && !this.frame) {
-            this.frame = requestAnimationFrame(() => {
-                this.frame = null;
-                this.shouldRender = false;
+    private renderCheck() {
+        if (this.shouldRender && !this.renderFunc) {
+            this.shouldRender = false;
+            this.renderFunc = () => {
                 console.log('render check');
-                this.scene.render(false);
-
-                if (this.renderLoop) {
-                    this.render();
+                this.scene.render();
+                if (!this.loopEnabled && !this.shouldRender) {
+                    this.engine.stopRenderLoop(this.renderFunc);
+                    this.renderFunc = null;
                 }
-            });
+                this.shouldRender = false;
+            };
+            this.engine.runRenderLoop(this.renderFunc);
         }
     }
 
     renderLoopStart() {
-        this.renderLoop = true;
+        this.loopEnabled = true;
         this.render();
     }
 
     renderLoopStop() {
-        this.renderLoop = false;
+        this.loopEnabled = false;
     }
 
     resize() {
@@ -58,39 +91,10 @@ class Context {
         }
         return newval;
     }
-
-    destroy() {
-        if (this.frame) {
-            cancelAnimationFrame(this.frame);
-            this.frame = null;
-        }
-    }
 }
 
-const tags = {
-    base: Symbol(),
-    mesh: Symbol(),
-    camera: Symbol(),
-    parent: Symbol()
-};
-
 export const init = () => {
-    const context = new Context();
-    setContext(tags.base, context);
-
-    onMount(() => {
-        context.engine = new Engine(context.canvas, true);
-        context.scene = new Scene(context.engine);
-        context.scene.onReadyObservable.addOnce(() => {
-            context.render();
-        });
-    });
-
-    onDestroy(() => context.engine?.dispose());
-
-    afterUpdate(() => context.renderCheck());
-
-    return context;
+    return new Context();
 };
 
 export const getContext = () => {
@@ -103,13 +107,6 @@ export const getCurrentMesh = () => {
 
 export const setCurrentMesh = (mesh: AbstractMesh) => {
     setContext(tags.mesh, mesh);
-};
-
-export const setMaterial = (material: Material) => {
-    const mesh = get(tags.mesh) as AbstractMesh;
-    if (mesh) {
-        mesh.material = material;
-    }
 };
 
 export const setParent = (node: Node) => {

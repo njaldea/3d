@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { getContext, setMaterial } from '$lib/context';
-
+    import { getContext, getCurrentMesh } from '$lib/context';
     const context = getContext();
-    export let id: string;
+    const mesh = getCurrentMesh();
 
-    $: setMaterial(context.scene.getMaterialByID(id));
+    export let id: string;
+    $: mesh.material = context.scene.getMaterialByID(id);
 </script>

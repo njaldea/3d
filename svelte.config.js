@@ -9,9 +9,6 @@ const config = {
 
     kit: {
         adapter: adapter(),
-        package: {
-            exports: (filename) => filename === 'index.ts'
-        },
         routes: (filepath) => {
             if (!/(?:(?:^_|\/_)|(?:^\.|\/\.)(?!well-known))/.test(filepath)) {
                 if (filepath.endsWith('.svelte')) {

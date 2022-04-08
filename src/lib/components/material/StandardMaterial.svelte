@@ -1,9 +1,10 @@
 <script lang="ts">
-    import { getContext, setMaterial } from '$lib/context';
+    import { getContext, getCurrentMesh } from '$lib/context';
     import { StandardMaterial } from '@babylonjs/core';
     import { onDestroy } from 'svelte';
 
     const context = getContext();
+    const mesh = getCurrentMesh();
 
     export let id: string;
     export let color: [number, number, number] = [0.3, 0.3, 0.3];
@@ -26,6 +27,9 @@
         apply(material);
     }
 
-    setMaterial(material);
-    onDestroy(() => material.dispose());
+    mesh && (mesh.material = material);
+    onDestroy(() => {
+        mesh && (mesh.material = null);
+        material.dispose();
+    });
 </script>

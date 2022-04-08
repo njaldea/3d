@@ -2,7 +2,7 @@
     import { setCurrentMesh } from '$lib/context';
 
     import type { Mesh } from '@babylonjs/core';
-    import Node from '$lib/components/core/Node.svelte';
+    import Node from '$lib/components/node/Node.svelte';
 
     export let mesh: Mesh;
 
