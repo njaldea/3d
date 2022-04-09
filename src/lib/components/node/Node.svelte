@@ -1,7 +1,8 @@
 <script lang="ts">
     import { getContext, getParent, setParent } from '$lib/context';
-    import type { TransformNode } from '@babylonjs/core';
     import { onDestroy } from 'svelte';
+
+    import type { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 
     export let position: [number, number, number] = [0, 0, 0];
     export let rotation: [number, number, number] = [0, 0, 0];
@@ -27,7 +28,12 @@
 
     node.parent = getParent();
     setParent(node);
-    onDestroy(() => node.dispose());
+    onDestroy(() => {
+        if (node.parent) {
+            node.dispose();
+            context.render();
+        }
+    });
 </script>
 
 <slot />

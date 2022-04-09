@@ -1,8 +1,9 @@
 <script lang="ts">
     import MeshComponent from './Mesh.svelte';
     import { getContext } from '$lib/context';
-    import { MeshBuilder } from '@babylonjs/core';
-    import type { Mesh } from '@babylonjs/core';
+
+    import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
+    import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 
     const context = getContext();
 

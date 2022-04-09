@@ -1,7 +1,9 @@
 <script lang="ts">
     import { getContext } from '$lib/context';
-    import { HemisphericLight, Vector3 } from '@babylonjs/core';
     import { onDestroy } from 'svelte';
+
+    import { HemisphericLight } from '@babylonjs/core/Lights/hemisphericLight.js';
+    import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 
     const context = getContext();
 

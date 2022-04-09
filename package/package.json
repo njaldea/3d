@@ -1,16 +1,16 @@
 {
     "name": "@nil-/3d",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "author": {
         "name": "Neil Jayson Aldea",
         "email": "njaldea@gmail.com"
     },
     "dependencies": {
         "@babylonjs/core": "^5.1.0",
+        "@babylonjs/gui": "^5.1.0",
         "svelte": "^3.47.0"
     },
     "devDependencies": {
-        "@babylonjs/gui": "^5.1.0",
         "@playwright/test": "^1.20.2",
         "@sveltejs/adapter-auto": "next",
         "@sveltejs/kit": "next",
@@ -45,7 +45,8 @@
         "./components/camera/arcrotate/Target.svelte": "./components/camera/arcrotate/Target.svelte",
         "./components/camera/arcrotate": "./components/camera/arcrotate/index.js",
         "./components/camera": "./components/camera/index.js",
-        "./components/gui/DynamicTexture.svelte": "./components/gui/DynamicTexture.svelte",
+        "./components/gui/FullScreenUI.svelte": "./components/gui/FullScreenUI.svelte",
+        "./components/gui/Label.svelte": "./components/gui/Label.svelte",
         "./components": "./components/index.js",
         "./components/lights/HemisphericLight.svelte": "./components/lights/HemisphericLight.svelte",
         "./components/lights": "./components/lights/index.js",

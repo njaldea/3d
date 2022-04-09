@@ -1,7 +1,9 @@
 <script lang="ts">
     import { getContext, getCurrentCamera } from '$lib/context';
     import { onDestroy } from 'svelte';
-    import type { AbstractMesh, ArcRotateCamera } from '@babylonjs/core';
+
+    import type { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
+    import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
 
     const context = getContext();
     const camera = getCurrentCamera() as ArcRotateCamera;

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { init } from '$lib/context';
     import TransformNode from './node/TransformNode.svelte';
+    import FullScreenUI from './gui/FullScreenUI.svelte';
 
     const context = init();
 </script>
@@ -9,9 +10,11 @@
 
 <canvas bind:this={context.canvas} on:keyup on:keydown />
 {#if context.canvas != null}
-    <TransformNode id="rootnode">
-        <slot />
-    </TransformNode>
+    <FullScreenUI>
+        <TransformNode id="rootnode">
+            <slot />
+        </TransformNode>
+    </FullScreenUI>
 {/if}
 
 <style>

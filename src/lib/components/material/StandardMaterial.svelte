@@ -1,7 +1,8 @@
 <script lang="ts">
     import { getContext, getCurrentMesh } from '$lib/context';
-    import { StandardMaterial } from '@babylonjs/core';
     import { onDestroy } from 'svelte';
+
+    import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
 
     const context = getContext();
     const mesh = getCurrentMesh();
@@ -29,7 +30,9 @@
 
     mesh && (mesh.material = material);
     onDestroy(() => {
-        mesh && (mesh.material = null);
+        if (mesh) {
+            mesh.material = null;
+        }
         material.dispose();
     });
 </script>

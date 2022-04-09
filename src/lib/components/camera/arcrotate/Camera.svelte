@@ -1,7 +1,9 @@
 <script lang="ts">
     import { getContext, setCurrentCamera } from '$lib/context';
-    import { Vector3, ArcRotateCamera } from '@babylonjs/core';
     import { onDestroy } from 'svelte';
+
+    import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
+    import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 
     const context = getContext();
 

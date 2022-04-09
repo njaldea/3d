@@ -1,9 +1,10 @@
 <script lang="ts">
     import { getContext, getCurrentMesh } from '$lib/context';
-
-    import { Color3, HighlightLayer } from '@babylonjs/core';
-    import type { Mesh } from '@babylonjs/core';
     import { onDestroy } from 'svelte';
+
+    import { Color3 } from '@babylonjs/core/Maths/math.color.js';
+    import { HighlightLayer } from '@babylonjs/core/Layers/highlightLayer.js';
+    import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 
     const context = getContext();
     const mesh = getCurrentMesh() as Mesh;
@@ -40,11 +41,11 @@
 
     onDestroy(() => {
         layer.removeMesh(mesh);
-        render();
         layer.onBeforeRenderMainTextureObservable.removeCallback(render);
         layer.onBeforeRenderMeshToEffect.removeCallback(render);
         layer.onBeforeComposeObservable.removeCallback(render);
         layer.onBeforeBlurObservable.removeCallback(render);
         layer.dispose();
+        render();
     });
 </script>

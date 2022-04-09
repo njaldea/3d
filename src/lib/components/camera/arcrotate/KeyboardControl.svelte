@@ -1,7 +1,10 @@
 <script lang="ts">
     import { getContext, getCurrentCamera } from '$lib/context';
-    import { KeyboardEventTypes, KeyboardInfo, ArcRotateCamera } from '@babylonjs/core';
     import { onDestroy } from 'svelte';
+
+    import type { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
+    import type { KeyboardInfo } from '@babylonjs/core/Events/keyboardEvents.js';
+    import { KeyboardEventTypes } from '@babylonjs/core/Events/keyboardEvents.js';
 
     const context = getContext();
     const camera = getCurrentCamera() as ArcRotateCamera;

@@ -1,7 +1,8 @@
 <script lang="ts">
     import { getContext } from '$lib/context';
-    import { TransformNode } from '@babylonjs/core';
     import Node from '$lib/components/node/Node.svelte';
+
+    import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 
     export let id: string;
     export let position: [number, number, number] = undefined;

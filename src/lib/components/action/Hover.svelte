@@ -1,8 +1,9 @@
 <script lang="ts">
     import { getCurrentMesh } from '$lib/context';
-
-    import { ActionManager, ExecuteCodeAction } from '@babylonjs/core';
     import { onDestroy } from 'svelte';
+
+    import { ActionManager } from '@babylonjs/core/Actions/actionManager.js';
+    import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions.js';
 
     const mesh = getCurrentMesh();
 
@@ -21,8 +22,10 @@
     mesh.actionManager.registerAction(actionOut);
 
     onDestroy(() => {
-        mesh.actionManager.unregisterAction(actionIn);
-        mesh.actionManager.unregisterAction(actionOut);
+        if (mesh && mesh.actionManager) {
+            mesh.actionManager.unregisterAction(actionIn);
+            mesh.actionManager.unregisterAction(actionOut);
+        }
     });
 </script>
 

@@ -50,20 +50,24 @@
     </TransformNode>
 
     <Box scaling={[1, 1, 2]} id="box1" {position} {rotation}>
-        <RefMaterial id="material" />
+        {#if toggle}
+            <RefMaterial id="material" />
+        {/if}
     </Box>
     <Box id="box2" position={inversepos} rotation={inverserot}>
         <RefMaterial id="material" />
     </Box>
 
-    <TransformNode id="group1" {rotation} {scaling}>
-        <Box id="box3" position={[2, 0.5, 2]} scaling={[1, 1, 1]}>
-            <RefMaterial id="material" />
-        </Box>
-        <Box id="box4" position={[3, 0.5, 3]} scaling={[1, 1, 1]}>
-            <RefMaterial id="material" />
-        </Box>
-    </TransformNode>
+    {#if toggle}
+        <TransformNode id="group1" {rotation} {scaling}>
+            <Box id="box3" position={[2, 0.5, 2]} scaling={[1, 1, 1]}>
+                <RefMaterial id="material" />
+            </Box>
+            <Box id="box4" position={[3, 0.5, 3]} scaling={[1, 1, 1]}>
+                <RefMaterial id="material" />
+            </Box>
+        </TransformNode>
+    {/if}
 </Canvas>
 
 <div>

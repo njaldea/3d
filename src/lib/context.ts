@@ -1,7 +1,10 @@
-import { Camera, Engine, Scene } from '@babylonjs/core';
-import type { Node, AbstractMesh } from '@babylonjs/core';
-
 import { getContext as get, setContext, onDestroy, onMount, afterUpdate } from 'svelte';
+
+import { Engine } from '@babylonjs/core/Engines/engine.js';
+import { Scene } from '@babylonjs/core/scene.js';
+import type { Camera } from '@babylonjs/core/Cameras/camera.js';
+import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
+import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture';
 
 const tags = {
     base: Symbol(),
@@ -17,16 +20,17 @@ class Context {
     scene: Scene;
 
     private renderFunc: () => void;
-    private shouldRender = false;
+    private shouldRender: boolean;
 
     // render loop currently needed for keyboard controls
     // as event is not fired on "held" keys
-    private loopEnabled = false;
+    private loopEnabled: boolean;
 
     constructor() {
         this.canvas = null;
         this.engine = null;
         this.scene = null;
+        this.shouldRender = false;
         this.loopEnabled = false;
         this.renderFunc = null;
 
@@ -45,6 +49,7 @@ class Context {
             }
             this.engine?.dispose();
         });
+
         afterUpdate(() => this.renderCheck());
     }
 
@@ -126,10 +131,10 @@ export const getCurrentCamera = () => {
     return get(tags.camera) as Camera;
 };
 
-export const getCurrentUI = () => {
-    return get(tags.ui);
+export const getFullScreenUI = () => {
+    return get(tags.ui) as AdvancedDynamicTexture;
 };
 
-export const setCurrentUI = (ui) => {
+export const setFullScreenUI = (ui) => {
     setContext(tags.ui, ui);
 };
