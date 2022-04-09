@@ -1,6 +1,6 @@
 {
     "name": "@nil-/3d",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "author": {
         "name": "Neil Jayson Aldea",
         "email": "njaldea@gmail.com"
@@ -47,6 +47,7 @@
         "./components/camera": "./components/camera/index.js",
         "./components/gui/FullScreenUI.svelte": "./components/gui/FullScreenUI.svelte",
         "./components/gui/Label.svelte": "./components/gui/Label.svelte",
+        "./components/gui": "./components/gui/index.js",
         "./components": "./components/index.js",
         "./components/lights/HemisphericLight.svelte": "./components/lights/HemisphericLight.svelte",
         "./components/lights": "./components/lights/index.js",

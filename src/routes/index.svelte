@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { components as FREKI } from '$lib';
-    const { Canvas } = FREKI;
-    const { Camera, KeyboardControl, Target } = FREKI.camera.arcrotate;
-    const { HemisphericLight } = FREKI.lights;
-    const { Ground } = FREKI.mesh;
-    const { StandardMaterial, RefMaterial } = FREKI.material;
-    const { TransformNode } = FREKI.node;
+    import { components as NIL } from '$lib';
+    const { Canvas } = NIL;
+    const { Camera, KeyboardControl, Target } = NIL.camera.arcrotate;
+    const { HemisphericLight } = NIL.lights;
+    const { Ground } = NIL.mesh;
+    const { StandardMaterial, RefMaterial } = NIL.material;
+    const { TransformNode } = NIL.node;
 
     import Box from './_Box.svelte';
 
@@ -58,16 +58,14 @@
         <RefMaterial id="material" />
     </Box>
 
-    {#if toggle}
-        <TransformNode id="group1" {rotation} {scaling}>
-            <Box id="box3" position={[2, 0.5, 2]} scaling={[1, 1, 1]}>
-                <RefMaterial id="material" />
-            </Box>
-            <Box id="box4" position={[3, 0.5, 3]} scaling={[1, 1, 1]}>
-                <RefMaterial id="material" />
-            </Box>
-        </TransformNode>
-    {/if}
+    <TransformNode id="group1" {rotation} {scaling}>
+        <Box id="box3" position={[2, 0.5, 2]} scaling={[1, 1, 1]}>
+            <RefMaterial id="material" />
+        </Box>
+        <Box id="box4" position={[3, 0.5, 3]} scaling={[1, 1, 1]}>
+            <RefMaterial id="material" />
+        </Box>
+    </TransformNode>
 </Canvas>
 
 <div>

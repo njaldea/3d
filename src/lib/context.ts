@@ -135,6 +135,6 @@ export const getFullScreenUI = () => {
     return get(tags.ui) as AdvancedDynamicTexture;
 };
 
-export const setFullScreenUI = (ui) => {
+export const setFullScreenUI = (ui: AdvancedDynamicTexture) => {
     setContext(tags.ui, ui);
 };

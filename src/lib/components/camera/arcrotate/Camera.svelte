@@ -3,6 +3,8 @@
     import { onDestroy } from 'svelte';
 
     import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
+    // import necessary for arcrotate to fire onViewMatrixChangedObservable
+    import {} from '@babylonjs/core/Gamepads/Controllers/poseEnabledController.js';
     import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 
     const context = getContext();
@@ -22,7 +24,9 @@
         context.scene
     );
     camera.setTarget(Vector3.Zero());
-    camera.attachControl(context.canvas, true, false);
+
+    // add keyboard via child component
+    camera.inputs.remove(camera.inputs.attached.keyboard);
 
     $: camera.lowerAlphaLimit = context.test(camera.lowerAlphaLimit, alphalimit[0]);
     $: camera.upperAlphaLimit = context.test(camera.upperAlphaLimit, alphalimit[1]);
@@ -47,6 +51,7 @@
     context.scene.onAfterRenderObservable.add(updateCamera);
     context.scene.onPointerObservable.add(updateCamera);
 
+    camera.attachControl(context.canvas, true, false);
     context.render();
 
     onDestroy(() => {

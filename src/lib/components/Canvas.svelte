@@ -23,6 +23,8 @@
         height: 100%;
         margin: 0px;
         padding: 0px;
+        border: 0px;
         box-sizing: border-box;
+        display: block;
     }
 </style>

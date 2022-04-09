@@ -53,7 +53,7 @@
     }
 
     function onMeshRemoved(mesh: AbstractMesh) {
-        if (mesh.id === target && currentMesh == mesh) {
+        if (mesh.id === target) {
             unsetTarget();
         }
     }
