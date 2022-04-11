@@ -1,22 +1,21 @@
 <script lang="ts">
-    import { getContext } from '$lib/context';
-    import { onDestroy } from 'svelte';
+    import { getCore, destructor } from '$lib/core';
 
     import { HemisphericLight } from '@babylonjs/core/Lights/hemisphericLight.js';
     import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 
-    const context = getContext();
+    const { scene, test } = getCore();
 
     export let id: string;
     export let intensity = 1;
     export let direction: [number, number, number] = [0, 0, 0];
 
-    const light = new HemisphericLight(id, new Vector3(...direction), context.scene);
+    const light = new HemisphericLight(id, new Vector3(...direction), scene);
 
-    $: light.direction.x = context.test(light.direction.x, direction[0]);
-    $: light.direction.y = context.test(light.direction.y, direction[1]);
-    $: light.direction.z = context.test(light.direction.z, direction[2]);
-    $: light.intensity = context.test(light.intensity, intensity);
+    $: light.direction.x = test(light.direction.x, direction[0]);
+    $: light.direction.y = test(light.direction.y, direction[1]);
+    $: light.direction.z = test(light.direction.z, direction[2]);
+    $: light.intensity = test(light.intensity, intensity);
 
-    onDestroy(() => light.dispose());
+    destructor(() => light.dispose());
 </script>

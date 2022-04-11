@@ -1,29 +1,23 @@
 <script lang="ts">
-    import { init } from '$lib/context';
-    import TransformNode from './node/TransformNode.svelte';
-    import FullScreenUI from './gui/FullScreenUI.svelte';
+    import { init } from '$lib/core';
+    import Core from '$lib/components/Core.svelte';
 
-    const context = init();
+    const core = init();
 </script>
 
-<svelte:window on:resize={() => context.resize()} />
+<svelte:window on:resize={core.resize} />
 
-<canvas bind:this={context.canvas} on:keyup on:keydown />
-{#if context.canvas != null}
-    <FullScreenUI>
-        <TransformNode id="rootnode">
-            <slot />
-        </TransformNode>
-    </FullScreenUI>
+<canvas bind:this={core.canvas} on:keyup on:keydown />
+{#if core.canvas != null}
+    <Core>
+        <slot />
+    </Core>
 {/if}
 
 <style>
     canvas {
         width: 100%;
         height: 100%;
-        margin: 0px;
-        padding: 0px;
-        border: 0px;
         box-sizing: border-box;
         display: block;
     }

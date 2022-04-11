@@ -1,5 +1,6 @@
 <script lang="ts">
     import { components as NIL } from '$lib';
+    import Instance from '$lib/components/mesh/Instance.svelte';
     const { Canvas } = NIL;
     const { Camera, KeyboardControl, Target } = NIL.camera.arcrotate;
     const { HemisphericLight } = NIL.lights;
@@ -21,10 +22,6 @@
     $: inverserot = [-rotation[0], -rotation[1], -rotation[2]] as [number, number, number];
 
     let toggle = true;
-
-    function click() {
-        toggle = !toggle;
-    }
 </script>
 
 <Canvas>
@@ -53,6 +50,10 @@
         {#if toggle}
             <RefMaterial id="material" />
         {/if}
+
+        {#each { length: 2 } as _, i (i)}
+            <Instance id={i.toString()} position={[1, 1, i + 1]} />
+        {/each}
     </Box>
     <Box id="box2" position={inversepos} rotation={inverserot}>
         <RefMaterial id="material" />
@@ -76,7 +77,7 @@
             </option>
         {/each}
     </select>
-    <button on:click={click}>onHover Box3: {toggle}</button>
+    <button on:click={() => (toggle = !toggle)}>{toggle}</button>
     <input type="range" min="0" max="1" step="0.001" bind:value={color[0]} />
     <input type="range" min="0" max="1" step="0.001" bind:value={color[1]} />
     <input type="range" min="0" max="1" step="0.001" bind:value={color[2]} />

@@ -1,11 +1,10 @@
 <script lang="ts">
     import MeshComponent from './Mesh.svelte';
-    import { getContext } from '$lib/context';
+    import { getCore } from '$lib/core';
 
-    import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
     import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 
-    const context = getContext();
+    const { scene } = getCore();
 
     export let position: [number, number, number] = undefined;
     export let rotation: [number, number, number] = undefined;
@@ -13,7 +12,6 @@
     export let disabled: boolean = undefined;
 
     export let id: string;
-    export let apply: (m: Mesh) => void = null;
 
     const ground = MeshBuilder.CreateGround(
         id,
@@ -24,10 +22,10 @@
             subdivisionsX: 10,
             subdivisionsY: 10
         },
-        context.scene
+        scene
     );
 </script>
 
-<MeshComponent mesh={ground} {apply} {position} {rotation} {scaling} {disabled}>
+<MeshComponent mesh={ground} {position} {rotation} {scaling} {disabled}>
     <slot />
 </MeshComponent>

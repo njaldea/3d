@@ -1,19 +1,17 @@
 <script lang="ts">
-    import { getContext, getCurrentMesh } from '$lib/context';
-    import { onDestroy } from 'svelte';
+    import { getCore, getCurrentMesh, destructor } from '$lib/core';
 
     import { ActionManager } from '@babylonjs/core/Actions/actionManager.js';
 
-    const context = getContext();
+    const { scene } = getCore();
     const mesh = getCurrentMesh();
 
-    mesh.actionManager = new ActionManager(context.scene);
+    const action = new ActionManager(scene);
+    mesh.actionManager = action;
 
-    onDestroy(() => {
-        if (mesh && mesh.actionManager) {
-            mesh.actionManager.dispose();
-            mesh.actionManager = null;
-        }
+    destructor(() => {
+        mesh.actionManager = null;
+        action.dispose();
     });
 </script>
 

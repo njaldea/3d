@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { setCurrentMesh } from '$lib/context';
+    import { setCurrentMesh } from '$lib/core';
 
     import Node from '$lib/components/node/Node.svelte';
 
@@ -12,10 +12,6 @@
     export let scaling: [number, number, number] = undefined;
     export let disabled: boolean = undefined;
 
-    export let apply: (m: Mesh) => void = null;
-    if (apply) {
-        apply(mesh);
-    }
     setCurrentMesh(mesh);
 </script>
 

@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { getCurrentMesh, getFullScreenUI } from '$lib/context';
-    import { onDestroy } from 'svelte';
+    import { getCurrentMesh, getFullScreenUI, destructor } from '$lib/core';
 
     import { Rectangle } from '@babylonjs/gui/2D/controls/rectangle';
     import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock';
@@ -45,12 +44,10 @@
     line.linkWithMesh(mesh);
     line.connectedControl = rect1;
 
-    onDestroy(() => {
-        if (ui) {
-            ui.removeControl(rect1);
-            ui.removeControl(label);
-            ui.removeControl(target);
-            ui.removeControl(line);
-        }
+    destructor(() => {
+        ui.removeControl(rect1);
+        ui.removeControl(label);
+        ui.removeControl(target);
+        ui.removeControl(line);
     });
 </script>

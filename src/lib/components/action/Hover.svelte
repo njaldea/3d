@@ -1,11 +1,10 @@
 <script lang="ts">
-    import { getCurrentMesh } from '$lib/context';
-    import { onDestroy } from 'svelte';
+    import { getCurrentMesh, destructor } from '$lib/core';
 
     import { ActionManager } from '@babylonjs/core/Actions/actionManager.js';
     import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions.js';
 
-    const mesh = getCurrentMesh();
+    const { actionManager } = getCurrentMesh();
 
     let hovered = false;
 
@@ -18,14 +17,12 @@
         () => (hovered = false)
     );
 
-    mesh.actionManager.registerAction(actionIn);
-    mesh.actionManager.registerAction(actionOut);
+    actionManager.registerAction(actionIn);
+    actionManager.registerAction(actionOut);
 
-    onDestroy(() => {
-        if (mesh && mesh.actionManager) {
-            mesh.actionManager.unregisterAction(actionIn);
-            mesh.actionManager.unregisterAction(actionOut);
-        }
+    destructor(() => {
+        actionManager.unregisterAction(actionIn);
+        actionManager.unregisterAction(actionOut);
     });
 </script>
 

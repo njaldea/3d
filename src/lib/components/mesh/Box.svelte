@@ -1,11 +1,10 @@
 <script lang="ts">
     import MeshComponent from './Mesh.svelte';
-    import { getContext } from '$lib/context';
+    import { getCore } from '$lib/core';
 
-    import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
     import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 
-    const context = getContext();
+    const { scene } = getCore();
 
     export let id: string;
     export let size: [number, number, number] = [1, 1, 1];
@@ -14,8 +13,6 @@
     export let scaling: [number, number, number] = undefined;
     export let disabled: boolean = undefined;
 
-    export let apply: (m: Mesh) => void = null;
-
     const box = MeshBuilder.CreateBox(
         id,
         {
@@ -23,10 +20,10 @@
             width: size[1],
             height: size[2]
         },
-        context.scene
+        scene
     );
 </script>
 
-<MeshComponent mesh={box} {position} {rotation} {scaling} {apply} {disabled}>
+<MeshComponent mesh={box} {position} {rotation} {scaling} {disabled}>
     <slot />
 </MeshComponent>

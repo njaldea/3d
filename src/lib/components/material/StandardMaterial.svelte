@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { getContext, getCurrentMesh } from '$lib/context';
-    import { onDestroy } from 'svelte';
+    import { getCore, getCurrentMesh, destructor } from '$lib/core';
 
     import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
 
-    const context = getContext();
+    const { scene, test, render } = getCore();
     const mesh = getCurrentMesh();
 
     export let id: string;
@@ -12,26 +11,21 @@
     export let alpha = 1.0;
     export let useLogarithmicDepth = false;
 
-    export let apply: (m: StandardMaterial) => void = null;
+    const material = new StandardMaterial(id, scene);
+    $: material.emissiveColor.r = test(material.emissiveColor.r, color[0]);
+    $: material.emissiveColor.g = test(material.emissiveColor.g, color[1]);
+    $: material.emissiveColor.b = test(material.emissiveColor.b, color[2]);
+    $: material.alpha = test(material.alpha, alpha);
+    $: material.useLogarithmicDepth = test(material.useLogarithmicDepth, useLogarithmicDepth);
 
-    const material = new StandardMaterial(id, context.scene);
-    $: material.emissiveColor.r = context.test(material.emissiveColor.r, color[0]);
-    $: material.emissiveColor.g = context.test(material.emissiveColor.g, color[1]);
-    $: material.emissiveColor.b = context.test(material.emissiveColor.b, color[2]);
-    $: material.alpha = context.test(material.alpha, alpha);
-    $: material.useLogarithmicDepth = context.test(
-        material.useLogarithmicDepth,
-        useLogarithmicDepth
-    );
-
-    if (apply) {
-        apply(material);
+    if (mesh) {
+        mesh.onMaterialChangedObservable.add(render);
+        mesh.material = material;
     }
-
-    mesh && (mesh.material = material);
-    onDestroy(() => {
+    destructor(() => {
         if (mesh) {
             mesh.material = null;
+            mesh.onMaterialChangedObservable.removeCallback(render);
         }
         material.dispose();
     });

@@ -1,12 +1,11 @@
 <script lang="ts">
-    import { getContext, getCurrentCamera } from '$lib/context';
-    import { onDestroy } from 'svelte';
+    import { getCore, getCurrentCamera, destructor } from '$lib/core';
 
     import type { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
     import type { KeyboardInfo } from '@babylonjs/core/Events/keyboardEvents.js';
     import { KeyboardEventTypes } from '@babylonjs/core/Events/keyboardEvents.js';
 
-    const context = getContext();
+    const { scene, renderLoopStart, renderLoopStop } = getCore();
     const camera = getCurrentCamera() as ArcRotateCamera;
 
     camera.inputs.addKeyboard();
@@ -19,19 +18,19 @@
         if ('wasdWASD'.includes(info.event.key)) {
             switch (info.type) {
                 case KeyboardEventTypes.KEYDOWN:
-                    context.renderLoopStart();
+                    renderLoopStart();
                     break;
                 case KeyboardEventTypes.KEYUP:
-                    context.renderLoopStop();
+                    renderLoopStop();
                     break;
             }
         }
     }
 
-    context.scene.onKeyboardObservable.add(onKeyboardUpdate);
+    scene.onKeyboardObservable.add(onKeyboardUpdate);
 
-    onDestroy(() => {
-        context.scene.onKeyboardObservable.removeCallback(onKeyboardUpdate);
+    destructor(() => {
+        scene.onKeyboardObservable.removeCallback(onKeyboardUpdate);
         camera.inputs.remove(camera.inputs.attached.keyboard);
         camera.keysUp = [];
         camera.keysDown = [];

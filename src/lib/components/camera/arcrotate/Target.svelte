@@ -1,22 +1,16 @@
 <script lang="ts">
-    import { getContext, getCurrentCamera } from '$lib/context';
-    import { onDestroy } from 'svelte';
+    import { getCore, getCurrentCamera, destructor } from '$lib/core';
 
     import type { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
     import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
 
-    const context = getContext();
+    const { render, scene } = getCore();
     const camera = getCurrentCamera() as ArcRotateCamera;
 
     export let target = '';
 
     // Once camera targets a mesh, 3~4 frames are rendered to achieve final result.
     // I think this is due to update in target position does not necessarily update the camera.
-
-    function render() {
-        camera.update();
-        context.render();
-    }
 
     let currentMesh: AbstractMesh = null;
 
@@ -28,6 +22,7 @@
             if (mesh) {
                 mesh.onAfterWorldMatrixUpdateObservable.add(render);
                 camera.setTarget(mesh);
+                camera.update();
                 render();
             } else if (currentMesh) {
                 camera.setTarget(currentMesh.position.clone());
@@ -44,7 +39,7 @@
         }
     }
 
-    $: setTarget(context.scene.getMeshByID(target));
+    $: setTarget(scene.getMeshByName(target));
 
     function onMeshAdded(mesh: AbstractMesh) {
         if (mesh.id === target) {
@@ -58,12 +53,12 @@
         }
     }
 
-    context.scene.onNewMeshAddedObservable.add(onMeshAdded);
-    context.scene.onMeshRemovedObservable.add(onMeshRemoved);
+    scene.onNewMeshAddedObservable.add(onMeshAdded);
+    scene.onMeshRemovedObservable.add(onMeshRemoved);
 
-    onDestroy(() => {
-        context.scene.onMeshRemovedObservable.removeCallback(onMeshRemoved);
-        context.scene.onNewMeshAddedObservable.removeCallback(onMeshAdded);
+    destructor(() => {
+        scene.onMeshRemovedObservable.removeCallback(onMeshRemoved);
+        scene.onNewMeshAddedObservable.removeCallback(onMeshAdded);
         unsetTarget();
     });
 </script>
