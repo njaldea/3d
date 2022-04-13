@@ -8,6 +8,7 @@
     "dependencies": {
         "@babylonjs/core": "^5.1.0",
         "@babylonjs/gui": "^5.1.0",
+        "@babylonjs/inspector": "^5.1.0",
         "svelte": "^3.47.0"
     },
     "devDependencies": {
@@ -36,6 +37,7 @@
     "exports": {
         "./package.json": "./package.json",
         "./components/Canvas.svelte": "./components/Canvas.svelte",
+        "./components/Core.svelte": "./components/Core.svelte",
         "./components/action/Action.svelte": "./components/action/Action.svelte",
         "./components/action/Highlight.svelte": "./components/action/Highlight.svelte",
         "./components/action/Hover.svelte": "./components/action/Hover.svelte",
@@ -45,7 +47,6 @@
         "./components/camera/arcrotate/Target.svelte": "./components/camera/arcrotate/Target.svelte",
         "./components/camera/arcrotate": "./components/camera/arcrotate/index.js",
         "./components/camera": "./components/camera/index.js",
-        "./components/gui/FullScreenUI.svelte": "./components/gui/FullScreenUI.svelte",
         "./components/gui/Label.svelte": "./components/gui/Label.svelte",
         "./components/gui": "./components/gui/index.js",
         "./components": "./components/index.js",
@@ -56,12 +57,13 @@
         "./components/material": "./components/material/index.js",
         "./components/mesh/Box.svelte": "./components/mesh/Box.svelte",
         "./components/mesh/Ground.svelte": "./components/mesh/Ground.svelte",
+        "./components/mesh/Instance.svelte": "./components/mesh/Instance.svelte",
         "./components/mesh/Mesh.svelte": "./components/mesh/Mesh.svelte",
         "./components/mesh": "./components/mesh/index.js",
         "./components/node/Node.svelte": "./components/node/Node.svelte",
         "./components/node/TransformNode.svelte": "./components/node/TransformNode.svelte",
         "./components/node": "./components/node/index.js",
-        "./context": "./context.js",
+        "./core": "./core/index.js",
         ".": "./index.js"
     },
     "svelte": "./index.js"

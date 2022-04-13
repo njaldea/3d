@@ -4,8 +4,8 @@ import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import type { Camera } from '@babylonjs/core/Cameras/camera.js';
 import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
-import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture';
 import type { Node } from '@babylonjs/core/node.js';
+import type { Container } from '@babylonjs/gui/2D/controls/container.js';
 
 /**
  * To emulate c++ RAII where children are destroyed first before the parent.
@@ -66,6 +66,7 @@ const tags = {
     camera: Symbol(),
     parent: Symbol(),
     ui: Symbol(),
+    ui_control: Symbol(),
     destructor: Symbol()
 };
 
@@ -192,12 +193,12 @@ export const getCurrentCamera = () => {
     return getContext(tags.camera) as Camera;
 };
 
-export const getFullScreenUI = () => {
-    return getContext(tags.ui) as AdvancedDynamicTexture;
+export const getCurrentUIContainer = () => {
+    return getContext(tags.ui_control) as Container;
 };
 
-export const setFullScreenUI = (ui: AdvancedDynamicTexture) => {
-    setContext(tags.ui, ui);
+export const setCurrentUIContainer = (control: Container) => {
+    setContext(tags.ui_control, control);
 };
 
 export const destructor = (cb: () => void) => {

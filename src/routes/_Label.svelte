@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { getCurrentMesh, getFullScreenUI, destructor } from '$lib/core';
+    import { getCurrentMesh, getCurrentUIContainer, destructor } from '$lib/core';
 
-    import { Rectangle } from '@babylonjs/gui/2D/controls/rectangle';
-    import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock';
-    import { Ellipse } from '@babylonjs/gui/2D/controls/ellipse';
-    import { Line } from '@babylonjs/gui/2D/controls/line';
+    import { Rectangle } from '@babylonjs/gui/2D/controls/rectangle.js';
+    import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js';
+    import { Ellipse } from '@babylonjs/gui/2D/controls/ellipse.js';
+    import { Line } from '@babylonjs/gui/2D/controls/line.js';
 
     export let text: string;
 
     const mesh = getCurrentMesh();
-    const ui = getFullScreenUI();
+    const ui = getCurrentUIContainer();
 
     var rect1 = new Rectangle();
     rect1.width = 0.2;
@@ -46,7 +46,6 @@
 
     destructor(() => {
         ui.removeControl(rect1);
-        ui.removeControl(label);
         ui.removeControl(target);
         ui.removeControl(line);
     });
