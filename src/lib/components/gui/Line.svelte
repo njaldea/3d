@@ -1,5 +1,6 @@
 <script lang="ts">
     import { getCurrentMesh, getCurrentUIContainer, destructor, getCore } from '$lib/core';
+    import type { Control } from '@babylonjs/gui/2D/controls/control.js';
 
     import { Line } from '@babylonjs/gui/2D/controls/line.js';
 
@@ -7,7 +8,7 @@
     const mesh = getCurrentMesh();
     const container = getCurrentUIContainer();
 
-    export let connectedControl = undefined;
+    export let connectedControl: Control = undefined;
 
     var line = new Line();
     line.lineWidth = 4;

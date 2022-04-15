@@ -1,10 +1,9 @@
 <script lang="ts">
     import { components as NIL } from '$lib';
-    import Instance from '$lib/components/mesh/Instance.svelte';
     const { Canvas } = NIL;
     const { Camera, KeyboardControl, Target } = NIL.camera.arcrotate;
     const { HemisphericLight } = NIL.lights;
-    const { Ground } = NIL.mesh;
+    const { Ground, Instance } = NIL.mesh;
     const { StandardMaterial, RefMaterial } = NIL.material;
     const { TransformNode } = NIL.node;
 

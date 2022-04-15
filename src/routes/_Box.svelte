@@ -5,7 +5,8 @@
     import Rectangle from '$lib/components/gui/Rectangle.svelte';
     import Ellipse from '$lib/components/gui/Ellipse.svelte';
     import Line from '$lib/components/gui/Line.svelte';
-    import { onDestroy, onMount } from 'svelte';
+
+    import type { Control } from '@babylonjs/gui/2D/controls/control.js';
 
     const { Box } = FREKI.mesh;
     const { Action, Hover, Highlight } = FREKI.action;
@@ -17,7 +18,7 @@
     export let scaling: [number, number, number] = [1, 1, 1];
     export let color: [number, number, number] = [0, 1, 0];
 
-    let rect;
+    let rect: Control = undefined;
 </script>
 
 <Box {id} {position} {rotation} {scaling}>

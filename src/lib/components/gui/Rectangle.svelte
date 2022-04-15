@@ -5,25 +5,28 @@
         getCurrentUIContainer,
         setCurrentUIContainer
     } from '$lib/core';
+
     import { Rectangle } from '@babylonjs/gui/2D/controls/rectangle.js';
+    import type { Control } from '@babylonjs/gui/2D/controls/control.js';
 
     const mesh = getCurrentMesh();
     const container = getCurrentUIContainer();
 
-    export const control = new Rectangle();
-    control.width = 0.2;
-    control.height = '40px';
-    control.cornerRadius = 20;
-    control.color = 'Orange';
-    control.thickness = 4;
-    control.background = 'green';
-    control.linkOffsetY = -150;
+    export let control: Control = new Rectangle();
+    const rect = control as Rectangle;
+    rect.width = 0.2;
+    rect.height = '40px';
+    rect.cornerRadius = 20;
+    rect.color = 'Orange';
+    rect.thickness = 4;
+    rect.background = 'green';
+    rect.linkOffsetY = -150;
 
-    container.addControl(control);
-    control.linkWithMesh(mesh);
+    container.addControl(rect);
+    rect.linkWithMesh(mesh);
 
-    setCurrentUIContainer(control);
-    destructor(() => container.removeControl(control));
+    setCurrentUIContainer(rect);
+    destructor(() => container.removeControl(rect));
 </script>
 
 <slot />

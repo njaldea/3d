@@ -26,6 +26,16 @@ const config = {
                 return true;
             }
             return false;
+        },
+        vite: {
+            build: {
+                rollupOptions: {
+                    output: {
+                        // need to disable vendor chunk
+                        manualChunks: undefined
+                    }
+                }
+            }
         }
     }
 };

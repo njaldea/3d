@@ -11,7 +11,7 @@
     const mesh = getCurrentMesh();
     const container = getCurrentUIContainer();
 
-    export const control = new Ellipse();
+    export let control = new Ellipse();
     control.width = '40px';
     control.height = '40px';
     control.color = 'Orange';

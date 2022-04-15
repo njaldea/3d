@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
     import TransformNode from '$lib/components/node/TransformNode.svelte';
     import { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js';
     import { getCore, setCurrentUIContainer, destructor } from '$lib/core';
+    import type { Container } from '@babylonjs/gui/2D/controls/container.js';
 
     const ui = AdvancedDynamicTexture.CreateFullscreenUI('fullscreen');
-    setCurrentUIContainer(ui);
+    setCurrentUIContainer(ui as any as Container);
     const { scene, renderLoopStart, renderLoopStop } = getCore();
 
     if (scene.debugLayer) {

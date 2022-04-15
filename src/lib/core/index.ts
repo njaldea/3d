@@ -81,7 +81,7 @@ type Core = {
     renderLoopStop: () => void;
 
     resize: () => void;
-    test: <Primitive extends string | number | boolean>(
+    test: <Primitive extends string | number | boolean | object>(
         curval: Primitive,
         newval: Primitive
     ) => Primitive;
@@ -132,7 +132,7 @@ export const init = (): Core => {
             core.render();
         },
 
-        test: <Primitive extends string | number | boolean>(
+        test: <Primitive extends string | number | boolean | object>(
             curval: Primitive,
             newval: Primitive
         ): Primitive => {

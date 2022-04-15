@@ -8,15 +8,24 @@
         %svelte.head%
         <style>
             html,
-            body,
-            body > div {
+            body {
                 width: 100%;
                 height: 100%;
+                box-sizing: border-box;
+                background-color: rgb(87, 87, 87);
+            }
+
+            *,
+            *::before,
+            *::after {
+                box-sizing: inherit;
+                margin: 0px;
+                padding: 0px;
             }
         </style>
     </head>
 
     <body>
-        <div>%svelte.body%</div>
+        %svelte.body%
     </body>
 </html>
