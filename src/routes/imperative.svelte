@@ -5,7 +5,7 @@
         Color4,
         Engine,
         HemisphericLight,
-        Mesh,
+        type Mesh,
         MeshBuilder,
         Scene,
         StandardMaterial,

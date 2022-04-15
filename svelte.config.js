@@ -12,7 +12,6 @@ const config = {
         routes: (filepath) => {
             if (!/(?:(?:^_|\/_)|(?:^\.|\/\.)(?!well-known))/.test(filepath)) {
                 if (filepath.endsWith('.svelte')) {
-                    filepath = filepath.slice('src/routes/'.length);
                     if (filepath.endsWith('index.svelte')) {
                         console.log(
                             '  - http://localhost:3000/' + filepath.slice(0, -'index.svelte'.length)
@@ -36,6 +35,9 @@ const config = {
                     }
                 }
             }
+        },
+        package: {
+            files: (filepath) => filepath !== 'components/Core.svelte'
         }
     }
 };
