@@ -1,7 +1,5 @@
 <script lang="ts">
     import { init } from '$lib/core';
-    import Core from '$lib/components/Core.svelte';
-
     const core = init();
 </script>
 
@@ -9,9 +7,7 @@
 
 <canvas bind:this={core.canvas} on:keyup on:keydown />
 {#if core.canvas != null}
-    <Core>
-        <slot />
-    </Core>
+    <slot />
 {/if}
 
 <style>

@@ -55,8 +55,16 @@ class Destructor {
             if (this.cb) {
                 this.cb();
             }
+
+            this.parent?.remove(this);
+            // onDestroy will trigger a render when it receives a return value (true)
+            // on the otherhand, if it is already destroyed (due to parent destruction)
+            // it will return false, thus, only calling render once
+            return true;
+        } else {
+            this.parent?.remove(this);
+            return false;
         }
-        this.parent?.remove(this);
     }
 }
 
@@ -64,7 +72,7 @@ const tags = {
     core: Symbol(),
     mesh: Symbol(),
     camera: Symbol(),
-    parent: Symbol(),
+    node: Symbol(),
     ui: Symbol(),
     ui_container: Symbol(),
     destructor: Symbol()
@@ -74,6 +82,7 @@ type Core = {
     canvas: HTMLCanvasElement;
     engine: Engine;
     scene: Scene;
+    fsui: ContainerProxy;
 
     render: () => void;
     renderCheck: () => void;
@@ -96,6 +105,7 @@ export const init = (): Core => {
         canvas: null,
         engine: null,
         scene: null,
+        fsui: null,
 
         renderCheck: () => {
             if (shouldRender && !renderFunc) {
@@ -148,7 +158,7 @@ export const init = (): Core => {
     onMount(() => {
         core.engine = new Engine(core.canvas, true);
         core.scene = new Scene(core.engine);
-        core.scene.onReadyObservable.addOnce(() => core.render());
+        core.scene.onReadyObservable.addOnce(core.render);
     });
 
     onDestroy(() => {
@@ -177,12 +187,12 @@ export const setCurrentMesh = (mesh: AbstractMesh) => {
     setContext(tags.mesh, mesh);
 };
 
-export const setParent = (node: Node) => {
-    setContext(tags.parent, node);
+export const setNode = (node: Node) => {
+    setContext(tags.node, node);
 };
 
-export const getParent = () => {
-    return getContext(tags.parent) as Node;
+export const getNode = () => {
+    return getContext(tags.node) as Node;
 };
 
 export const setCurrentCamera = (camera: Camera) => {
@@ -222,22 +232,40 @@ class ContainerProxy {
 }
 
 export const getCurrentUIContainer = () => {
-    return getContext(tags.ui_container) as IContainer;
-};
-
-export const setCurrentUIContainer = (control: IContainer) => {
-    const container = getCurrentUIContainer() as ContainerProxy;
+    const container = getContext(tags.ui_container) as IContainer;
     if (container == null) {
-        setContext(tags.ui_container, new ContainerProxy(control, 0));
+        return getCore().fsui;
     } else {
-        setContext(tags.ui_container, new ContainerProxy(control, container.depth + 1));
+        return container;
     }
 };
 
+export const setFullscreenUI = (container: IContainer) => {
+    getCore().fsui = new ContainerProxy(container, 0);
+};
+
+export const setCurrentUIContainer = (container: IContainer) => {
+    const current = getCurrentUIContainer() as ContainerProxy;
+    const depth = current == null ? 1 : current.depth + 1;
+    setContext(tags.ui_container, new ContainerProxy(container, depth));
+};
+
 export const destructor = (cb: () => void) => {
+    const { render } = getCore();
     const current = new Destructor(cb);
     setContext(tags.destructor, current);
-    onDestroy(() => current.call());
+    onDestroy(() => {
+        if (current.call()) {
+            // render when a component has a destructor to update the canvas
+            // this is an over simplification so that users won't need to manually
+            // trigger render render in their destructors.
+            // most of the time, disposal of objects is done in destructor, thus
+            // a rerender is necessary anyway.
+            //
+            // TODO: check for use cases that contradicts this case.
+            render();
+        }
+    });
 
     (getContext(tags.destructor) as Destructor)?.add(current);
 };

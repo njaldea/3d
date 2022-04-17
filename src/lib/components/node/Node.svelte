@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getCore, getParent, setParent, destructor } from '$lib/core';
+    import { getCore, getNode, setNode, destructor } from '$lib/core';
 
     import type { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 
@@ -25,12 +25,9 @@
 
     $: node.setEnabled(!disabled);
 
-    node.parent = getParent();
-    setParent(node);
-    destructor(() => {
-        node.dispose();
-        render();
-    });
+    node.parent = getNode();
+    setNode(node);
+    destructor(() => node.dispose());
 </script>
 
 <slot />

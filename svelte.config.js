@@ -26,6 +26,7 @@ const config = {
             }
             return false;
         },
+        trailingSlash: 'never',
         vite: {
             build: {
                 rollupOptions: {
@@ -35,9 +36,6 @@ const config = {
                     }
                 }
             }
-        },
-        package: {
-            files: (filepath) => filepath !== 'components/Core.svelte'
         }
     }
 };

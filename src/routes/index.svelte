@@ -7,6 +7,7 @@
     const { StandardMaterial, RefMaterial } = NIL.material;
     const { TransformNode } = NIL.node;
 
+    import FSUI from '$lib/components/gui/FullscreenUI.svelte';
     import Box from './_Box.svelte';
 
     let target = '';
@@ -24,6 +25,7 @@
 </script>
 
 <Canvas>
+    <FSUI />
     <StandardMaterial id="material" useLogarithmicDepth alpha={0.7} color={[255, 0, 0]} />
 
     <Camera
@@ -66,6 +68,8 @@
             <RefMaterial id="material" />
         </Box>
     </TransformNode>
+
+    <slot />
 </Canvas>
 
 <div>

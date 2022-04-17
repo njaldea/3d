@@ -32,7 +32,6 @@
     }
 
     layer.addMesh(mesh as Mesh, highlight);
-    render();
 
     destructor(() => {
         layer.onBeforeRenderMainTextureObservable.removeCallback(render);
@@ -40,6 +39,7 @@
         layer.onBeforeComposeObservable.removeCallback(render);
         layer.onBeforeBlurObservable.removeCallback(render);
         layer.dispose();
-        render();
     });
+
+    render();
 </script>

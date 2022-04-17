@@ -48,7 +48,6 @@
     scene.onPointerObservable.add(updateCamera);
 
     camera.attachControl(canvas, true, false);
-    render();
 
     destructor(() => {
         scene.onPointerObservable.removeCallback(updateCamera);
@@ -58,6 +57,7 @@
     });
 
     setCurrentCamera(camera);
+    render();
 </script>
 
 <slot />

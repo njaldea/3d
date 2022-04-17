@@ -27,9 +27,9 @@
     mesh.onMaterialChangedObservable.add(render);
 
     destructor(() => {
-        mesh.material = null;
         scene.onNewMaterialAddedObservable.removeCallback(materialAdded);
         scene.onMaterialRemovedObservable.removeCallback(materialRemoved);
         mesh.onMaterialChangedObservable.removeCallback(render);
+        mesh.material = null;
     });
 </script>

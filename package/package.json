@@ -1,6 +1,6 @@
 {
     "name": "@nil-/3d",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "author": {
         "name": "Neil Jayson Aldea",
         "email": "njaldea@gmail.com"
@@ -41,6 +41,7 @@
     "exports": {
         "./package.json": "./package.json",
         "./components/Canvas.svelte": "./components/Canvas.svelte",
+        "./components/Inspector.svelte": "./components/Inspector.svelte",
         "./components/action/Action.svelte": "./components/action/Action.svelte",
         "./components/action/Highlight.svelte": "./components/action/Highlight.svelte",
         "./components/action/Hover.svelte": "./components/action/Hover.svelte",
@@ -50,6 +51,7 @@
         "./components/camera/arcrotate/Target.svelte": "./components/camera/arcrotate/Target.svelte",
         "./components/camera/arcrotate": "./components/camera/arcrotate/index.js",
         "./components/camera": "./components/camera/index.js",
+        "./components/gui/FullscreenUI.svelte": "./components/gui/FullscreenUI.svelte",
         "./components/gui/Line.svelte": "./components/gui/Line.svelte",
         "./components/gui/TextBlock.svelte": "./components/gui/TextBlock.svelte",
         "./components/gui/container/Container.svelte": "./components/gui/container/Container.svelte",
