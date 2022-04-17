@@ -11,6 +11,5 @@
     $: control.text = test(control.text, text);
 
     container.addControl(control);
-
     destructor(() => container.removeControl(control));
 </script>

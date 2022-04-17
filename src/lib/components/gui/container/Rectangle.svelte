@@ -1,15 +1,10 @@
 <script lang="ts">
-    import {
-        getCurrentMesh,
-        destructor,
-        getCurrentUIContainer,
-        setCurrentUIContainer
-    } from '$lib/core';
+    import { destructor, getCurrentUIContainer } from '$lib/core';
+    import Container from './Container.svelte';
 
     import { Rectangle } from '@babylonjs/gui/2D/controls/rectangle.js';
     import type { Control } from '@babylonjs/gui/2D/controls/control.js';
 
-    const mesh = getCurrentMesh();
     const container = getCurrentUIContainer();
 
     export let control: Control = new Rectangle();
@@ -23,10 +18,9 @@
     rect.linkOffsetY = -150;
 
     container.addControl(rect);
-    rect.linkWithMesh(mesh);
-
-    setCurrentUIContainer(rect);
     destructor(() => container.removeControl(rect));
 </script>
 
-<slot />
+<Container container={rect}>
+    <slot />
+</Container>

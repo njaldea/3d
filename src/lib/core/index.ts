@@ -5,7 +5,7 @@ import { Scene } from '@babylonjs/core/scene.js';
 import type { Camera } from '@babylonjs/core/Cameras/camera.js';
 import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
 import type { Node } from '@babylonjs/core/node.js';
-import type { Container } from '@babylonjs/gui/2D/controls/container.js';
+import type { Control } from '@babylonjs/gui/2D/controls/control.js';
 
 /**
  * To emulate c++ RAII where children are destroyed first before the parent.
@@ -66,7 +66,7 @@ const tags = {
     camera: Symbol(),
     parent: Symbol(),
     ui: Symbol(),
-    ui_control: Symbol(),
+    ui_container: Symbol(),
     destructor: Symbol()
 };
 
@@ -193,12 +193,45 @@ export const getCurrentCamera = () => {
     return getContext(tags.camera) as Camera;
 };
 
-export const getCurrentUIContainer = () => {
-    return getContext(tags.ui_control) as Container;
+type IContainer = {
+    addControl: (control: Control) => void;
+    removeControl: (control: Control) => void;
 };
 
-export const setCurrentUIContainer = (control: Container) => {
-    setContext(tags.ui_control, control);
+// this will handle linking with mesh
+// for now, linking with mesh is done for all root control
+class ContainerProxy {
+    constructor(private container: IContainer, public depth: number) {}
+
+    public addControl(control: Control) {
+        this.container.addControl(control);
+        // depth == 0 | root
+        // depth == 1 | mesh
+        // depth >= 2 | controls
+        if (this.depth === 0) {
+            const mesh = getCurrentMesh();
+            if (mesh != null) {
+                control.linkWithMesh(mesh);
+            }
+        }
+    }
+
+    public removeControl(control: Control) {
+        this.container.removeControl(control);
+    }
+}
+
+export const getCurrentUIContainer = () => {
+    return getContext(tags.ui_container) as IContainer;
+};
+
+export const setCurrentUIContainer = (control: IContainer) => {
+    const container = getCurrentUIContainer() as ContainerProxy;
+    if (container == null) {
+        setContext(tags.ui_container, new ContainerProxy(control, 0));
+    } else {
+        setContext(tags.ui_container, new ContainerProxy(control, container.depth + 1));
+    }
 };
 
 export const destructor = (cb: () => void) => {

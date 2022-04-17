@@ -1,11 +1,10 @@
 <script lang="ts">
-    import { getCurrentMesh, getCurrentUIContainer, destructor, getCore } from '$lib/core';
+    import { getCurrentUIContainer, destructor, getCore } from '$lib/core';
     import type { Control } from '@babylonjs/gui/2D/controls/control.js';
 
     import { Line } from '@babylonjs/gui/2D/controls/line.js';
 
     const { test } = getCore();
-    const mesh = getCurrentMesh();
     const container = getCurrentUIContainer();
 
     export let connectedControl: Control = undefined;
@@ -18,7 +17,5 @@
     $: line.connectedControl = test(line.connectedControl, connectedControl);
 
     container.addControl(line);
-    line.linkWithMesh(mesh);
-
     destructor(() => container.removeControl(line));
 </script>

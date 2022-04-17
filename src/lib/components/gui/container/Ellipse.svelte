@@ -1,14 +1,9 @@
 <script lang="ts">
-    import {
-        getCurrentMesh,
-        getCurrentUIContainer,
-        setCurrentUIContainer,
-        destructor
-    } from '$lib/core';
+    import { getCurrentUIContainer, destructor } from '$lib/core';
+    import Container from './Container.svelte';
 
     import { Ellipse } from '@babylonjs/gui/2D/controls/ellipse.js';
 
-    const mesh = getCurrentMesh();
     const container = getCurrentUIContainer();
 
     export let control = new Ellipse();
@@ -19,8 +14,7 @@
     control.background = 'green';
 
     container.addControl(control);
-    control.linkWithMesh(mesh);
-
-    setCurrentUIContainer(control);
     destructor(() => container.removeControl(control));
 </script>
+
+<Container container={control} />
