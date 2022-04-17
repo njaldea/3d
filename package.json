@@ -1,9 +1,13 @@
 {
     "name": "@nil-/3d",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "author": {
         "name": "Neil Jayson Aldea",
         "email": "njaldea@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/njaldea/3d.git"
     },
     "scripts": {
         "dev": "svelte-kit dev",
