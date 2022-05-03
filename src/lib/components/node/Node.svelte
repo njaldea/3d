@@ -10,6 +10,7 @@
 
     const { render, test } = getCore();
     export let node: TransformNode;
+    node.onDisposeObservable.add(render);
 
     $: node.position.x = test(node.position.x, position[0]);
     $: node.position.y = test(node.position.y, position[1]);
@@ -27,7 +28,10 @@
 
     node.parent = getNode();
     setNode(node);
-    destructor(() => node.dispose());
+    destructor(() => {
+        node.dispose();
+        node.onDisposeObservable.removeCallback(render);
+    });
 </script>
 
 <slot />

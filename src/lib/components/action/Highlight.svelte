@@ -12,10 +12,6 @@
     export let color: [number, number, number] = [0, 0, 0];
 
     const layer = new HighlightLayer(`${mesh.id}-${id}`, scene);
-    layer.onBeforeRenderMainTextureObservable.addOnce(render);
-    layer.onBeforeRenderMeshToEffect.addOnce(render);
-    layer.onBeforeComposeObservable.addOnce(render);
-    layer.onBeforeBlurObservable.addOnce(render);
     const highlight = new Color3(...color);
 
     $: highlight.r = updateColor(highlight.r, color[0]);
@@ -25,21 +21,27 @@
     function updateColor(l: number, r: number) {
         if (l != r) {
             layer.removeMesh(mesh);
-            layer.addMesh(mesh as Mesh, highlight);
+            layer.addMesh(mesh, highlight);
             render();
         }
         return r;
     }
 
-    layer.addMesh(mesh as Mesh, highlight);
+    layer.addMesh(mesh, highlight);
+
+    layer.onBeforeRenderMainTextureObservable.addOnce(render);
+    layer.onBeforeRenderMeshToEffect.addOnce(render);
+    layer.onBeforeComposeObservable.addOnce(render);
+    layer.onBeforeBlurObservable.addOnce(render);
+    layer.onDisposeObservable.add(render);
 
     destructor(() => {
+        layer.dispose();
         layer.onBeforeRenderMainTextureObservable.removeCallback(render);
         layer.onBeforeRenderMeshToEffect.removeCallback(render);
         layer.onBeforeComposeObservable.removeCallback(render);
         layer.onBeforeBlurObservable.removeCallback(render);
-        layer.dispose();
+        layer.onDisposeObservable.removeCallback(render);
     });
-
     render();
 </script>

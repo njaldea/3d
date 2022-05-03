@@ -55,16 +55,8 @@ class Destructor {
             if (this.cb) {
                 this.cb();
             }
-
-            this.parent?.remove(this);
-            // onDestroy will trigger a render when it receives a return value (true)
-            // on the otherhand, if it is already destroyed (due to parent destruction)
-            // it will return false, thus, only calling render once
-            return true;
-        } else {
-            this.parent?.remove(this);
-            return false;
         }
+        this.parent?.remove(this);
     }
 }
 
@@ -203,7 +195,7 @@ export const getCurrentCamera = () => {
     return getContext(tags.camera) as Camera;
 };
 
-type IContainer = {
+export type IContainer = {
     addControl: (control: Control) => void;
     removeControl: (control: Control) => void;
 };
@@ -234,7 +226,11 @@ class ContainerProxy {
 export const getCurrentUIContainer = () => {
     const container = getContext(tags.ui_container) as IContainer;
     if (container == null) {
-        return getCore().fsui;
+        const { fsui } = getCore();
+        if (fsui == null) {
+            throw 'FullscreenUI does not exist!';
+        }
+        return fsui;
     } else {
         return container;
     }
@@ -251,21 +247,9 @@ export const setCurrentUIContainer = (container: IContainer) => {
 };
 
 export const destructor = (cb: () => void) => {
-    const { render } = getCore();
     const current = new Destructor(cb);
     setContext(tags.destructor, current);
-    onDestroy(() => {
-        if (current.call()) {
-            // render when a component has a destructor to update the canvas
-            // this is an over simplification so that users won't need to manually
-            // trigger render render in their destructors.
-            // most of the time, disposal of objects is done in destructor, thus
-            // a rerender is necessary anyway.
-            //
-            // TODO: check for use cases that contradicts this case.
-            render();
-        }
-    });
+    onDestroy(() => current.call());
 
     (getContext(tags.destructor) as Destructor)?.add(current);
 };

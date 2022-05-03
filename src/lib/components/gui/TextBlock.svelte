@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { getCore, destructor, getCurrentUIContainer } from '$lib/core';
+    import Control from '$lib/components/gui/Control.svelte';
+    import { getCore, getCurrentUIContainer } from '$lib/core';
     import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js';
 
     export let text: string;
@@ -9,7 +10,6 @@
 
     export let control = new TextBlock();
     $: control.text = test(control.text, text);
-
-    container.addControl(control);
-    destructor(() => container.removeControl(control));
 </script>
+
+<Control {container} {control} />

@@ -26,7 +26,6 @@
     <Action>
         <Hover>
             <Highlight {color} />
-            <!-- <Label text={id} /> -->
             <Rectangle bind:control={rect}>
                 <TextBlock text={id} />
             </Rectangle>

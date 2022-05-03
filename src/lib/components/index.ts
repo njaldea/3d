@@ -6,3 +6,4 @@ export * as lights from './lights';
 export * as action from './action';
 export * as gui from './gui';
 export { default as Canvas } from './Canvas.svelte';
+export { default as Inspector } from './Inspector.svelte';

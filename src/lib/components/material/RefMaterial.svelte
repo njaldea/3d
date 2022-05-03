@@ -3,10 +3,14 @@
 
     import type { Material } from '@babylonjs/core/Materials/material.js';
 
+    export let id: string;
+
     const { render, scene } = getCore();
     const mesh = getCurrentMesh();
 
-    export let id: string;
+    scene.onNewMaterialAddedObservable.add(materialAdded);
+    scene.onMaterialRemovedObservable.add(materialRemoved);
+    mesh.onMaterialChangedObservable.add(render);
 
     $: mesh.material = scene.getMaterialByName(id);
 
@@ -22,14 +26,10 @@
         }
     }
 
-    scene.onNewMaterialAddedObservable.add(materialAdded);
-    scene.onMaterialRemovedObservable.add(materialRemoved);
-    mesh.onMaterialChangedObservable.add(render);
-
     destructor(() => {
+        mesh.material = null;
         scene.onNewMaterialAddedObservable.removeCallback(materialAdded);
         scene.onMaterialRemovedObservable.removeCallback(materialRemoved);
         mesh.onMaterialChangedObservable.removeCallback(render);
-        mesh.material = null;
     });
 </script>

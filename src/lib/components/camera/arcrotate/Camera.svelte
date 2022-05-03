@@ -2,8 +2,7 @@
     import { getCore, setCurrentCamera, destructor } from '$lib/core';
 
     import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
-    // import necessary for arcrotate to fire onViewMatrixChangedObservable
-    import {} from '@babylonjs/core/Gamepads/Controllers/poseEnabledController.js';
+    import {} from '@babylonjs/core/Culling/ray.js';
     import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 
     const { canvas, scene, test, render } = getCore();
@@ -40,20 +39,26 @@
     camera.mapPanning = true;
 
     function updateCamera() {
+        // this is to force update the matrix
+        // by importing only the camera js file,
+        // there is some issue with firing viewMatrixChanged
+        camera.getViewMatrix();
         camera.update();
     }
 
-    camera.onViewMatrixChangedObservable.add(render);
-    scene.onAfterRenderObservable.add(updateCamera);
     scene.onPointerObservable.add(updateCamera);
+    scene.onAfterRenderObservable.add(updateCamera);
+    camera.onViewMatrixChangedObservable.add(render);
+    camera.onDisposeObservable.add(render);
 
     camera.attachControl(canvas, true, false);
 
     destructor(() => {
+        camera.dispose();
         scene.onPointerObservable.removeCallback(updateCamera);
         scene.onAfterRenderObservable.removeCallback(updateCamera);
         camera.onViewMatrixChangedObservable.removeCallback(render);
-        camera.dispose();
+        camera.onDisposeObservable.removeCallback(render);
     });
 
     setCurrentCamera(camera);
