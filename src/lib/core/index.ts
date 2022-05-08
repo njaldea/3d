@@ -142,7 +142,7 @@ class Core {
         };
 
         this.test = (curval, newval) => {
-            if (curval != newval) {
+            if (curval !== newval) {
                 this.shouldRender = true;
             }
             return newval;

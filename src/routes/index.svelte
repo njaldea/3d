@@ -2,6 +2,7 @@
     import Canvas from '@nil-/3d/components/Canvas.svelte';
 
     import Camera from '@nil-/3d/components/camera/arcrotate/Camera.svelte';
+    import PointerControl from '@nil-/3d/components/camera/arcrotate/PointerControl.svelte';
     import KeyboardControl from '@nil-/3d/components/camera/arcrotate/KeyboardControl.svelte';
     import Target from '@nil-/3d/components/camera/arcrotate/Target.svelte';
 
@@ -46,6 +47,7 @@
         {#if toggle}
             <Target {target} />
             <KeyboardControl />
+            <PointerControl />
         {/if}
     </Camera>
     <HemisphericLight id="light" {intensity} {direction} />

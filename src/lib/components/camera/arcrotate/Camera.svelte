@@ -1,8 +1,24 @@
+<script lang="ts" context="module">
+    import { tick } from 'svelte';
+    import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
+
+    export function updateCamera(camera: ArcRotateCamera) {
+        return async () => {
+            // need to defer update in next frame to guarantee retrigger
+            // after scene is renderered
+            await tick();
+
+            // this is to force update the matrix
+            // by importing only the camera js file
+            camera.getViewMatrix();
+            camera.update();
+        };
+    }
+</script>
+
 <script lang="ts">
     import { getCore, setCurrentCamera, destructor } from '$lib/core';
 
-    import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
-    import {} from '@babylonjs/core/Culling/ray.js';
     import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 
     const { canvas, scene, test, render } = getCore();
@@ -23,8 +39,9 @@
     );
     camera.setTarget(Vector3.Zero());
 
-    // add keyboard via child component
+    // add controls via child component
     camera.inputs.remove(camera.inputs.attached.keyboard);
+    camera.inputs.remove(camera.inputs.attached.pointer);
 
     $: camera.lowerAlphaLimit = test(camera.lowerAlphaLimit, alphalimit[0]);
     $: camera.upperAlphaLimit = test(camera.upperAlphaLimit, alphalimit[1]);
@@ -38,16 +55,9 @@
     $: camera.angularSensibilityY = test(camera.angularSensibilityY, sensibility[1]);
     camera.mapPanning = true;
 
-    function updateCamera() {
-        // this is to force update the matrix
-        // by importing only the camera js file,
-        // there is some issue with firing viewMatrixChanged
-        camera.getViewMatrix();
-        camera.update();
-    }
+    const update = updateCamera(camera);
 
-    scene.onPointerObservable.add(updateCamera);
-    scene.onAfterRenderObservable.add(updateCamera);
+    scene.onAfterRenderObservable.add(update);
     camera.onViewMatrixChangedObservable.add(render);
     camera.onDisposeObservable.add(render);
 
@@ -55,8 +65,7 @@
 
     destructor(() => {
         camera.dispose();
-        scene.onPointerObservable.removeCallback(updateCamera);
-        scene.onAfterRenderObservable.removeCallback(updateCamera);
+        scene.onAfterRenderObservable.removeCallback(update);
         camera.onViewMatrixChangedObservable.removeCallback(render);
         camera.onDisposeObservable.removeCallback(render);
     });
