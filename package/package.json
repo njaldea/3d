@@ -1,6 +1,6 @@
 {
     "name": "@nil-/3d",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "author": {
         "name": "Neil Jayson Aldea",
         "email": "njaldea@gmail.com"
@@ -10,20 +10,21 @@
         "url": "https://github.com/njaldea/3d.git"
     },
     "dependencies": {
-        "@babylonjs/core": "^5.4.0",
-        "@babylonjs/gui": "^5.4.0",
-        "@babylonjs/inspector": "^5.4.0",
+        "@babylonjs/core": "^5.5.5",
+        "@babylonjs/gui": "^5.5.5",
+        "@babylonjs/materials": "^5.5.5",
+        "@babylonjs/inspector": "^5.5.5",
         "svelte": "^3.48.0"
     },
     "devDependencies": {
         "@playwright/test": "^1.21.1",
         "@sveltejs/adapter-auto": "1.0.0-next.40",
-        "@sveltejs/kit": "1.0.0-next.324",
+        "@sveltejs/kit": "1.0.0-next.326",
         "@typescript-eslint/eslint-plugin": "^5.22.0",
         "@typescript-eslint/parser": "^5.22.0",
-        "eslint": "^8.14.0",
+        "eslint": "^8.15.0",
         "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-svelte3": "^3.4.1",
+        "eslint-plugin-svelte3": "^4.0.0",
         "prettier": "^2.6.2",
         "prettier-plugin-svelte": "^2.7.0",
         "svelte-check": "^2.7.0",
@@ -63,8 +64,10 @@
         "./components": "./components/index.js",
         "./components/lights/HemisphericLight.svelte": "./components/lights/HemisphericLight.svelte",
         "./components/lights": "./components/lights/index.js",
-        "./components/material/RefMaterial.svelte": "./components/material/RefMaterial.svelte",
-        "./components/material/StandardMaterial.svelte": "./components/material/StandardMaterial.svelte",
+        "./components/material/Grid.svelte": "./components/material/Grid.svelte",
+        "./components/material/Material.svelte": "./components/material/Material.svelte",
+        "./components/material/Reference.svelte": "./components/material/Reference.svelte",
+        "./components/material/Standard.svelte": "./components/material/Standard.svelte",
         "./components/material": "./components/material/index.js",
         "./components/mesh/Box.svelte": "./components/mesh/Box.svelte",
         "./components/mesh/Ground.svelte": "./components/mesh/Ground.svelte",
