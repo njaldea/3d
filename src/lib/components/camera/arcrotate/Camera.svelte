@@ -8,8 +8,11 @@
             // after scene is renderered
             await tick();
 
-            // this is to force update the matrix
-            // by importing only the camera js file
+            // calling getViewMatrix is necessary if '@babylonjs/core/Culling/ray.js' is not imported
+            // anywhere in the project. in @nil-/3d, it is imported by Hover.svelte since ray casting
+            // is necessary for mouse hover to work.
+            // for now, let's assume that Hover.svelte is possible to not be imported by the user thus,
+            // we pay for an extra call to getViewMatrix.
             camera.getViewMatrix();
             camera.update();
         };
@@ -40,8 +43,9 @@
     camera.setTarget(Vector3.Zero());
 
     // add controls via child component
-    camera.inputs.remove(camera.inputs.attached.keyboard);
-    camera.inputs.remove(camera.inputs.attached.pointer);
+    camera.inputs.attached.keyboard.detachControl();
+    camera.inputs.attached.pointers.detachControl();
+    camera.inputs.attached.mousewheel.detachControl();
 
     $: camera.lowerAlphaLimit = test(camera.lowerAlphaLimit, alphalimit[0]);
     $: camera.upperAlphaLimit = test(camera.upperAlphaLimit, alphalimit[1]);

@@ -1,6 +1,10 @@
 <script lang="ts">
     import { getCurrentMesh, destructor } from '$lib/core';
 
+    // this is to enable hover events
+    // ray adds functionality to scene.prototype
+    import '@babylonjs/core/Culling/ray.js';
+
     import { ActionManager } from '@babylonjs/core/Actions/actionManager.js';
     import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions.js';
 

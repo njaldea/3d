@@ -7,9 +7,14 @@
     const { scene } = getCore();
     const camera = getCurrentCamera() as ArcRotateCamera;
 
-    camera.inputs.addPointers();
+    camera.inputs.attachInput(camera.inputs.attached.pointers);
+    camera.inputs.attachInput(camera.inputs.attached.mousewheel);
 
     const update = updateCamera(camera);
     scene.onPointerObservable.add(update);
-    destructor(() => scene.onPointerObservable.removeCallback(update));
+    destructor(() => {
+        scene.onPointerObservable.removeCallback(update);
+        camera.inputs.attached.pointers.detachControl();
+        camera.inputs.attached.mousewheel.detachControl();
+    });
 </script>
