@@ -1,13 +1,22 @@
 <script lang="ts">
-    import { components as NIL } from '$lib';
-    const { Canvas } = NIL;
-    const { Camera, KeyboardControl, Target } = NIL.camera.arcrotate;
-    const { HemisphericLight } = NIL.lights;
-    const { Ground, Instance } = NIL.mesh;
-    const { Standard: StandardMaterial, Reference: RefMaterial, Grid: GridMaterial } = NIL.material;
-    const { TransformNode } = NIL.node;
+    import Canvas from '@nil-/3d/components/Canvas.svelte';
 
-    import FSUI from '$lib/components/gui/FullscreenUI.svelte';
+    import Camera from '@nil-/3d/components/camera/arcrotate/Camera.svelte';
+    import KeyboardControl from '@nil-/3d/components/camera/arcrotate/KeyboardControl.svelte';
+    import Target from '@nil-/3d/components/camera/arcrotate/Target.svelte';
+
+    import HemisphericLight from '@nil-/3d/components/lights/HemisphericLight.svelte';
+
+    import Ground from '@nil-/3d/components/mesh/Ground.svelte';
+    import Instance from '@nil-/3d/components/mesh/Instance.svelte';
+
+    import StandardMaterial from '@nil-/3d/components/material/Standard.svelte';
+    import RefMaterial from '@nil-/3d/components/material/Reference.svelte';
+    import GridMaterial from '@nil-/3d/components/material/Grid.svelte';
+
+    import TransformNode from '@nil-/3d/components/node/TransformNode.svelte';
+
+    import FSUI from '@nil-/3d/components/gui/FullscreenUI.svelte';
     import Box from './_Box.svelte';
 
     let target = '';

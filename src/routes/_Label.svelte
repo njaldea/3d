@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getCurrentMesh, getCurrentUIContainer, destructor } from '$lib/core';
+    import { getCurrentMesh, getCurrentUIContainer, destructor } from '@nil-/3d/core';
 
     import { Rectangle } from '@babylonjs/gui/2D/controls/rectangle.js';
     import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js';

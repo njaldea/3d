@@ -1,10 +1,10 @@
 <script lang="ts">
     import { components as FREKI } from '$lib';
 
-    import Line from '$lib/components/gui/Line.svelte';
-    import TextBlock from '$lib/components/gui/TextBlock.svelte';
-    import Rectangle from '$lib/components/gui/container/Rectangle.svelte';
-    import Ellipse from '$lib/components/gui/container/Ellipse.svelte';
+    import Line from '@nil-/3d/components/gui/Line.svelte';
+    import TextBlock from '@nil-/3d/components/gui/TextBlock.svelte';
+    import Rectangle from '@nil-/3d/components/gui/container/Rectangle.svelte';
+    import Ellipse from '@nil-/3d/components/gui/container/Ellipse.svelte';
 
     import type { Control } from '@babylonjs/gui/2D/controls/control.js';
 

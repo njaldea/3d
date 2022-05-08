@@ -2,7 +2,7 @@
     import { getCore, getCurrentMesh } from '$lib/core';
     import Material from '$lib/components/material/Material.svelte';
 
-    import { GridMaterial } from '@babylonjs/materials/grid/gridMaterial';
+    import { GridMaterial } from '@babylonjs/materials/grid/gridMaterial.js';
 
     const { scene, test } = getCore();
     const mesh = getCurrentMesh();

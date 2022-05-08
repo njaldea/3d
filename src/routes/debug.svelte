@@ -1,6 +1,6 @@
 <script lang="ts">
     import Index from './index.svelte';
-    import Inspector from '$lib/components/Inspector.svelte';
+    import Inspector from '@nil-/3d/components/Inspector.svelte';
 </script>
 
 <!-- dynamic import needed to delay this this part (to be done in browser); -->

@@ -1,7 +1,7 @@
 import { getContext, setContext, onDestroy, onMount, afterUpdate } from 'svelte';
 
 import { Engine } from '@babylonjs/core/Engines/engine.js';
-import { WebGPUEngine } from '@babylonjs/core/Engines/webgpuEngine';
+import { WebGPUEngine } from '@babylonjs/core/Engines/webgpuEngine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import type { Camera } from '@babylonjs/core/Cameras/camera.js';
 import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
