@@ -18,12 +18,11 @@
         {
             width: 10000,
             height: 10000,
-            subdivisions: 2,
-            subdivisionsX: 10,
-            subdivisionsY: 10
+            subdivisions: 2
         },
         scene
     );
+    ground.infiniteDistance = true;
 </script>
 
 <MeshComponent mesh={ground} {position} {rotation} {scaling} {disabled}>

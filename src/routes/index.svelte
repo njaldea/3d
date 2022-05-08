@@ -4,7 +4,7 @@
     const { Camera, KeyboardControl, Target } = NIL.camera.arcrotate;
     const { HemisphericLight } = NIL.lights;
     const { Ground, Instance } = NIL.mesh;
-    const { StandardMaterial, RefMaterial } = NIL.material;
+    const { Standard: StandardMaterial, Reference: RefMaterial, Grid: GridMaterial } = NIL.material;
     const { TransformNode } = NIL.node;
 
     import FSUI from '$lib/components/gui/FullscreenUI.svelte';
@@ -41,9 +41,9 @@
     </Camera>
     <HemisphericLight id="light" {intensity} {direction} />
 
-    <TransformNode id="groundgroup" position={[0, -0.001, 0]} disabled={false}>
+    <TransformNode id="groundgroup" position={[0, -0.001, 0]}>
         <Ground id="ground">
-            <StandardMaterial id="ground" useLogarithmicDepth alpha={1} color={[0, 0, 128]} />
+            <GridMaterial id="grid" />
         </Ground>
     </TransformNode>
 

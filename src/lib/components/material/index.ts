@@ -1,2 +1,3 @@
-export { default as RefMaterial } from './RefMaterial.svelte';
-export { default as StandardMaterial } from './StandardMaterial.svelte';
+export { default as Reference } from './Reference.svelte';
+export { default as Standard } from './Standard.svelte';
+export { default as Grid } from './Grid.svelte';

@@ -1,9 +1,10 @@
 <script lang="ts">
-    import { getCore, getCurrentMesh, destructor } from '$lib/core';
+    import { getCore, getCurrentMesh } from '$lib/core';
+    import Material from '$lib/components/material/Material.svelte';
 
     import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
 
-    const { scene, test, render } = getCore();
+    const { scene, test } = getCore();
     const mesh = getCurrentMesh();
 
     export let id: string;
@@ -17,16 +18,8 @@
     $: material.emissiveColor.b = test(material.emissiveColor.b, color[2]);
     $: material.alpha = test(material.alpha, alpha);
     $: material.useLogarithmicDepth = test(material.useLogarithmicDepth, useLogarithmicDepth);
-
-    if (mesh) {
-        mesh.onMaterialChangedObservable.add(render);
-        mesh.material = material;
-    }
-    destructor(() => {
-        if (mesh) {
-            mesh.material = null;
-            mesh.onMaterialChangedObservable.removeCallback(render);
-        }
-        material.dispose();
-    });
 </script>
+
+{#if mesh != null}
+    <Material {mesh} {material} />
+{/if}
