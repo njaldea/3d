@@ -8,6 +8,10 @@
 
     let hovered = false;
 
+    if (actionManager == null) {
+        throw 'Hover component should be a child of an Action component';
+    }
+
     const actionIn = new ExecuteCodeAction(
         ActionManager.OnPointerOverTrigger,
         () => (hovered = true)

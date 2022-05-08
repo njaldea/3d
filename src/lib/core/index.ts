@@ -1,6 +1,7 @@
 import { getContext, setContext, onDestroy, onMount, afterUpdate } from 'svelte';
 
 import { Engine } from '@babylonjs/core/Engines/engine.js';
+import { WebGPUEngine } from '@babylonjs/core/Engines/webgpuEngine';
 import { Scene } from '@babylonjs/core/scene.js';
 import type { Camera } from '@babylonjs/core/Cameras/camera.js';
 import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
@@ -19,12 +20,13 @@ import type { Control } from '@babylonjs/gui/2D/controls/control.js';
  * To do this, the destructor interface masks it to reorder the destroy calls.
  */
 class Destructor {
-    private parent: Destructor;
+    private parent: null | Destructor;
     private children: Destructor[];
     private destroyed: boolean;
     private cb: () => void;
 
     constructor(cb: () => void) {
+        this.parent = null;
         this.children = [];
         this.destroyed = false;
         this.cb = cb;
@@ -70,105 +72,118 @@ const tags = {
     destructor: Symbol()
 };
 
-type Core = {
-    canvas: HTMLCanvasElement;
-    engine: Engine;
-    scene: Scene;
-    fsui: ContainerProxy;
+class Core {
+    public canvas: HTMLCanvasElement;
+    public engine: Engine;
+    public scene: Scene;
+    public fsui: null | ContainerProxy;
 
-    render: () => void;
-    renderCheck: () => void;
-    renderLoopStart: () => void;
-    renderLoopStop: () => void;
+    // update only when something has changed
+    public update: () => void;
 
-    resize: () => void;
-    test: <Primitive extends string | number | boolean | object>(
+    // force render
+    public render: () => void;
+    public renderLoopStart: () => void;
+    public renderLoopStop: () => void;
+
+    private renderFunc: () => void;
+
+    public resize: () => void;
+    public test: <Primitive /* extends string | number | boolean | object */>(
         curval: Primitive,
         newval: Primitive
     ) => Primitive;
-};
 
-export const init = (): Core => {
-    let shouldRender = false;
-    let loopEnabled = 0;
-    let renderFunc = null;
+    private shouldRender: boolean;
+    private loopEnabled: number;
 
-    const core: Core = {
-        canvas: null,
-        engine: null,
-        scene: null,
-        fsui: null,
+    public destroy() {
+        this.loopEnabled = 0;
+        this.engine.dispose();
+    }
 
-        renderCheck: () => {
-            if (shouldRender && !renderFunc) {
-                shouldRender = false;
-                renderFunc = () => {
-                    console.log('render check');
-                    core.scene.render();
-                    if (loopEnabled === 0 && !shouldRender) {
-                        core.engine.stopRenderLoop(renderFunc);
-                        renderFunc = null;
-                    }
-                    shouldRender = false;
-                };
-                core.engine.runRenderLoop(renderFunc);
+    constructor(canvas: HTMLCanvasElement, webgpu: boolean) {
+        this.shouldRender = true;
+        this.loopEnabled = 0;
+
+        this.renderFunc = () => {
+            console.log('render frame');
+            this.scene.render();
+            if (this.loopEnabled === 0 && !this.shouldRender) {
+                this.engine.stopRenderLoop(this.renderFunc);
             }
-        },
+            this.shouldRender = false;
+        };
 
-        render: () => {
-            shouldRender = true;
-            core.renderCheck();
-        },
+        this.render = () => {
+            this.shouldRender = true;
+            this.update();
+        };
 
-        renderLoopStart: () => {
-            loopEnabled += 1;
-            core.render();
-        },
+        this.update = () => {
+            if (this.shouldRender) {
+                this.shouldRender = false;
+                this.engine.runRenderLoop(this.renderFunc);
+            }
+        };
 
-        renderLoopStop: () => {
-            loopEnabled -= 1;
-        },
+        this.renderLoopStart = () => {
+            this.loopEnabled += 1;
+            this.render();
+        };
 
-        resize: () => {
-            core.engine.resize();
-            core.render();
-        },
+        this.renderLoopStop = () => {
+            this.loopEnabled -= 1;
+        };
 
-        test: <Primitive extends string | number | boolean | object>(
-            curval: Primitive,
-            newval: Primitive
-        ): Primitive => {
+        this.resize = () => {
+            this.engine.resize();
+            this.render();
+        };
+
+        this.test = (curval, newval) => {
             if (curval != newval) {
-                shouldRender = true;
+                this.shouldRender = true;
             }
             return newval;
+        };
+
+        this.canvas = canvas;
+        if (webgpu) {
+            this.engine = new WebGPUEngine(this.canvas, { antialiasing: true });
+        } else {
+            this.engine = new Engine(this.canvas, true);
         }
-    };
+        this.scene = new Scene(this.engine);
+        this.scene.onReadyObservable.addOnce(this.render);
+        this.fsui = null;
+    }
+}
 
-    setContext(tags.core, core);
+type InitRef = {
+    core: null | Core;
+    canvas: null | HTMLCanvasElement;
+};
 
-    onMount(() => {
-        core.engine = new Engine(core.canvas, true);
-        core.scene = new Scene(core.engine);
-        core.scene.onReadyObservable.addOnce(core.render);
+export const init = (webgpu: boolean): InitRef => {
+    const ref: InitRef = { core: null, canvas: null };
+
+    setContext(tags.core, ref);
+
+    onMount(async () => {
+        if (ref.canvas) {
+            ref.core = new Core(ref.canvas, webgpu);
+        }
     });
 
-    onDestroy(() => {
-        if (renderFunc) {
-            core.engine.stopRenderLoop(renderFunc);
-            renderFunc = null;
-        }
+    onDestroy(async () => ref.core?.destroy());
 
-        // null guard due to sveltekit ssr
-        core.engine?.dispose();
-    });
-
-    afterUpdate(core.renderCheck);
-    return core;
+    afterUpdate(() => ref.core?.update());
+    return ref;
 };
 
 export const getCore = () => {
-    return getContext(tags.core) as Core;
+    return (getContext(tags.core) as InitRef).core as Core;
 };
 
 export const getCurrentMesh = () => {

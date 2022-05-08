@@ -18,7 +18,7 @@
     export let scaling: [number, number, number] = [1, 1, 1];
     export let color: [number, number, number] = [0, 1, 0];
 
-    let rect: Control = undefined;
+    let rect: undefined | Control = undefined;
 </script>
 
 <Box {id} {position} {rotation} {scaling}>

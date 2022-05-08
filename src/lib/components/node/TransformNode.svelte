@@ -5,10 +5,10 @@
     import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 
     export let id: string;
-    export let position: [number, number, number] = undefined;
-    export let rotation: [number, number, number] = undefined;
-    export let scaling: [number, number, number] = undefined;
-    export let disabled: boolean = undefined;
+    export let position: undefined | [number, number, number] = undefined;
+    export let rotation: undefined | [number, number, number] = undefined;
+    export let scaling: undefined | [number, number, number] = undefined;
+    export let disabled: undefined | boolean = undefined;
 
     const { scene } = getCore();
     const node = new TransformNode(id, scene);

@@ -7,10 +7,10 @@
 
     export let mesh: Mesh;
 
-    export let position: [number, number, number] = undefined;
-    export let rotation: [number, number, number] = undefined;
-    export let scaling: [number, number, number] = undefined;
-    export let disabled: boolean = undefined;
+    export let position: undefined | [number, number, number] = undefined;
+    export let rotation: undefined | [number, number, number] = undefined;
+    export let scaling: undefined | [number, number, number] = undefined;
+    export let disabled: undefined | boolean = undefined;
 
     setCurrentMesh(mesh);
 </script>

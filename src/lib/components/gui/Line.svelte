@@ -8,14 +8,15 @@
     const { test } = getCore();
     const container = getCurrentUIContainer();
 
-    export let connectedControl: Control = undefined;
+    export let connectedControl: undefined | Control = undefined;
 
     const control = new Line();
     control.lineWidth = 4;
     control.color = 'Orange';
     control.y2 = 20;
     control.linkOffsetY = -20;
-    $: control.connectedControl = test(control.connectedControl, connectedControl);
+    // TODO: find better control mapping (relationships between multiple controls)
+    $: control.connectedControl = test(control.connectedControl, connectedControl) as Control;
 </script>
 
 <ControlComponent {container} {control} />

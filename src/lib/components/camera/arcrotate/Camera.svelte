@@ -10,7 +10,7 @@
     export let id: string;
     export let sensibility: [number, number] = [1000, 1000];
     export let alphalimit: [number | null, number | null] = [null, null];
-    export let betalimit: [number | null, number | null] = [null, null];
+    export let betalimit: [number, number] = [0, 0];
     export let radiuslimit: [number | null, number | null] = [null, null];
 
     const camera = new ArcRotateCamera(

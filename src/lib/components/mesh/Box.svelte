@@ -8,10 +8,10 @@
 
     export let id: string;
     export let size: [number, number, number] = [1, 1, 1];
-    export let position: [number, number, number] = undefined;
-    export let rotation: [number, number, number] = undefined;
-    export let scaling: [number, number, number] = undefined;
-    export let disabled: boolean = undefined;
+    export let position: undefined | [number, number, number] = undefined;
+    export let rotation: undefined | [number, number, number] = undefined;
+    export let scaling: undefined | [number, number, number] = undefined;
+    export let disabled: undefined | boolean = undefined;
 
     const box = MeshBuilder.CreateBox(
         id,

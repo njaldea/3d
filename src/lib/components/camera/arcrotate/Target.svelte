@@ -12,9 +12,9 @@
     // Once camera targets a mesh, 3~4 frames are rendered to achieve final result.
     // I think this is due to update in target position does not necessarily update the camera.
 
-    let currentMesh: AbstractMesh = null;
+    let currentMesh: null | AbstractMesh = null;
 
-    function setTarget(mesh: AbstractMesh) {
+    function setTarget(mesh: null | AbstractMesh) {
         if (mesh != currentMesh) {
             if (currentMesh) {
                 currentMesh.onAfterWorldMatrixUpdateObservable.removeCallback(render);

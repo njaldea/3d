@@ -1,12 +1,17 @@
 <script lang="ts">
     import { init } from '$lib/core';
-    const core = init();
+    export let webgpu = false;
+    const ref = init(webgpu);
 </script>
 
-<svelte:window on:resize={core.resize} />
+<svelte:window
+    on:resize={() => {
+        ref.core?.resize();
+    }}
+/>
 
-<canvas bind:this={core.canvas} on:keyup on:keydown />
-{#if core.canvas != null}
+<canvas bind:this={ref.canvas} on:keyup on:keydown />
+{#if ref.canvas != null}
     <slot />
 {/if}
 
