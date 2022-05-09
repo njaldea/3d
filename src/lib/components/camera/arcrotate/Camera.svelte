@@ -20,7 +20,13 @@
 </script>
 
 <script lang="ts">
-    import { getCore, setCurrentCamera, getCurrentCanvas, destructor } from '$lib/core';
+    import {
+        getCore,
+        setCurrentCamera,
+        getCurrentCanvas,
+        withRenderViews,
+        destructor
+    } from '$lib/core';
 
     import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 
@@ -42,7 +48,7 @@
         scene
     );
     camera.setTarget(Vector3.Zero());
-    if (engine.registerView != null) {
+    if (withRenderViews()) {
         engine.registerView(canvas, camera);
     }
 

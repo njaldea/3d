@@ -31,9 +31,9 @@
 <Canvas>
     <FSUI />
     <Camera id="main-cam" {toggle} {target} />
-    <StandardMaterial id="material" useLogarithmicDepth alpha={0.7} {color} />
-
     <slot name="cameras" />
+
+    <StandardMaterial id="material" useLogarithmicDepth alpha={0.7} {color} />
 
     <HemisphericLight id="light" {intensity} {direction} />
 

@@ -12,9 +12,7 @@
     let toggle = true;
 </script>
 
-<div class="views">
-    <Canvas {target} {intensity} {direction} {position} {rotation} {scaling} {color} {toggle} />
-</div>
+<Canvas {target} {intensity} {direction} {position} {rotation} {scaling} {color} {toggle} />
 
 <Control
     bind:target
@@ -26,12 +24,3 @@
     bind:color
     bind:toggle
 />
-
-<style>
-    .views {
-        height: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        outline: 1px black;
-    }
-</style>

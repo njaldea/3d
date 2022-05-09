@@ -5,7 +5,7 @@
 </script>
 
 {#if canvas != null}
-    <CanvasContext {canvas}>
+    <CanvasContext {canvas} views>
         <slot />
     </CanvasContext>
 {/if}
