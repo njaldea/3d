@@ -20,11 +20,12 @@
 </script>
 
 <script lang="ts">
-    import { getCore, setCurrentCamera, destructor } from '$lib/core';
+    import { getCore, setCurrentCamera, getCurrentCanvas, destructor } from '$lib/core';
 
     import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 
-    const { canvas, scene, test, render } = getCore();
+    const { engine, scene, test, render } = getCore();
+    const canvas = getCurrentCanvas();
 
     export let id: string;
     export let sensibility: [number, number] = [1000, 1000];
@@ -41,6 +42,9 @@
         scene
     );
     camera.setTarget(Vector3.Zero());
+    if (engine.registerView != null) {
+        engine.registerView(canvas, camera);
+    }
 
     // add controls via child component
     camera.inputs.attached.keyboard.detachControl();
