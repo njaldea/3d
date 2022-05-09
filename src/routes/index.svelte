@@ -12,7 +12,9 @@
     let toggle = true;
 </script>
 
-<Canvas {target} {intensity} {direction} {position} {rotation} {scaling} {color} {toggle} />
+<Canvas {target} {intensity} {direction} {position} {rotation} {scaling} {color} {toggle}>
+    <slot />
+</Canvas>
 
 <Control
     bind:target

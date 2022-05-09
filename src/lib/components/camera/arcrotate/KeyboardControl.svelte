@@ -8,7 +8,7 @@
     const { scene, renderLoopStart, renderLoopStop } = getCore();
     const camera = getCurrentCamera() as ArcRotateCamera;
 
-    camera.inputs.addKeyboard();
+    camera.inputs.attachInput(camera.inputs.attached.keyboard);
     camera.keysUp = [87];
     camera.keysDown = [83];
     camera.keysLeft = [65];
@@ -31,7 +31,7 @@
 
     destructor(() => {
         scene.onKeyboardObservable.removeCallback(onKeyboardUpdate);
-        camera.inputs.remove(camera.inputs.attached.keyboard);
+        camera.inputs.attached.keyboard.detachControl();
         camera.keysUp = [];
         camera.keysDown = [];
         camera.keysLeft = [];
