@@ -35,17 +35,22 @@
     export let betalimit: [number, number] = [0, 0];
     export let radiuslimit: [number | null, number | null] = [null, null];
 
-    const camera = new ArcRotateCamera(
-        id,
-        Math.PI / 2,
-        Math.PI / 2,
-        10,
-        new Vector3(10, 10, -30),
-        scene
-    );
+    export let alpha = 0;
+    export let beta = 0;
+    export let radius = 10;
+
+    const camera = new ArcRotateCamera(id, alpha, beta, radius, Vector3.Zero(), scene, true);
+
     camera.setTarget(Vector3.Zero());
     if ($babylonjs_view) {
-        engine.registerView(canvas, camera);
+        // only register if not main view (canvas)
+        // necessary when `views` is not imported
+        // TODO: find proper way to handle case for:
+        //  -  with/without views
+        //  -  active camera in engine
+        if (canvas !== engine.getInputElement()) {
+            engine.registerView(canvas, camera);
+        }
     }
 
     // add controls via child component
@@ -53,6 +58,9 @@
     camera.inputs.attached.pointers.detachControl();
     camera.inputs.attached.mousewheel.detachControl();
 
+    $: camera.alpha = test(camera.alpha, alpha);
+    $: camera.beta = test(camera.beta, beta);
+    $: camera.radius = test(camera.radius, radius);
     $: camera.lowerAlphaLimit = test(camera.lowerAlphaLimit, alphalimit[0]);
     $: camera.upperAlphaLimit = test(camera.upperAlphaLimit, alphalimit[1]);
     $: camera.lowerBetaLimit = test(camera.lowerBetaLimit, betalimit[0]);

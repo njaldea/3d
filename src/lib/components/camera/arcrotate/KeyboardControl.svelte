@@ -16,16 +16,34 @@
     camera.keysLeft = [65];
     camera.keysRight = [68];
 
+    let first = true;
+    function loop(flag: boolean) {
+        if (first) {
+            first = false;
+            return;
+        }
+        if (flag) {
+            renderLoopStart();
+        } else {
+            renderLoopStop();
+        }
+    }
+
+    let pressedKeys = new Set();
+    $: flag = pressedKeys.size > 0;
+    $: loop(flag);
+
     function onKeyboardUpdate(info: KeyboardInfo) {
         if ('wasdWASD'.includes(info.event.key)) {
             switch (info.type) {
                 case KeyboardEventTypes.KEYDOWN:
-                    renderLoopStart();
+                    pressedKeys.add(info.event.key.toLowerCase());
                     break;
                 case KeyboardEventTypes.KEYUP:
-                    renderLoopStop();
+                    pressedKeys.delete(info.event.key.toLowerCase());
                     break;
             }
+            pressedKeys = pressedKeys;
         }
     }
 

@@ -14,7 +14,7 @@
 
     import FSUI from '@nil-/3d/components/gui/FullscreenUI.svelte';
     import Box from './_Box.svelte';
-    import type { Core } from '@nil-/3d/core';
+    import type { Core } from '@nil-/3d/core/types';
 
     export let target: string;
     export let intensity: number;
@@ -33,7 +33,7 @@
 
 <Canvas bind:core>
     <FSUI />
-    <Camera id="main-cam" {toggle} {target} />
+    <Camera id="main-cam" {toggle} {target} alpha={Math.PI / 3} beta={Math.PI / 3} radius={30} />
 
     <StandardMaterial id="material" useLogarithmicDepth alpha={0.7} {color} />
 

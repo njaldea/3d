@@ -4,13 +4,21 @@ import { Scene } from '@babylonjs/core/scene.js';
 
 import type { ContainerProxy } from '$lib/core/types/ContainerProxy';
 
+import { writable } from 'svelte/store';
+import type { Writable } from 'svelte/store';
+
 export class Core {
     public canvas: HTMLCanvasElement;
     public engine: Engine;
     public scene: Scene;
     public fsui: null | ContainerProxy;
 
+    public active_canvas: Writable<HTMLCanvasElement | null>;
+    private unsubs: (() => void)[];
+
     // update only when something has changed
+    // called in afterUpdate hook of svelte
+    // and in core.render()
     public update: () => void;
 
     // force render
@@ -28,20 +36,26 @@ export class Core {
 
     private shouldRender: boolean;
     private loopEnabled: number;
+    private rendering: boolean;
 
     public destroy() {
         this.loopEnabled = 0;
+        for (const unsub of this.unsubs) {
+            unsub();
+        }
         this.engine.dispose();
     }
 
     constructor(canvas: HTMLCanvasElement, webgpu: boolean) {
         this.shouldRender = true;
         this.loopEnabled = 0;
+        this.rendering = false;
 
         this.renderFunc = () => {
             console.log('render frame');
             this.scene.render();
             if (this.loopEnabled === 0 && !this.shouldRender) {
+                this.rendering = false;
                 this.engine.stopRenderLoop(this.renderFunc);
             }
             this.shouldRender = false;
@@ -55,7 +69,10 @@ export class Core {
         this.update = () => {
             if (this.shouldRender) {
                 this.shouldRender = false;
-                this.engine.runRenderLoop(this.renderFunc);
+                if (!this.rendering) {
+                    this.rendering = true;
+                    this.engine.runRenderLoop(this.renderFunc);
+                }
             }
         };
 
@@ -89,5 +106,17 @@ export class Core {
         this.scene = new Scene(this.engine);
         this.scene.onReadyObservable.addOnce(this.render);
         this.fsui = null;
+
+        this.active_canvas = writable(null);
+        this.unsubs = [
+            this.active_canvas.subscribe((c) => {
+                if (this.engine.getInputElement() !== c) {
+                    this.scene.detachControl();
+                    this.engine.inputElement = c;
+                    this.scene.attachControl();
+                }
+            })
+        ];
+        this.active_canvas.set(canvas);
     }
 }

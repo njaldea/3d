@@ -14,6 +14,7 @@
     let toggle = true;
 
     let core1: Core;
+    let core2: Core;
 </script>
 
 <div class="views">
@@ -29,8 +30,19 @@
         {toggle}
     />
     <CanvasView id={'cam-2'} core={core1} alpha={0.1} beta={0.1} />
-    <CanvasView id={'cam-3'} core={core1} alpha={0.2} beta={0.2} />
-    <CanvasView id={'cam-4'} core={core1} alpha={0.3} beta={0.3} />
+
+    <Canvas
+        bind:core={core2}
+        {target}
+        {intensity}
+        {direction}
+        {position}
+        {rotation}
+        {scaling}
+        {color}
+        {toggle}
+    />
+    <CanvasView id={'cam2-2'} core={core2} alpha={0.3} beta={0.3} />
 </div>
 
 <Control

@@ -14,12 +14,13 @@
 
 <svelte:window on:resize={() => core?.resize()} />
 
-<canvas bind:this={canvas} />
-{#if canvas != null && core != null}
-    <Context {core} {canvas}>
-        <slot />
-    </Context>
-{/if}
+<canvas bind:this={canvas} on:click={() => core?.active_canvas.set(canvas)}>
+    {#if canvas != null && core != null}
+        <Context {core} {canvas}>
+            <slot />
+        </Context>
+    {/if}
+</canvas>
 
 <style>
     canvas {
