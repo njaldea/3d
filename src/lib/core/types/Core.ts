@@ -2,7 +2,7 @@ import { WebGPUEngine } from '@babylonjs/core/Engines/webgpuEngine.js';
 import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 
-import type { ContainerProxy } from '$lib/core/ContainerProxy';
+import type { ContainerProxy } from '$lib/core/types/ContainerProxy';
 
 export class Core {
     public canvas: HTMLCanvasElement;

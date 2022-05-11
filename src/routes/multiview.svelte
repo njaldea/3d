@@ -2,7 +2,7 @@
     import Control from './_Control.svelte';
     import Canvas from './_Canvas.svelte';
     import CanvasView from './_CanvasView.svelte';
-    import type { Core } from '@nil-/3d/core/Core';
+    import type { Core } from '@nil-/3d/core';
 
     let target = '';
     let intensity = 0.3;

@@ -5,8 +5,8 @@
 
 <script lang="ts">
     import Context from '$lib/components/Context.svelte';
-    import type { Core } from '$lib/core/Core';
     import { view } from '$lib/core/state/treeshake';
+    import type { Core } from '$lib/core/types/Core';
 
     export let core: Core;
     let canvas: HTMLCanvasElement;

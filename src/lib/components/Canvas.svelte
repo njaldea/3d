@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Core } from '$lib/core/Core';
+    import { Core } from '$lib/core/types/Core';
     import Context from '$lib/components/Context.svelte';
 
     import { onMount, onDestroy } from 'svelte';

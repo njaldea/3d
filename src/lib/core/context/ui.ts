@@ -2,8 +2,8 @@ import { getContext, setContext } from 'svelte';
 import { tags } from '$lib/core/tags';
 
 import { getCore } from '$lib/core/context/core';
-import { ContainerProxy } from '$lib/core/ContainerProxy';
-import type { IContainer } from '$lib/core/ContainerProxy';
+import { ContainerProxy } from '$lib/core/types/ContainerProxy';
+import type { IContainer } from '$lib/core/types/ContainerProxy';
 
 export const getCurrentUIContainer = () => {
     const container = getContext(tags.ui_container) as IContainer;

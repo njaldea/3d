@@ -14,7 +14,7 @@
 
     import FSUI from '@nil-/3d/components/gui/FullscreenUI.svelte';
     import Box from './_Box.svelte';
-    import type { Core } from '@nil-/3d/core/Core';
+    import type { Core } from '@nil-/3d/core';
 
     export let target: string;
     export let intensity: number;

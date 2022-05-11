@@ -1,4 +1,4 @@
-import type { Core } from '$lib/core/Core';
+import type { Core } from '$lib/core/types/Core';
 import { tags } from '$lib/core/tags';
 import { getContext, setContext } from 'svelte';
 

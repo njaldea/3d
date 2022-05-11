@@ -1,6 +1,6 @@
 <script lang="ts">
     import { setCore, setCurrentCanvas } from '$lib/core';
-    import type { Core } from '$lib/core/Core';
+    import type { Core } from '$lib/core/types/Core';
     import { afterUpdate } from 'svelte';
 
     export let core: Core;
