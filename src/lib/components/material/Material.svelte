@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { destructor, getCore } from '$lib/core';
+    import { destructor } from '$lib/core/lifecycle/destructor';
+    import { getCore } from '$lib/core/context/core';
 
     import type { Material } from '@babylonjs/core/Materials/material';
     import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh';

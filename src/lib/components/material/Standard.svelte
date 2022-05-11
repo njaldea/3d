@@ -1,6 +1,8 @@
 <script lang="ts">
-    import { getCore, getCurrentMesh } from '$lib/core';
     import Material from '$lib/components/material/Material.svelte';
+
+    import { getCurrentMesh } from '$lib/core/context/mesh';
+    import { getCore } from '$lib/core/context/core';
 
     import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
 

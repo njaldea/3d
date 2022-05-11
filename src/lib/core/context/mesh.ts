@@ -1,11 +1,7 @@
 import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
-import { getContext, setContext } from 'svelte';
-import { tags } from '$lib/core/tags';
+import { tags } from '$lib/core/state/tags';
+import { create } from './_generator';
 
-export const getCurrentMesh = () => {
-    return getContext(tags.mesh) as AbstractMesh;
-};
-
-export const setCurrentMesh = (mesh: AbstractMesh) => {
-    setContext(tags.mesh, mesh);
-};
+const { get, set } = create<AbstractMesh>(tags.mesh);
+export const setCurrentMesh = set;
+export const getCurrentMesh = get;

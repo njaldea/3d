@@ -5,7 +5,8 @@
 </script>
 
 <script lang="ts">
-    import { getCurrentMesh, destructor } from '$lib/core';
+    import { getCurrentMesh } from '$lib/core/context/mesh';
+    import { destructor } from '$lib/core/lifecycle/destructor';
     import { ActionManager } from '@babylonjs/core/Actions/actionManager.js';
     import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions.js';
 

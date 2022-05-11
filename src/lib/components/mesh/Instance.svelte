@@ -1,7 +1,9 @@
 <script lang="ts">
-    import { getCurrentMesh, setCurrentMesh } from '$lib/core';
-    import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
     import Node from '$lib/components/node/Node.svelte';
+
+    import { getCurrentMesh, setCurrentMesh } from '$lib/core/context/mesh';
+
+    import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 
     const mesh = getCurrentMesh() as Mesh;
 

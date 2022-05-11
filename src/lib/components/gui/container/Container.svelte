@@ -1,8 +1,10 @@
 <script lang="ts">
     import Control from '$lib/components/gui/Control.svelte';
-    import { getCurrentUIContainer } from '$lib/core';
-    import { setCurrentUIContainer } from '$lib/core';
-    import { getCore, destructor } from '$lib/core';
+
+    import { destructor } from '$lib/core/lifecycle/destructor';
+    import { getCurrentUIContainer, setCurrentUIContainer } from '$lib/core/context/ui';
+    import { getCore } from '$lib/core/context/core';
+
     import type { Container } from '@babylonjs/gui/2D/controls/container.js';
 
     export let container: Container;

@@ -1,10 +1,6 @@
-import { getContext, setContext } from 'svelte';
-import { tags } from '$lib/core/tags';
+import { tags } from '$lib/core/state/tags';
+import { create } from './_generator';
 
-export const getCurrentCanvas = () => {
-    return getContext(tags.canvas) as HTMLCanvasElement;
-};
-
-export const setCurrentCanvas = (canvas: HTMLCanvasElement) => {
-    return setContext(tags.canvas, canvas);
-};
+const { get, set } = create<HTMLCanvasElement>(tags.camera);
+export const setCurrentCanvas = set;
+export const getCurrentCanvas = get;

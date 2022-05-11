@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { getCore } from '$lib/core';
     import Node from '$lib/components/node/Node.svelte';
+
+    import { getCore } from '$lib/core/context/core';
 
     import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 

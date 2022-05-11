@@ -1,5 +1,7 @@
 <script lang="ts">
-    import { getCore, destructor } from '$lib/core';
+    import { getCore } from '$lib/core/context/core';
+    import { destructor } from '$lib/core/lifecycle';
+
     import type { IContainer } from '$lib/core/types/ContainerProxy';
     import type { Control } from '@babylonjs/gui/2D/controls/control.js';
 

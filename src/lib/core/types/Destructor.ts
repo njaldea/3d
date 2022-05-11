@@ -1,6 +1,3 @@
-import { getContext, onDestroy, setContext } from 'svelte';
-import { tags } from '$lib/core/tags';
-
 /**
  * To emulate c++ RAII where children are destroyed first before the parent.
  *
@@ -12,7 +9,7 @@ import { tags } from '$lib/core/tags';
  * of constructor call (script tag)
  * To do this, the destructor interface masks it to reorder the destroy calls.
  */
-class Destructor {
+export class Destructor {
     private parent: null | Destructor;
     private children: Destructor[];
     private destroyed: boolean;
@@ -54,11 +51,3 @@ class Destructor {
         this.parent?.remove(this);
     }
 }
-
-export const destructor = (cb: () => void) => {
-    const current = new Destructor(cb);
-    setContext(tags.destructor, current);
-    onDestroy(() => current.call());
-
-    (getContext(tags.destructor) as Destructor)?.add(current);
-};

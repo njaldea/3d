@@ -19,7 +19,10 @@
 </script>
 
 <script lang="ts">
-    import { getCore, setCurrentCamera, getCurrentCanvas, destructor } from '$lib/core';
+    import { destructor } from '$lib/core/lifecycle/destructor';
+    import { setCurrentCamera } from '$lib/core/context/camera';
+    import { getCurrentCanvas } from '$lib/core/context/canvas';
+    import { getCore } from '$lib/core/context/core';
 
     import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 

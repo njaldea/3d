@@ -1,8 +1,10 @@
 <script lang="ts">
     import ControlComponent from '$lib/components/gui/Control.svelte';
-    import { getCurrentUIContainer, getCore } from '$lib/core';
-    import type { Control } from '@babylonjs/gui/2D/controls/control.js';
 
+    import { getCurrentUIContainer } from '$lib/core/context/ui';
+    import { getCore } from '$lib/core/context/core';
+
+    import type { Control } from '@babylonjs/gui/2D/controls/control.js';
     import { Line } from '@babylonjs/gui/2D/controls/line.js';
 
     const { test } = getCore();

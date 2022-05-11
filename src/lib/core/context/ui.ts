@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import { tags } from '$lib/core/tags';
+import { tags } from '$lib/core/state/tags';
 
 import { getCore } from '$lib/core/context/core';
 import { ContainerProxy } from '$lib/core/types/ContainerProxy';

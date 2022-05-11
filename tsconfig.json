@@ -14,10 +14,10 @@
         "strict": true,
         "target": "es2020",
         "paths": {
-            "@nil-/3d": ["src/lib"],
-            "@nil-/3d/*": ["src/lib/*"],
             "$lib": ["src/lib"],
-            "$lib/*": ["src/lib/*"]
+            "$lib/*": ["src/lib/*"],
+            "@nil-/3d": ["src/lib"],
+            "@nil-/3d/*": ["src/lib/*"]
         }
     }
 }

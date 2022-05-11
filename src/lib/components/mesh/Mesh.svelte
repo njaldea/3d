@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { setCurrentMesh } from '$lib/core';
+    import { setCurrentMesh } from '$lib/core/context/mesh';
 
     import Node from '$lib/components/node/Node.svelte';
 

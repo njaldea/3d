@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { getCore, destructor } from '$lib/core';
+    import { destructor } from '$lib/core/lifecycle/destructor';
+    import { getCore } from '$lib/core/context/core';
 
     const { scene, renderLoopStart, renderLoopStop } = getCore();
 

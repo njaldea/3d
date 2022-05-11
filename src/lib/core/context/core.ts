@@ -1,11 +1,7 @@
 import type { Core } from '$lib/core/types/Core';
-import { tags } from '$lib/core/tags';
-import { getContext, setContext } from 'svelte';
+import { tags } from '$lib/core/state/tags';
+import { create } from './_generator';
 
-export const getCore = () => {
-    return getContext(tags.core) as Core;
-};
-
-export const setCore = (core: Core) => {
-    setContext(tags.core, core);
-};
+const { get, set } = create<Core>(tags.core);
+export const setCore = set;
+export const getCore = get;

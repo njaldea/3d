@@ -1,5 +1,7 @@
 <script lang="ts">
-    import { getCore, getNode, setNode, destructor } from '$lib/core';
+    import { destructor } from '$lib/core/lifecycle/destructor';
+    import { getNode, setNode } from '$lib/core/context/node';
+    import { getCore } from '$lib/core/context/core';
 
     import type { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 

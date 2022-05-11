@@ -1,6 +1,7 @@
 <script lang="ts">
-    import MeshComponent from './Mesh.svelte';
-    import { getCore } from '$lib/core';
+    import MeshComponent from '$lib/components/mesh/Mesh.svelte';
+
+    import { getCore } from '$lib/core/context/core';
 
     import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 

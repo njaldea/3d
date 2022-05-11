@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { getCore, destructor } from '$lib/core';
+    import { destructor } from '$lib/core/lifecycle/destructor';
+    import { getCore } from '$lib/core/context/core';
 
     import { HemisphericLight } from '@babylonjs/core/Lights/hemisphericLight.js';
     import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
