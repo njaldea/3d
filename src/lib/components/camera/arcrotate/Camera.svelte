@@ -1,32 +1,25 @@
 <script lang="ts" context="module">
     import { tick } from 'svelte';
     import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
+    import { view as babylonjs_view } from '$lib/core/state/treeshake';
+    import { ray as babylonjs_ray } from '$lib/core/state/treeshake';
+    import { get } from 'svelte/store';
 
     export function updateCamera(camera: ArcRotateCamera) {
         return async () => {
             // need to defer update in next frame to guarantee retrigger
             // after scene is renderered
             await tick();
-
-            // calling getViewMatrix is necessary if '@babylonjs/core/Culling/ray.js' is not imported
-            // anywhere in the project. in @nil-/3d, it is imported by Hover.svelte since ray casting
-            // is necessary for mouse hover to work.
-            // for now, let's assume that Hover.svelte is possible to not be imported by the user thus,
-            // we pay for an extra call to getViewMatrix.
-            camera.getViewMatrix();
+            if (get(babylonjs_ray)) {
+                camera.getViewMatrix();
+            }
             camera.update();
         };
     }
 </script>
 
 <script lang="ts">
-    import {
-        getCore,
-        setCurrentCamera,
-        getCurrentCanvas,
-        withRenderViews,
-        destructor
-    } from '$lib/core';
+    import { getCore, setCurrentCamera, getCurrentCanvas, destructor } from '$lib/core';
 
     import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 
@@ -48,7 +41,7 @@
         scene
     );
     camera.setTarget(Vector3.Zero());
-    if (withRenderViews()) {
+    if ($babylonjs_view) {
         engine.registerView(canvas, camera);
     }
 

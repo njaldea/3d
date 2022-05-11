@@ -1,18 +1,16 @@
-<script lang="ts">
-    import { Core } from '$lib/core/Core';
-    import Context from '$lib/components/Context.svelte';
-
-    import { onMount, onDestroy } from 'svelte';
-    export let webgpu = false;
-    export let core: null | Core = null;
-
-    let canvas: HTMLCanvasElement;
-
-    onMount(() => (core = new Core(canvas, webgpu)));
-    onDestroy(() => core?.destroy());
+<script lang="ts" context="module">
+    import '@babylonjs/core/Engines/Extensions/engine.views.js';
+    view.set(true);
 </script>
 
-<svelte:window on:resize={() => core?.resize()} />
+<script lang="ts">
+    import Context from '$lib/components/Context.svelte';
+    import type { Core } from '$lib/core/Core';
+    import { view } from '$lib/core/state/treeshake';
+
+    export let core: Core;
+    let canvas: HTMLCanvasElement;
+</script>
 
 <canvas bind:this={canvas} />
 {#if canvas != null && core != null}

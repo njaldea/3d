@@ -8,11 +8,3 @@ export const getCurrentCanvas = () => {
 export const setCurrentCanvas = (canvas: HTMLCanvasElement) => {
     return setContext(tags.canvas, canvas);
 };
-
-export const withRenderViews = () => {
-    return getContext(tags.canvas_views) === true;
-};
-
-export const setRenderViews = () => {
-    return setContext(tags.canvas_views, true);
-};

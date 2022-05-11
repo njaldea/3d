@@ -1,8 +1,8 @@
 <script lang="ts">
     import Control from './_Control.svelte';
     import Canvas from './_Canvas.svelte';
-    import Camera from './_ArcRotateCamera.svelte';
-    import CanvasRef from '@nil-/3d/components/CanvasRef.svelte';
+    import CanvasView from './_CanvasView.svelte';
+    import type { Core } from '@nil-/3d/core/Core';
 
     let target = '';
     let intensity = 0.3;
@@ -13,18 +13,36 @@
     let color: [number, number, number] = [255, 0, 0];
     let toggle = true;
 
-    let canvas: HTMLCanvasElement;
+    let core1: Core;
+    let core2: Core;
 </script>
 
 <div class="views">
-    <Canvas {target} {intensity} {direction} {position} {rotation} {scaling} {color} {toggle}>
-        <svelte:fragment slot="cameras">
-            <CanvasRef {canvas}>
-                <Camera id="camera2" {toggle} {target} />
-            </CanvasRef>
-        </svelte:fragment>
-    </Canvas>
-    <canvas bind:this={canvas} />
+    <Canvas
+        bind:core={core1}
+        {target}
+        {intensity}
+        {direction}
+        {position}
+        {rotation}
+        {scaling}
+        {color}
+        {toggle}
+    />
+    <CanvasView core={core1} />
+
+    <Canvas
+        bind:core={core2}
+        {target}
+        {intensity}
+        {direction}
+        {position}
+        {rotation}
+        {scaling}
+        {color}
+        {toggle}
+    />
+    <CanvasView core={core2} />
 </div>
 
 <Control
