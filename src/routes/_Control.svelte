@@ -48,7 +48,7 @@
         display: flex;
         flex-direction: column;
         top: 0;
-        left: 25px;
+        left: 0;
         margin-top: 10px;
         margin-left: 10px;
         background-color: rgb(179, 11, 11);

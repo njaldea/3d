@@ -1,4 +1,6 @@
-<slot />
+<div>
+    <slot />
+</div>
 
 <nav>
     <ul>
@@ -10,6 +12,11 @@
 </nav>
 
 <style>
+    div {
+        position: relative;
+        height: 100%;
+        margin-left: 25px;
+    }
     nav {
         position: absolute;
         display: block;
