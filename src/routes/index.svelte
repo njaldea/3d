@@ -12,7 +12,7 @@
     let toggle = true;
 </script>
 
-<Canvas {target} {intensity} {direction} {position} {rotation} {scaling} {color} {toggle}>
+<Canvas id="main" {target} {intensity} {direction} {position} {rotation} {scaling} {color} {toggle}>
     <slot />
 </Canvas>
 

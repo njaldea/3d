@@ -1,32 +1,14 @@
-<script lang="ts" context="module">
-    import { tick } from 'svelte';
-    import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
-    import { view as babylonjs_view } from '$lib/core/state/treeshake';
-    import { ray as babylonjs_ray } from '$lib/core/state/treeshake';
-    import { get } from 'svelte/store';
-
-    export function updateCamera(camera: ArcRotateCamera) {
-        return async () => {
-            // need to defer update in next frame to guarantee retrigger
-            // after scene is renderered
-            await tick();
-            if (get(babylonjs_ray)) {
-                camera.getViewMatrix();
-            }
-            camera.update();
-        };
-    }
-</script>
-
 <script lang="ts">
     import { destructor } from '$lib/core/lifecycle/destructor';
+    import { makeUpdate } from '$lib/core/context/camera';
     import { setCurrentCamera } from '$lib/core/context/camera';
     import { getCurrentCanvas } from '$lib/core/context/canvas';
     import { getCore } from '$lib/core/context/core';
 
+    import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
     import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 
-    const { engine, scene, test, render } = getCore();
+    const { scene, test, render } = getCore();
     const canvas = getCurrentCanvas();
 
     export let id: string;
@@ -39,19 +21,9 @@
     export let beta = 0;
     export let radius = 10;
 
-    const camera = new ArcRotateCamera(id, alpha, beta, radius, Vector3.Zero(), scene, true);
-
+    const camera = new ArcRotateCamera(id, alpha, beta, radius, Vector3.Zero(), scene);
     camera.setTarget(Vector3.Zero());
-    if ($babylonjs_view) {
-        // only register if not main view (canvas)
-        // necessary when `views` is not imported
-        // TODO: find proper way to handle case for:
-        //  -  with/without views
-        //  -  active camera in engine
-        if (canvas !== engine.getInputElement()) {
-            engine.registerView(canvas, camera);
-        }
-    }
+    camera.attachControl(canvas, true, false);
 
     // add controls via child component
     camera.inputs.attached.keyboard.detachControl();
@@ -73,13 +45,11 @@
     $: camera.angularSensibilityY = test(camera.angularSensibilityY, sensibility[1]);
     camera.mapPanning = true;
 
-    const update = updateCamera(camera);
+    const update = makeUpdate(camera);
 
     scene.onAfterRenderObservable.add(update);
     camera.onViewMatrixChangedObservable.add(render);
     camera.onDisposeObservable.add(render);
-
-    camera.attachControl(canvas, true, false);
 
     destructor(() => {
         camera.dispose();

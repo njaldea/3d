@@ -21,13 +21,25 @@
     let value = 5;
     let box1: Mesh;
 
-    const render = () => scene && requestAnimationFrame(() => scene.render());
+    let running = false;
+    const func = () => {
+        running = false;
+        engine.stopRenderLoop(func);
+        scene.render();
+    };
+    const render = () => {
+        if (scene && engine) {
+            if (!running) {
+                running = true;
+                engine.runRenderLoop(func);
+            }
+        }
+    };
 
     onMount(() => {
         engine = new Engine(canvas, true);
         scene = new Scene(engine);
         scene.clearColor = new Color4(0.9, 0.3, 0.3, 1);
-
         scene.onReadyObservable.add(render);
 
         const camera = new ArcRotateCamera(
@@ -39,7 +51,9 @@
             scene
         );
         camera.setTarget(Vector3.Zero());
+        engine.registerView(canvas, camera);
         camera.attachControl(canvas, true, false);
+
         camera.onViewMatrixChangedObservable.add(() => {
             render();
             camera.update();

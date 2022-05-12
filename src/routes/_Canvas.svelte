@@ -14,8 +14,8 @@
 
     import FSUI from '@nil-/3d/components/gui/FullscreenUI.svelte';
     import Box from './_Box.svelte';
-    import type { Core } from '@nil-/3d/core/types';
 
+    export let id: string;
     export let target: string;
     export let intensity: number;
     export let direction: [number, number, number];
@@ -27,13 +27,18 @@
 
     $: inversepos = [-position[0], -position[1], -position[2]] as [number, number, number];
     $: inverserot = [-rotation[0], -rotation[1], -rotation[2]] as [number, number, number];
-
-    export let core: undefined | Core = undefined;
 </script>
 
-<Canvas bind:core>
+<Canvas>
+    <Camera
+        id={`main-cam-${id}`}
+        {toggle}
+        {target}
+        alpha={Math.PI / 3}
+        beta={Math.PI / 3}
+        radius={30}
+    />
     <FSUI />
-    <Camera id="main-cam" {toggle} {target} alpha={Math.PI / 3} beta={Math.PI / 3} radius={30} />
 
     <StandardMaterial id="material" useLogarithmicDepth alpha={0.7} {color} />
 

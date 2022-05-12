@@ -4,8 +4,7 @@
 
     import { onMount, onDestroy } from 'svelte';
     export let webgpu = false;
-    export let core: null | Core = null;
-
+    let core: null | Core = null;
     let canvas: HTMLCanvasElement;
 
     onMount(() => (core = new Core(canvas, webgpu)));
@@ -14,7 +13,7 @@
 
 <svelte:window on:resize={() => core?.resize()} />
 
-<canvas bind:this={canvas} on:click={() => core?.active_canvas.set(canvas)}>
+<canvas bind:this={canvas}>
     {#if canvas != null && core != null}
         <Context {core} {canvas}>
             <slot />

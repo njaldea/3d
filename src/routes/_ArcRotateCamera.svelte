@@ -1,6 +1,5 @@
 <script lang="ts">
     import Camera from '@nil-/3d/components/camera/arcrotate/Camera.svelte';
-    import CurrentCanvas from '@nil-/3d/components/camera/CurrentCanvas.svelte';
     import KeyboardControl from '@nil-/3d/components/camera/arcrotate/KeyboardControl.svelte';
     import PointerControl from '@nil-/3d/components/camera/arcrotate/PointerControl.svelte';
     import Target from '@nil-/3d/components/camera/arcrotate/Target.svelte';
@@ -23,10 +22,8 @@
     {radius}
 >
     {#if toggle}
-        <CurrentCanvas>
-            <Target {target} />
-            <KeyboardControl />
-            <PointerControl />
-        </CurrentCanvas>
+        <Target {target} />
+        <KeyboardControl />
+        <PointerControl />
     {/if}
 </Camera>
