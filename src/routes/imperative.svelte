@@ -51,7 +51,7 @@
             scene
         );
         camera.setTarget(Vector3.Zero());
-        engine.registerView(canvas, camera);
+        // engine.registerView(canvas, camera);
         camera.attachControl(canvas, true, false);
 
         camera.onViewMatrixChangedObservable.add(() => {

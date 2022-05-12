@@ -1,4 +1,5 @@
 NOTES:
+
 ```
  - currently supports only 1 scene, 1 camera per engine
     - switching of active camera to be supported later
@@ -19,6 +20,7 @@ NOTES:
 ```
 
 TODO:
+
 ```
  -  check plugin support like integration with mapbox
  -  better camera support (include other available cameras)
