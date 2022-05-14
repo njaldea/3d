@@ -24,7 +24,6 @@
         if (l != r) {
             layer.removeMesh(mesh);
             layer.addMesh(mesh, highlight);
-            render();
         }
         return r;
     }
@@ -45,5 +44,4 @@
         layer.onBeforeBlurObservable.removeCallback(render);
         layer.onDisposeObservable.removeCallback(render);
     });
-    render();
 </script>

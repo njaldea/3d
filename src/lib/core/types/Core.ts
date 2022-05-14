@@ -10,11 +10,6 @@ export class Core {
     public scene: Scene;
     public fsui: null | ContainerProxy;
 
-    // update only when something has changed
-    // called in afterUpdate hook of svelte
-    // and in core.render()
-    public update: () => void;
-
     // force render
     public render: () => void;
     public renderLoopStart: () => void;
@@ -23,10 +18,6 @@ export class Core {
     private renderFunc: () => void;
 
     public resize: () => void;
-    public test: <Primitive /* extends string | number | boolean | object */>(
-        curval: Primitive,
-        newval: Primitive
-    ) => Primitive;
 
     private shouldRender: boolean;
     private loopEnabled: number;
@@ -56,17 +47,9 @@ export class Core {
         };
 
         this.render = () => {
-            this.shouldRender = true;
-            this.update();
-        };
-
-        this.update = () => {
-            if (this.shouldRender) {
-                this.shouldRender = false;
-                if (!this.rendering) {
-                    this.rendering = true;
-                    requestAnimationFrame(this.renderFunc);
-                }
+            if (!this.rendering) {
+                this.rendering = true;
+                requestAnimationFrame(this.renderFunc);
             }
         };
 
@@ -82,13 +65,6 @@ export class Core {
         this.resize = () => {
             this.engine.resize();
             this.render();
-        };
-
-        this.test = (curval, newval) => {
-            if (curval !== newval) {
-                this.shouldRender = true;
-            }
-            return newval;
         };
 
         this.canvas = canvas;

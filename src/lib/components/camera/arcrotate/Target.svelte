@@ -6,7 +6,7 @@
     import type { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
     import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
 
-    const { render, scene } = getCore();
+    const { scene } = getCore();
     const camera = getCurrentCamera() as ArcRotateCamera;
 
     export let target = '';
@@ -18,14 +18,9 @@
 
     function setTarget(mesh: null | AbstractMesh) {
         if (mesh != currentMesh) {
-            if (currentMesh) {
-                currentMesh.onAfterWorldMatrixUpdateObservable.removeCallback(render);
-            }
             if (mesh) {
-                mesh.onAfterWorldMatrixUpdateObservable.add(render);
                 camera.setTarget(mesh);
                 camera.update();
-                render();
             } else if (currentMesh) {
                 camera.setTarget(currentMesh.position.clone());
             }
@@ -35,7 +30,6 @@
 
     function unsetTarget() {
         if (currentMesh) {
-            currentMesh.onAfterWorldMatrixUpdateObservable.removeCallback(render);
             camera.setTarget(currentMesh.position.clone());
             currentMesh = null;
         }

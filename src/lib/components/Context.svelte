@@ -12,8 +12,8 @@
     setCurrentCanvas(canvas);
     setCore(core);
 
-    destructor(() => core?.destroy());
-    afterUpdate(() => core.update());
+    destructor(() => core.destroy());
+    afterUpdate(() => core.render());
 </script>
 
 <slot />

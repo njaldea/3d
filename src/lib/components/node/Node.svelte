@@ -10,21 +10,21 @@
     export let scaling: [number, number, number] = [1, 1, 1];
     export let disabled = false;
 
-    const { render, test } = getCore();
+    const { render } = getCore();
     export let node: TransformNode;
     node.onDisposeObservable.add(render);
 
-    $: node.position.x = test(node.position.x, position[0]);
-    $: node.position.y = test(node.position.y, position[1]);
-    $: node.position.z = test(node.position.z, position[2]);
+    $: node.position.x = position[0];
+    $: node.position.y = position[1];
+    $: node.position.z = position[2];
 
-    $: node.rotation.x = test(node.rotation.x, rotation[0]);
-    $: node.rotation.y = test(node.rotation.y, rotation[1]);
-    $: node.rotation.z = test(node.rotation.z, rotation[2]);
+    $: node.rotation.x = rotation[0];
+    $: node.rotation.y = rotation[1];
+    $: node.rotation.z = rotation[2];
 
-    $: node.scaling.x = test(node.scaling.x, scaling[0]);
-    $: node.scaling.y = test(node.scaling.y, scaling[1]);
-    $: node.scaling.z = test(node.scaling.z, scaling[2]);
+    $: node.scaling.x = scaling[0];
+    $: node.scaling.y = scaling[1];
+    $: node.scaling.z = scaling[2];
 
     $: node.setEnabled(!disabled);
 

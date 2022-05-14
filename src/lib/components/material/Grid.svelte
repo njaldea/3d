@@ -6,7 +6,7 @@
 
     import { GridMaterial } from '@babylonjs/materials/grid/gridMaterial.js';
 
-    const { scene, test } = getCore();
+    const { scene } = getCore();
     const mesh = getCurrentMesh();
 
     export let id: string;
@@ -20,14 +20,14 @@
     material.minorUnitVisibility = 0.1;
     material.backFaceCulling = false;
 
-    $: material.opacity = test(material.opacity, opacity);
-    $: material.gridRatio = test(material.gridRatio, gridRatio);
-    $: material.mainColor.r = test(material.mainColor.r, mainColor[0]);
-    $: material.mainColor.g = test(material.mainColor.g, mainColor[1]);
-    $: material.mainColor.b = test(material.mainColor.b, mainColor[2]);
-    $: material.lineColor.r = test(material.lineColor.r, lineColor[0]);
-    $: material.lineColor.g = test(material.lineColor.g, lineColor[1]);
-    $: material.lineColor.b = test(material.lineColor.b, lineColor[2]);
+    $: material.opacity = opacity;
+    $: material.gridRatio = gridRatio;
+    $: material.mainColor.r = mainColor[0];
+    $: material.mainColor.g = mainColor[1];
+    $: material.mainColor.b = mainColor[2];
+    $: material.lineColor.r = lineColor[0];
+    $: material.lineColor.g = lineColor[1];
+    $: material.lineColor.b = lineColor[2];
 </script>
 
 {#if mesh != null}

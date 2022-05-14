@@ -8,7 +8,7 @@
     import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
     import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 
-    const { scene, test, render } = getCore();
+    const { scene, render } = getCore();
     const canvas = getCurrentCanvas();
 
     export let id: string;
@@ -30,19 +30,19 @@
     camera.inputs.attached.pointers.detachControl();
     camera.inputs.attached.mousewheel.detachControl();
 
-    $: camera.alpha = test(camera.alpha, alpha);
-    $: camera.beta = test(camera.beta, beta);
-    $: camera.radius = test(camera.radius, radius);
-    $: camera.lowerAlphaLimit = test(camera.lowerAlphaLimit, alphalimit[0]);
-    $: camera.upperAlphaLimit = test(camera.upperAlphaLimit, alphalimit[1]);
-    $: camera.lowerBetaLimit = test(camera.lowerBetaLimit, betalimit[0]);
-    $: camera.upperBetaLimit = test(camera.upperBetaLimit, betalimit[1]);
-    $: camera.lowerRadiusLimit = test(camera.lowerRadiusLimit, radiuslimit[0]);
-    $: camera.upperRadiusLimit = test(camera.upperRadiusLimit, radiuslimit[1]);
+    $: camera.alpha = alpha;
+    $: camera.beta = beta;
+    $: camera.radius = radius;
+    $: camera.lowerAlphaLimit = alphalimit[0];
+    $: camera.upperAlphaLimit = alphalimit[1];
+    $: camera.lowerBetaLimit = betalimit[0];
+    $: camera.upperBetaLimit = betalimit[1];
+    $: camera.lowerRadiusLimit = radiuslimit[0];
+    $: camera.upperRadiusLimit = radiuslimit[1];
     camera.wheelPrecision = 50;
 
-    $: camera.angularSensibilityX = test(camera.angularSensibilityX, sensibility[0]);
-    $: camera.angularSensibilityY = test(camera.angularSensibilityY, sensibility[1]);
+    $: camera.angularSensibilityX = sensibility[0];
+    $: camera.angularSensibilityY = sensibility[1];
     camera.mapPanning = true;
 
     const update = makeUpdate(camera);
@@ -59,7 +59,6 @@
     });
 
     setCurrentCamera(camera);
-    render();
 </script>
 
 <slot />
