@@ -18,16 +18,35 @@ NOTES:
      -  this is necessary to better handle resource acquisition (done in constructor) and release (done in destructor)
  -  actionmanager for instance meshes are not yet supported
  -  Canvas is self updating. anything that changes in the direct child (slot) of it will trigger a render
- -  In case of custom components that is self updating, manual trigger of render is necessary. see the code below on how to update the scene
+ -  Component.svelte is dedicated to provide automatic render when a "local" variable of a svelte component has changed. See example below for "RotatingBox"
 ```
 
-For self updating components where update is not visible to the parent Canvas component
+```html
+<script lang="ts">
+    import { Box } from '@nil-/3d/components/mesh/Box.svelte';
+    import { Component } from '@nil-/3d/components/Component.svelte';
+    import { onMount } from 'svelte';
 
-```ts
-import { getCore } from '@nil-/3d/core/context';
-import { afterUpdate } from 'svelte';
-const { render } = getCore();
-afterUpdate(render);
+    // rotation is a local variable
+    // any change to it will trigger svelte afterUpdate lifecycle
+    // which will trigger render (enabled by Component.svelte)
+    let rotation = [0, 0, 0] as [number, number, number];
+
+    function rotate() {
+        rotation[0] += 0.1;
+    }
+
+    onMount(() => {
+        const interval = setInterval(rotate, 100);
+        return () => clearInterval(interval);
+    });
+</script>
+
+<Component>
+    <Box id="rotating" position={[5, 0, 5]} {rotation}>
+        <slot />
+    </Box>
+</Component>
 ```
 
 TODO:
