@@ -21,7 +21,7 @@ NOTES:
  -  Component.svelte is dedicated to provide automatic render when a "local" variable of a svelte component has changed. See example below for "RotatingBox"
 ```
 
-```html
+```jsx
 <script lang="ts">
     import { Box } from '@nil-/3d/components/mesh/Box.svelte';
     import { Component } from '@nil-/3d/components/Component.svelte';
