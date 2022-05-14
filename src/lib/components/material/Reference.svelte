@@ -7,12 +7,11 @@
 
     export let id: string;
 
-    const { render, scene } = getCore();
+    const { scene } = getCore();
     const mesh = getCurrentMesh();
 
     scene.onNewMaterialAddedObservable.add(materialAdded);
     scene.onMaterialRemovedObservable.add(materialRemoved);
-    mesh.onMaterialChangedObservable.add(render);
 
     $: mesh.material = scene.getMaterialByName(id);
 
@@ -32,6 +31,5 @@
         mesh.material = null;
         scene.onNewMaterialAddedObservable.removeCallback(materialAdded);
         scene.onMaterialRemovedObservable.removeCallback(materialRemoved);
-        mesh.onMaterialChangedObservable.removeCallback(render);
     });
 </script>

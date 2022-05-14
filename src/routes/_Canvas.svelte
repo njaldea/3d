@@ -14,6 +14,7 @@
 
     import FSUI from '@nil-/3d/components/gui/FullscreenUI.svelte';
     import Box from './_Box.svelte';
+    import RotatingBox from './_RotatingBox.svelte';
 
     export let id: string;
     export let target: string;
@@ -32,7 +33,7 @@
 <Canvas>
     <Camera
         id={`main-cam-${id}`}
-        {toggle}
+        toggle={true}
         {target}
         alpha={Math.PI / 3}
         beta={Math.PI / 3}
@@ -50,10 +51,13 @@
         </Ground>
     </TransformNode>
 
-    <Box scaling={[1, 1, 2]} id="box1" {position} {rotation}>
-        {#if toggle}
+    {#if toggle}
+        <RotatingBox>
             <RefMaterial id="material" />
-        {/if}
+        </RotatingBox>
+    {/if}
+    <Box scaling={[1, 1, 2]} id="box1" {position} {rotation}>
+        <RefMaterial id="material" />
 
         {#each { length: 2 } as _, i (i)}
             <Instance id={i.toString()} position={[1, 1, i + 1]} />

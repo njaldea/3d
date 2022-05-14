@@ -10,8 +10,13 @@ export class Core {
     public scene: Scene;
     public fsui: null | ContainerProxy;
 
-    // force render
+    private renderCount: number;
     public render: () => void;
+    // extended render is used for cases where some addition/removal of objects
+    // needs a few frame to finalize the scene. For example, highlight, and gui
+    // controls. For now, the default is to render at least 2 frames if argument
+    // is not provided
+    public extendedRender: (count?: number) => void;
     public renderLoopStart: () => void;
     public renderLoopStop: () => void;
 
@@ -19,7 +24,6 @@ export class Core {
 
     public resize: () => void;
 
-    private shouldRender: boolean;
     private loopEnabled: number;
     private rendering: boolean;
 
@@ -29,21 +33,22 @@ export class Core {
     }
 
     constructor(canvas: HTMLCanvasElement, webgpu: boolean) {
-        this.shouldRender = true;
         this.loopEnabled = 0;
         this.rendering = false;
+        this.renderCount = 0;
 
         this.renderFunc = () => {
             console.log('render frame');
             if (this.scene.activeCamera) {
+                if (this.renderCount > 0) {
+                    this.renderCount -= 1;
+                }
+                this.rendering = false;
                 this.scene.render();
             }
-            if (this.loopEnabled === 0 && !this.shouldRender) {
-                this.rendering = false;
-            } else {
-                requestAnimationFrame(this.renderFunc);
+            if (this.loopEnabled > 0 || this.renderCount > 0) {
+                this.render();
             }
-            this.shouldRender = false;
         };
 
         this.render = () => {
@@ -51,6 +56,11 @@ export class Core {
                 this.rendering = true;
                 requestAnimationFrame(this.renderFunc);
             }
+        };
+
+        this.extendedRender = (count?: number) => {
+            this.renderCount = count ?? 2;
+            this.render();
         };
 
         this.renderLoopStart = () => {

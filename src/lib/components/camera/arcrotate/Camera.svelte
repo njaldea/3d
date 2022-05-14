@@ -49,13 +49,11 @@
 
     scene.onAfterRenderObservable.add(update);
     camera.onViewMatrixChangedObservable.add(render);
-    camera.onDisposeObservable.add(render);
 
     destructor(() => {
         camera.dispose();
         scene.onAfterRenderObservable.removeCallback(update);
         camera.onViewMatrixChangedObservable.removeCallback(render);
-        camera.onDisposeObservable.removeCallback(render);
     });
 
     setCurrentCamera(camera);

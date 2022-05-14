@@ -7,7 +7,7 @@
     import { HighlightLayer } from '@babylonjs/core/Layers/highlightLayer.js';
     import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 
-    const { render, scene } = getCore();
+    const { extendedRender, scene } = getCore();
     const mesh = getCurrentMesh() as Mesh;
 
     export let id = 'hl';
@@ -30,18 +30,9 @@
 
     layer.addMesh(mesh, highlight);
 
-    layer.onBeforeRenderMainTextureObservable.addOnce(render);
-    layer.onBeforeRenderMeshToEffect.addOnce(render);
-    layer.onBeforeComposeObservable.addOnce(render);
-    layer.onBeforeBlurObservable.addOnce(render);
-    layer.onDisposeObservable.add(render);
-
     destructor(() => {
         layer.dispose();
-        layer.onBeforeRenderMainTextureObservable.removeCallback(render);
-        layer.onBeforeRenderMeshToEffect.removeCallback(render);
-        layer.onBeforeComposeObservable.removeCallback(render);
-        layer.onBeforeBlurObservable.removeCallback(render);
-        layer.onDisposeObservable.removeCallback(render);
+        extendedRender();
     });
+    extendedRender();
 </script>

@@ -1,7 +1,6 @@
 <script lang="ts">
     import { destructor } from '$lib/core/lifecycle/destructor';
     import { getNode, setNode } from '$lib/core/context/node';
-    import { getCore } from '$lib/core/context/core';
 
     import type { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 
@@ -10,9 +9,7 @@
     export let scaling: [number, number, number] = [1, 1, 1];
     export let disabled = false;
 
-    const { render } = getCore();
     export let node: TransformNode;
-    node.onDisposeObservable.add(render);
 
     $: node.position.x = position[0];
     $: node.position.y = position[1];
@@ -30,10 +27,7 @@
 
     node.parent = getNode();
     setNode(node);
-    destructor(() => {
-        node.dispose();
-        node.onDisposeObservable.removeCallback(render);
-    });
+    destructor(() => node.dispose());
 </script>
 
 <slot />
