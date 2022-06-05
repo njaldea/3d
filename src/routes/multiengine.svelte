@@ -10,6 +10,7 @@
     let scaling: [number, number, number] = [5, 5, 5];
     let color: [number, number, number] = [255, 0, 0];
     let toggle = true;
+    let materialID = 'standard';
 </script>
 
 <div class="views">
@@ -23,6 +24,7 @@
         {scaling}
         {color}
         {toggle}
+        {materialID}
     />
 
     <Canvas
@@ -35,6 +37,7 @@
         {scaling}
         {color}
         {toggle}
+        {materialID}
     />
 </div>
 
@@ -47,6 +50,7 @@
     bind:scaling
     bind:color
     bind:toggle
+    bind:materialID
 />
 
 <style>

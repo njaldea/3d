@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { getCore } from '$lib/core/context';
     import { destructor } from '$lib/core/lifecycle';
 
     import type { IContainer } from '$lib/core/types/ContainerProxy';

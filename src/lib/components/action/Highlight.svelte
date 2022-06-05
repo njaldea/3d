@@ -7,7 +7,7 @@
     import { HighlightLayer } from '@babylonjs/core/Layers/highlightLayer.js';
     import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 
-    const { render, scene } = getCore();
+    const { scene } = getCore();
     const mesh = getCurrentMesh() as Mesh;
 
     export let id = 'hl';
