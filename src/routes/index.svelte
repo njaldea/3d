@@ -2,6 +2,7 @@
     import Control from './_Control.svelte';
     import Canvas from './_Canvas.svelte';
 
+    let show = true;
     let target = '';
     let intensity = 0.3;
     let direction: [number, number, number] = [0, 1, 0];
@@ -13,20 +14,30 @@
     let materialID = 'standard';
 </script>
 
-<Canvas
-    id="main"
-    {target}
-    {intensity}
-    {direction}
-    {position}
-    {rotation}
-    {scaling}
-    {color}
-    {toggle}
-    {materialID}
->
-    <slot />
-</Canvas>
+<svelte:window
+    on:keydown={(e) => {
+        if (e.key === '\\') {
+            show = !show;
+        }
+    }}
+/>
+
+{#if show}
+    <Canvas
+        id="main"
+        {target}
+        {intensity}
+        {direction}
+        {position}
+        {rotation}
+        {scaling}
+        {color}
+        {toggle}
+        {materialID}
+    >
+        <slot />
+    </Canvas>
+{/if}
 
 <Control
     bind:target

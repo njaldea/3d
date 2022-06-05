@@ -20,16 +20,20 @@ export class Core {
     public resize: () => void;
 
     private loopEnabled: number;
-    private rendering: boolean;
+    private frame: number | null;
 
     public destroy() {
         this.loopEnabled = 0;
+        if (this.frame != null) {
+            cancelAnimationFrame(this.frame);
+            this.frame = null;
+        }
         this.engine.dispose();
     }
 
     constructor(canvas: HTMLCanvasElement, webgpu: boolean) {
         this.loopEnabled = 0;
-        this.rendering = false;
+        this.frame = null;
         this.renderCount = 0;
 
         this.renderFunc = () => {
@@ -38,20 +42,20 @@ export class Core {
                 if (this.renderCount > 0) {
                     this.renderCount -= 1;
                 }
-                this.rendering = false;
                 this.scene.render(false);
-            }
-            if (this.loopEnabled > 0 || this.renderCount > 0) {
-                this.rendering = true;
-                requestAnimationFrame(this.renderFunc);
+
+                if (this.loopEnabled > 0 || this.renderCount > 0) {
+                    this.frame = requestAnimationFrame(this.renderFunc);
+                } else {
+                    this.frame = null;
+                }
             }
         };
 
         this.render = () => {
             this.renderCount = 2;
-            if (!this.rendering) {
-                this.rendering = true;
-                requestAnimationFrame(this.renderFunc);
+            if (this.frame == null) {
+                this.frame = requestAnimationFrame(this.renderFunc);
             }
         };
 
