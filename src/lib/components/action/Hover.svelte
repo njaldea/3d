@@ -5,6 +5,7 @@
 </script>
 
 <script lang="ts">
+    import Component from '$lib/components/Component.svelte';
     import { getCurrentMesh } from '$lib/core/context/mesh';
     import { destructor } from '$lib/core/lifecycle/destructor';
     import { ActionManager } from '@babylonjs/core/Actions/actionManager.js';
@@ -37,5 +38,7 @@
 </script>
 
 {#if hovered}
-    <slot />
+    <Component>
+        <slot />
+    </Component>
 {/if}

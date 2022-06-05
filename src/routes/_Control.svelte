@@ -7,6 +7,7 @@
     export let scaling: [number, number, number];
     export let color: [number, number, number];
     export let toggle: boolean;
+    export let materialID: string;
 </script>
 
 <div class="top">
@@ -18,10 +19,17 @@
         {/each}
     </select>
     <button on:click={() => (toggle = !toggle)}>{toggle}</button>
+    <select bind:value={materialID}>
+        {#each ['standard', 'grid'] as id}
+            <option value={id}>
+                {id}
+            </option>
+        {/each}
+    </select>
     <div>color</div>
-    <input type="range" min="0" max="255" step="1" bind:value={color[0]} />
-    <input type="range" min="0" max="255" step="1" bind:value={color[1]} />
-    <input type="range" min="0" max="255" step="1" bind:value={color[2]} />
+    <input type="range" min="0" max="1" step="0.01" bind:value={color[0]} />
+    <input type="range" min="0" max="1" step="0.01" bind:value={color[1]} />
+    <input type="range" min="0" max="1" step="0.01" bind:value={color[2]} />
     <div>intensity</div>
     <input type="range" min="0" max="1" step="0.01" bind:value={intensity} />
     <div>direction</div>
@@ -54,5 +62,6 @@
         background-color: rgb(179, 11, 11);
         color: white;
         padding: 5px;
+        user-select: none;
     }
 </style>

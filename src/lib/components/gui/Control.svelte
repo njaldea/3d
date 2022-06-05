@@ -8,14 +8,11 @@
     export let container: IContainer;
     export let control: Control;
 
-    const { extendedRender } = getCore();
     container.addControl(control);
     destructor(() => {
         container.removeControl(control);
         control.dispose(); // should this be called?
-        extendedRender();
     });
-    extendedRender();
 </script>
 
 <slot />

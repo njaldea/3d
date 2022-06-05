@@ -12,7 +12,7 @@
     }
 
     onMount(() => {
-        const interval = setInterval(rotate, 100);
+        const interval = setInterval(rotate, 1000 / 60);
         return () => clearInterval(interval);
     });
 </script>

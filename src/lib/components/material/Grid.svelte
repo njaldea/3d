@@ -1,24 +1,22 @@
 <script lang="ts">
     import Material from '$lib/components/material/Material.svelte';
 
-    import { getCurrentMesh } from '$lib/core/context/mesh';
     import { getCore } from '$lib/core/context/core';
 
     import { GridMaterial } from '@babylonjs/materials/grid/gridMaterial.js';
 
     const { scene } = getCore();
-    const mesh = getCurrentMesh();
 
     export let id: string;
     export let mainColor: [number, number, number] = [1, 1, 1];
     export let lineColor: [number, number, number] = [1, 1, 1];
-    export let gridRatio = 2;
-    export let opacity = 0.2;
+    export let gridRatio = 1;
+    export let opacity = 0.5;
+    export let backFaceCulling: boolean | undefined = undefined;
 
     var material = new GridMaterial(id, scene);
-    material.majorUnitFrequency = 1;
-    material.minorUnitVisibility = 0.1;
-    material.backFaceCulling = false;
+    material.majorUnitFrequency = 10;
+    material.minorUnitVisibility = 0.25;
 
     $: material.opacity = opacity;
     $: material.gridRatio = gridRatio;
@@ -30,6 +28,4 @@
     $: material.lineColor.b = lineColor[2];
 </script>
 
-{#if mesh != null}
-    <Material {mesh} {material} />
-{/if}
+<Material {material} {backFaceCulling} />

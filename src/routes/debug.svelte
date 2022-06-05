@@ -1,11 +1,10 @@
 <script lang="ts">
     import Index from './index.svelte';
     import Inspector from '@nil-/3d/components/Inspector.svelte';
+    import '@babylonjs/core/Debug/debugLayer.js';
+    import '@babylonjs/inspector';
 </script>
 
-<!-- dynamic import needed to delay this this part (to be done in browser); -->
-{#await Promise.all( [import('@babylonjs/core/Debug/debugLayer.js'), import('@babylonjs/inspector')] ) then _}
-    <Index>
-        <Inspector />
-    </Index>
-{/await}
+<Index>
+    <Inspector />
+</Index>

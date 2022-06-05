@@ -1,15 +1,23 @@
 <script lang="ts">
     import { destructor } from '$lib/core/lifecycle/destructor';
+    import { getCurrentMesh } from '$lib/core/context/mesh';
 
     import type { Material } from '@babylonjs/core/Materials/material';
-    import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh';
+
+    const mesh = getCurrentMesh();
 
     export let material: Material;
-    export let mesh: AbstractMesh;
+    export let backFaceCulling = true;
 
-    mesh.material = material;
+    $: material.backFaceCulling = backFaceCulling;
+
+    if (mesh) {
+        mesh.material = material;
+    }
     destructor(() => {
-        mesh.material = null;
+        if (mesh) {
+            mesh.material = null;
+        }
         material.dispose();
     });
 </script>

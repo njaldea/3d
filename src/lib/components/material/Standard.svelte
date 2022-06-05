@@ -1,18 +1,17 @@
 <script lang="ts">
     import Material from '$lib/components/material/Material.svelte';
 
-    import { getCurrentMesh } from '$lib/core/context/mesh';
     import { getCore } from '$lib/core/context/core';
 
     import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
 
     const { scene } = getCore();
-    const mesh = getCurrentMesh();
 
     export let id: string;
     export let color: [number, number, number] = [0.3, 0.3, 0.3];
     export let alpha = 1.0;
     export let useLogarithmicDepth = false;
+    export let backFaceCulling: boolean | undefined = undefined;
 
     const material = new StandardMaterial(id, scene);
     $: material.emissiveColor.r = color[0];
@@ -22,6 +21,4 @@
     $: material.useLogarithmicDepth = useLogarithmicDepth;
 </script>
 
-{#if mesh != null}
-    <Material {mesh} {material} />
-{/if}
+<Material {material} {backFaceCulling} />

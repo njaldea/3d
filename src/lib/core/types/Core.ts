@@ -12,11 +12,6 @@ export class Core {
 
     private renderCount: number;
     public render: () => void;
-    // extended render is used for cases where some addition/removal of objects
-    // needs a few frame to finalize the scene. For example, highlight, and gui
-    // controls. For now, the default is to render at least 2 frames if argument
-    // is not provided
-    public extendedRender: (count?: number) => void;
     public renderLoopStart: () => void;
     public renderLoopStop: () => void;
 
@@ -44,23 +39,20 @@ export class Core {
                     this.renderCount -= 1;
                 }
                 this.rendering = false;
-                this.scene.render();
+                this.scene.render(false);
             }
             if (this.loopEnabled > 0 || this.renderCount > 0) {
-                this.render();
-            }
-        };
-
-        this.render = () => {
-            if (!this.rendering) {
                 this.rendering = true;
                 requestAnimationFrame(this.renderFunc);
             }
         };
 
-        this.extendedRender = (count?: number) => {
-            this.renderCount = count ?? 2;
-            this.render();
+        this.render = () => {
+            this.renderCount = 2;
+            if (!this.rendering) {
+                this.rendering = true;
+                requestAnimationFrame(this.renderFunc);
+            }
         };
 
         this.renderLoopStart = () => {

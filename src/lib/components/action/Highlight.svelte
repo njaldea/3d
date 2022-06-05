@@ -7,7 +7,7 @@
     import { HighlightLayer } from '@babylonjs/core/Layers/highlightLayer.js';
     import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 
-    const { extendedRender, scene } = getCore();
+    const { render, scene } = getCore();
     const mesh = getCurrentMesh() as Mesh;
 
     export let id = 'hl';
@@ -30,9 +30,5 @@
 
     layer.addMesh(mesh, highlight);
 
-    destructor(() => {
-        layer.dispose();
-        extendedRender();
-    });
-    extendedRender();
+    destructor(() => layer.dispose());
 </script>
