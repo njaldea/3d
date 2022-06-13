@@ -12,6 +12,8 @@
     export let alpha = 1.0;
     export let useLogarithmicDepth = false;
     export let backFaceCulling: boolean | undefined = undefined;
+    export let frozen: boolean | undefined = undefined;
+    export let disableLighting = false;
 
     const material = new StandardMaterial(id, scene);
     $: material.emissiveColor.r = color[0];
@@ -19,6 +21,9 @@
     $: material.emissiveColor.b = color[2];
     $: material.alpha = alpha;
     $: material.useLogarithmicDepth = useLogarithmicDepth;
+    $: material.disableLighting = disableLighting;
+    material.alphaMode = 0;
+    material.needDepthPrePass = false;
 </script>
 
-<Material {material} {backFaceCulling} />
+<Material {material} {backFaceCulling} {frozen} />

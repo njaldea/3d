@@ -8,8 +8,10 @@
 
     export let material: Material;
     export let backFaceCulling = true;
+    export let frozen = false;
 
     $: material.backFaceCulling = backFaceCulling;
+    $: frozen ? material.freeze() : material.unfreeze();
 
     if (mesh) {
         mesh.material = material;

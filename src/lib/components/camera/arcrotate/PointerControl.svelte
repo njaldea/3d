@@ -13,6 +13,8 @@
     camera.inputs.attachInput(camera.inputs.attached.pointers);
     camera.inputs.attachInput(camera.inputs.attached.mousewheel);
 
+    camera.wheelDeltaPercentage = 0.01;
+
     const update = makeUpdate(camera);
     scene.onPointerObservable.add(update);
     destructor(() => {

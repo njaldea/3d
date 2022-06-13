@@ -13,6 +13,7 @@
     export let gridRatio = 1;
     export let opacity = 0.5;
     export let backFaceCulling: boolean | undefined = undefined;
+    export let frozen: boolean | undefined = undefined;
 
     var material = new GridMaterial(id, scene);
     material.majorUnitFrequency = 10;
@@ -28,4 +29,4 @@
     $: material.lineColor.b = lineColor[2];
 </script>
 
-<Material {material} {backFaceCulling} />
+<Material {material} {backFaceCulling} {frozen} />

@@ -16,7 +16,7 @@
     {id}
     sensibility={[2000, 2000]}
     betalimit={[0, Math.PI / 2 - 0.1]}
-    radiuslimit={[0.1, 50]}
+    radiuslimit={[0.1, 1000]}
     {alpha}
     {beta}
     {radius}

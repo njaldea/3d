@@ -11,10 +11,11 @@
     export let rotation: undefined | [number, number, number] = undefined;
     export let scaling: undefined | [number, number, number] = undefined;
     export let disabled: undefined | boolean = undefined;
+    export let frozen: undefined | boolean = undefined;
 
     setCurrentMesh(mesh);
 </script>
 
-<Node node={mesh} {position} {rotation} {scaling} {disabled}>
+<Node node={mesh} {position} {rotation} {scaling} {disabled} {frozen}>
     <slot />
 </Node>
