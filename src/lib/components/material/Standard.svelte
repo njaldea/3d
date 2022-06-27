@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Material from '$lib/components/material/Material.svelte';
+    import Material, { type AlphaMode } from '$lib/components/material/Material.svelte';
 
     import { getCore } from '$lib/core/context/core';
 
@@ -8,17 +8,23 @@
     const { scene } = getCore();
 
     export let id: string;
+
     export let color: [number, number, number] = [0.3, 0.3, 0.3];
-    export let alpha = 1.0;
     export let useLogarithmicDepth = false;
-    export let backFaceCulling: boolean | undefined = undefined;
+    export let disableLighting = false;
+
+    export let alpha: undefined | number = undefined;
+    export let alphaMode: undefined | AlphaMode = undefined;
+    export let needDepthPrePass: undefined | boolean = undefined;
+    export let backFaceCulling: undefined | boolean = undefined;
+    export let frozen: undefined | boolean = undefined;
 
     const material = new StandardMaterial(id, scene);
     $: material.emissiveColor.r = color[0];
     $: material.emissiveColor.g = color[1];
     $: material.emissiveColor.b = color[2];
-    $: material.alpha = alpha;
     $: material.useLogarithmicDepth = useLogarithmicDepth;
+    $: material.disableLighting = disableLighting;
 </script>
 
-<Material {material} {backFaceCulling} />
+<Material {material} {alpha} {alphaMode} {needDepthPrePass} {backFaceCulling} {frozen} />

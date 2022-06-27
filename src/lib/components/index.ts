@@ -5,6 +5,6 @@ export * as camera from './camera';
 export * as lights from './lights';
 export * as action from './action';
 export * as gui from './gui';
+export * as map from './map';
 export { default as Canvas } from './Canvas.svelte';
 export { default as Component } from './Component.svelte';
-export { default as Inspector } from './Inspector.svelte';

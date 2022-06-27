@@ -14,21 +14,10 @@
     export let color: [number, number, number] = [0, 0, 0];
 
     const layer = new HighlightLayer(`${mesh.id}-${id}`, scene);
-    const highlight = new Color3(...color);
-
-    $: highlight.r = updateColor(highlight.r, color[0]);
-    $: highlight.g = updateColor(highlight.g, color[1]);
-    $: highlight.b = updateColor(highlight.b, color[2]);
-
-    function updateColor(l: number, r: number) {
-        if (l != r) {
-            layer.removeMesh(mesh);
-            layer.addMesh(mesh, highlight);
-        }
-        return r;
+    $: {
+        layer.removeMesh(mesh);
+        layer.addMesh(mesh, new Color3(...color));
     }
-
-    layer.addMesh(mesh, highlight);
 
     destructor(() => layer.dispose());
 </script>

@@ -14,7 +14,7 @@
     export let scaling: undefined | [number, number, number] = undefined;
     export let disabled: undefined | boolean = undefined;
 
-    const box = MeshBuilder.CreateBox(
+    const mesh = MeshBuilder.CreateBox(
         id,
         {
             depth: size[0],
@@ -25,6 +25,6 @@
     );
 </script>
 
-<MeshComponent mesh={box} {position} {rotation} {scaling} {disabled}>
+<MeshComponent {mesh} {position} {rotation} {scaling} {disabled}>
     <slot />
 </MeshComponent>

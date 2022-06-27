@@ -14,7 +14,7 @@
 
     export let id: string;
 
-    const ground = MeshBuilder.CreateGround(
+    const mesh = MeshBuilder.CreateGround(
         id,
         {
             width: 10000,
@@ -23,9 +23,9 @@
         },
         scene
     );
-    ground.infiniteDistance = true;
+    mesh.infiniteDistance = true;
 </script>
 
-<MeshComponent mesh={ground} {position} {rotation} {scaling} {disabled}>
+<MeshComponent {mesh} {position} {rotation} {scaling} {disabled}>
     <slot />
 </MeshComponent>

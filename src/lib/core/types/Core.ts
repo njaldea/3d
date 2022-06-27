@@ -42,7 +42,7 @@ export class Core {
                 if (this.renderCount > 0) {
                     this.renderCount -= 1;
                 }
-                this.scene.render(false);
+                this.scene.render(false, true);
 
                 if (this.loopEnabled > 0 || this.renderCount > 0) {
                     this.frame = requestAnimationFrame(this.renderFunc);
