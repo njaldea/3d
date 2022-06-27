@@ -8,6 +8,7 @@
     export let rotation: [number, number, number] = [0, 0, 0];
     export let scaling: [number, number, number] = [1, 1, 1];
     export let disabled = false;
+    export let frozen = false;
 
     export let node: TransformNode;
 
@@ -24,6 +25,7 @@
     $: node.scaling.z = scaling[2];
 
     $: node.setEnabled(!disabled);
+    $: frozen ? node.freezeWorldMatrix() : node.unfreezeWorldMatrix();
 
     node.parent = getNode();
     setNode(node);

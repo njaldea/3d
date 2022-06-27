@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Material from '$lib/components/material/Material.svelte';
+    import Material, { type AlphaMode } from '$lib/components/material/Material.svelte';
 
     import { getCore } from '$lib/core/context/core';
 
@@ -8,13 +8,19 @@
     const { scene } = getCore();
 
     export let id: string;
+
+    export let opacity = 0.5;
+    export let gridRatio = 1;
     export let mainColor: [number, number, number] = [1, 1, 1];
     export let lineColor: [number, number, number] = [1, 1, 1];
-    export let gridRatio = 1;
-    export let opacity = 0.5;
-    export let backFaceCulling: boolean | undefined = undefined;
 
-    var material = new GridMaterial(id, scene);
+    export let alpha: undefined | number = undefined;
+    export let alphaMode: undefined | AlphaMode = undefined;
+    export let needDepthPrePass: undefined | boolean = undefined;
+    export let backFaceCulling: undefined | boolean = undefined;
+    export let frozen: undefined | boolean = undefined;
+
+    const material = new GridMaterial(id, scene);
     material.majorUnitFrequency = 10;
     material.minorUnitVisibility = 0.25;
 
@@ -28,4 +34,4 @@
     $: material.lineColor.b = lineColor[2];
 </script>
 
-<Material {material} {backFaceCulling} />
+<Material {material} {alpha} {alphaMode} {needDepthPrePass} {backFaceCulling} {frozen} />

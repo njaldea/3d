@@ -7,7 +7,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/njaldea/3d.git"
+        "url": "https://gitlab.com/njaldea/3d.git"
     },
     "scripts": {
         "dev": "svelte-kit dev",
@@ -23,28 +23,31 @@
         "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
     },
     "dependencies": {
-        "@babylonjs/core": "^5.9.0",
-        "@babylonjs/gui": "^5.9.0",
-        "@babylonjs/inspector": "^5.9.0",
-        "@babylonjs/materials": "^5.9.0",
+        "@babylonjs/core": "^5.12.1",
+        "@babylonjs/gui": "^5.12.1",
+        "@babylonjs/inspector": "^5.12.1",
+        "@babylonjs/materials": "^5.12.1",
+        "earcut": "^2.2.3",
         "svelte": "^3.48.0"
     },
     "devDependencies": {
+        "@nil-/map": "^0.0.4",
         "@playwright/test": "^1.22.2",
-        "@sveltejs/adapter-auto": "1.0.0-next.50",
-        "@sveltejs/kit": "1.0.0-next.348",
-        "@typescript-eslint/eslint-plugin": "^5.27.0",
-        "@typescript-eslint/parser": "^5.27.0",
-        "eslint": "^8.17.0",
+        "@sveltejs/adapter-auto": "1.0.0-next.52",
+        "@sveltejs/kit": "1.0.0-next.354",
+        "@types/earcut": "^2.1.1",
+        "@typescript-eslint/eslint-plugin": "^5.29.0",
+        "@typescript-eslint/parser": "^5.29.0",
+        "eslint": "^8.18.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-svelte3": "^4.0.0",
-        "prettier": "^2.6.2",
+        "prettier": "^2.7.1",
         "prettier-plugin-svelte": "^2.7.0",
         "svelte-check": "^2.7.2",
         "svelte-preprocess": "^4.10.7",
         "svelte2tsx": "^0.5.10",
         "tslib": "^2.4.0",
-        "typescript": "~4.7.3"
+        "typescript": "~4.7.4"
     },
     "keywords": [
         "svelte",
