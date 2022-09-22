@@ -7,52 +7,58 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://gitlab.com/njaldea/3d.git"
+        "url": "https://github.com/njaldea/3d.git"
     },
     "scripts": {
-        "dev": "svelte-kit dev",
-        "build": "svelte-kit build",
-        "package": "svelte-kit package",
+        "dev": "vite dev",
+        "build": "vite build",
+        "package": "svelte-package",
         "package:publish": "npm run package && cd package && npm publish",
-        "preview": "svelte-kit preview",
-        "prepare": "svelte-kit sync",
+        "preview": "vite preview",
         "test": "playwright test",
         "check": "svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
         "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-        "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
+        "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
+        "update": "npx npm-check-updates",
+        "update:apply": "npm run update -- -u"
     },
     "dependencies": {
-        "@babylonjs/core": "^5.12.1",
-        "@babylonjs/gui": "^5.12.1",
-        "@babylonjs/inspector": "^5.12.1",
-        "@babylonjs/materials": "^5.12.1",
-        "earcut": "^2.2.3",
-        "svelte": "^3.48.0"
+        "@babylonjs/core": "^5.24.0",
+        "@babylonjs/gui": "^5.24.0",
+        "@babylonjs/inspector": "^5.24.0",
+        "@babylonjs/materials": "^5.24.0",
+        "earcut": "^2.2.4",
+        "svelte": "^3.50.1"
     },
     "devDependencies": {
         "@nil-/map": "^0.0.4",
-        "@playwright/test": "^1.22.2",
-        "@sveltejs/adapter-auto": "1.0.0-next.52",
-        "@sveltejs/kit": "1.0.0-next.354",
+        "@playwright/test": "^1.26.0",
+        "@sveltejs/adapter-auto": "1.0.0-next.80",
+        "@sveltejs/kit": "1.0.0-next.493",
+        "@sveltejs/package": "^1.0.0-next.5",
         "@types/earcut": "^2.1.1",
-        "@typescript-eslint/eslint-plugin": "^5.29.0",
-        "@typescript-eslint/parser": "^5.29.0",
-        "eslint": "^8.18.0",
+        "@typescript-eslint/eslint-plugin": "^5.38.0",
+        "@typescript-eslint/parser": "^5.38.0",
+        "eslint": "^8.23.1",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-svelte3": "^4.0.0",
         "prettier": "^2.7.1",
         "prettier-plugin-svelte": "^2.7.0",
-        "svelte-check": "^2.7.2",
+        "svelte-check": "^2.9.0",
         "svelte-preprocess": "^4.10.7",
-        "svelte2tsx": "^0.5.10",
+        "svelte2tsx": "^0.5.18",
         "tslib": "^2.4.0",
-        "typescript": "~4.7.4"
+        "typescript": "~4.8.3",
+        "vite": "^3.1.3"
     },
     "keywords": [
         "svelte",
         "babylonjs",
         "3D"
     ],
-    "type": "module"
+    "type": "module",
+    "engines": {
+        "node": "v16.17.0"
+    }
 }

@@ -16,7 +16,7 @@
         const count = value.length;
         const batch = 25;
         const { subscribe, update } = writable<Res[]>([]);
-        let tm: null | NodeJS.Timeout;
+        let tm: null | ReturnType<typeof setTimeout>;
         function add(i: number) {
             update((v) => [...v, ...value.slice(i, Math.min(count, i + batch))]);
             render();

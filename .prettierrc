@@ -5,9 +5,10 @@
     "printWidth": 100,
     "tabWidth": 4,
     "semi": true,
+    "plugins": ["prettier-plugin-svelte"],
+    "pluginSearchDirs": ["."],
+    "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }],
     "svelteSortOrder": "options-scripts-markup-styles",
     "svelteStrictMode": false,
-    "svelteBracketNewLine": true,
-    "svelteAllowShorthand": true,
     "svelteIndentScriptAndStyle": true
 }

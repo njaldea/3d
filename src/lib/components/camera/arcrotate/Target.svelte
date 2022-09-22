@@ -17,7 +17,7 @@
     let currentMesh: null | AbstractMesh = null;
 
     function setTarget(mesh: null | AbstractMesh) {
-        if (mesh != currentMesh) {
+        if (mesh !== currentMesh) {
             if (mesh) {
                 camera.setTarget(mesh);
                 camera.update();

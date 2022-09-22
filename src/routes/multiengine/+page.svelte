@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Control from './_Control.svelte';
-    import Canvas from './_Canvas.svelte';
+    import Control from '../_Control.svelte';
+    import Canvas from '../_Canvas.svelte';
 
     let target = '';
     let intensity = 0.3;

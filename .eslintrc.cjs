@@ -16,5 +16,12 @@ module.exports = {
         browser: true,
         es2017: true,
         node: true
+    },
+    rules: {
+        eqeqeq: ['error', 'always', { null: 'ignore' }],
+        quotes: ['error', 'single'],
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off'
     }
 };

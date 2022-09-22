@@ -4,6 +4,6 @@ export const request = async (x: number, y: number) => {
     const token = import.meta.env.VITE_TOKEN;
     const url = import.meta.env.VITE_MAP_URL;
     const zoom = 16;
-    const service = `{url}/{zoom}/{x}/{y}.vector.pbf?sku=101jDpRuC1GUm&access_token={token}`;
-    return await req(format(service, {url, zoom, x, y, token}));
-}
+    const service = '{url}/{zoom}/{x}/{y}.vector.pbf?sku=101jDpRuC1GUm&access_token={token}';
+    return await req(format(service, { url, zoom, x, y, token }));
+};
