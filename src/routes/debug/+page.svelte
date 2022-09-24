@@ -12,15 +12,15 @@
     let color: [number, number, number] = [1, 0, 0];
     let toggle = false;
     let materialID = 'standard';
-</script>
 
-<svelte:window
-    on:keydown={(e) => {
+    function keydown(e: KeyboardEvent) {
         if (e.key === '\\') {
             show = !show;
         }
-    }}
-/>
+    }
+</script>
+
+<svelte:window on:keydown={keydown} />
 
 {#if show}
     <Canvas

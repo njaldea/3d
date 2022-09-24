@@ -15,30 +15,30 @@
         "package": "svelte-package",
         "package:publish": "npm run package && cd package && npm publish",
         "preview": "vite preview",
-        "check": "svelte-check --tsconfig ./tsconfig.json",
-        "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-        "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
         "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
-        "update": "npx npm-check-updates",
-        "update:apply": "npm run update -- -u"
+        "check": "npm run check:format && npm run check:eslint && npm run check:ts",
+        "check:format": "prettier --ignore-path .gitignore --check --plugin-search-dir=. .",
+        "check:eslint": "eslint --ignore-path .gitignore .",
+        "check:ts": "svelte-check --tsconfig ./tsconfig.json",
+        "update": "npx npm-check-updates"
     },
     "dependencies": {
-        "@babylonjs/core": "^5.24.0",
-        "@babylonjs/gui": "^5.24.0",
-        "@babylonjs/inspector": "^5.24.0",
-        "@babylonjs/materials": "^5.24.0",
+        "@babylonjs/core": "^5.25.0",
+        "@babylonjs/gui": "^5.25.0",
+        "@babylonjs/inspector": "^5.25.0",
+        "@babylonjs/materials": "^5.25.0",
         "earcut": "^2.2.4",
         "svelte": "^3.50.1"
     },
     "devDependencies": {
         "@nil-/map": "^0.0.4",
         "@sveltejs/adapter-auto": "1.0.0-next.80",
-        "@sveltejs/kit": "1.0.0-next.493",
+        "@sveltejs/kit": "1.0.0-next.502",
         "@sveltejs/package": "^1.0.0-next.5",
         "@types/earcut": "^2.1.1",
         "@typescript-eslint/eslint-plugin": "^5.38.0",
         "@typescript-eslint/parser": "^5.38.0",
-        "eslint": "^8.23.1",
+        "eslint": "^8.24.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-svelte3": "^4.0.0",
         "prettier": "^2.7.1",
@@ -57,6 +57,6 @@
     ],
     "type": "module",
     "engines": {
-        "node": "v16.15.0"
+        "node": "^v16.15.0"
     }
 }

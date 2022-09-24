@@ -19,8 +19,8 @@ export class Core {
 
     public resize: () => void;
 
-    private loopEnabled: number;
     private frame: number | null;
+    private loopEnabled: number;
 
     public destroy() {
         this.loopEnabled = 0;
@@ -32,8 +32,8 @@ export class Core {
     }
 
     constructor(canvas: HTMLCanvasElement, webgpu: boolean) {
-        this.loopEnabled = 0;
         this.frame = null;
+        this.loopEnabled = 0;
         this.renderCount = 0;
 
         this.renderFunc = () => {
@@ -46,10 +46,10 @@ export class Core {
 
                 if (this.loopEnabled > 0 || this.renderCount > 0) {
                     this.frame = requestAnimationFrame(this.renderFunc);
-                } else {
-                    this.frame = null;
+                    return;
                 }
             }
+            this.frame = null;
         };
 
         this.render = () => {

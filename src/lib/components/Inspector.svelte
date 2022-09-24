@@ -5,7 +5,7 @@
     const { scene, renderLoopStart, renderLoopStop } = getCore();
 
     if (scene.debugLayer) {
-        scene.debugLayer.show({ embedMode: true, enableClose: false });
+        void scene.debugLayer.show({ embedMode: true, enableClose: false });
         renderLoopStart();
     }
 

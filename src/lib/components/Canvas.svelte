@@ -2,19 +2,12 @@
     import { Core } from '$lib/core/types/Core';
     import Context from '$lib/components/Context.svelte';
 
-    import { onMount } from 'svelte';
-    export let webgpu = false;
-    let core: null | Core = null;
     let canvas: HTMLCanvasElement;
-
-    onMount(() => (core = new Core(canvas, webgpu)));
 </script>
 
-<svelte:window on:resize={() => core?.resize()} />
-
 <canvas bind:this={canvas}>
-    {#if canvas != null && core != null}
-        <Context {core} {canvas}>
+    {#if canvas}
+        <Context core={new Core(canvas, false)}>
             <slot />
         </Context>
     {/if}

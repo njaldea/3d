@@ -6,12 +6,19 @@
     import type { Core } from '$lib/core/types/Core';
 
     export let core: Core;
-    export let canvas: HTMLCanvasElement;
 
-    setCurrentCanvas(canvas);
     setCore(core);
+    setCurrentCanvas(core.canvas);
 
-    destructor(() => core.destroy());
+    window.addEventListener('resize', core.resize);
+    // const observer = new ResizeObserver(core.resize);
+    // observer.observe(core.canvas);
+
+    destructor(() => {
+        window.removeEventListener('resize', core.resize);
+        // observer.disconnect();
+        core.destroy();
+    });
 </script>
 
 <Component>
