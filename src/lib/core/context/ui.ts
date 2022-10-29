@@ -6,7 +6,7 @@ import { ContainerProxy } from '$lib/core/types/ContainerProxy';
 import type { IContainer } from '$lib/core/types/ContainerProxy';
 
 export const getCurrentUIContainer = () => {
-    const container = getContext(tags.ui_container) as IContainer;
+    const container = getContext<IContainer>(tags.ui_container);
     if (container == null) {
         const { fsui } = getCore();
         if (fsui == null) {

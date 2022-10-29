@@ -1,24 +1,9 @@
-<script lang="ts" context="module">
-    export enum AlphaMode {
-        Disable = 0,
-        Add = 1,
-        Combine = 2,
-        Subtract = 3,
-        Multiply = 4,
-        Maximize = 5,
-        One = 6,
-        PreMultiplied = 7,
-        PreMultiplied_PorterDuff = 8,
-        Interpolate = 9,
-        ScreenMode = 10
-    }
-</script>
-
 <script lang="ts">
     import { destructor } from '$lib/core/lifecycle/destructor';
     import { getCurrentMesh } from '$lib/core/context/mesh';
 
     import type { Material } from '@babylonjs/core/Materials/material';
+    import { AlphaMode } from '$lib/components/material/AlphaMode';
 
     const mesh = getCurrentMesh();
 

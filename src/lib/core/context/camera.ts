@@ -11,13 +11,15 @@ import { tick } from 'svelte';
 import { get } from 'svelte/store';
 
 export function makeUpdate(camera: Camera) {
-    return async () => {
-        // need to defer update in next frame to guarantee retrigger
-        // after scene is renderered
+    const impl = async () => {
+        // need to defer update in next frame to guarantee retrigger after scene is renderered
         await tick();
         if (get(babylonjs_ray)) {
             camera.getViewMatrix();
         }
         camera.update();
+    };
+    return () => {
+        void impl();
     };
 }

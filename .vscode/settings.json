@@ -16,5 +16,5 @@
         "README.md": "*.md"
     },
     "editor.defaultFormatter": "svelte.svelte-vscode",
-    "editor.formatOnSave": true
+    "eslint.validate": ["javascript", "svelte"]
 }

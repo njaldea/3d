@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Camera from './_ArcRotateCamera.svelte';
+    import Camera from './camera.svelte';
     import Canvas from '@nil-/3d/components/Canvas.svelte';
     import HemisphericLight from '@nil-/3d/components/lights/HemisphericLight.svelte';
 
@@ -13,8 +13,8 @@
     import TransformNode from '@nil-/3d/components/node/TransformNode.svelte';
 
     import FSUI from '@nil-/3d/components/gui/FullscreenUI.svelte';
-    import Box from './_Box.svelte';
-    import RotatingBox from './_RotatingBox.svelte';
+    import Box from './box.svelte';
+    import RotatingBox from './rotatingbox.svelte';
 
     export let id: string;
     export let target: string;

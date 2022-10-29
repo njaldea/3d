@@ -1,5 +1,6 @@
 <script lang="ts">
-    import Material, { type AlphaMode } from '$lib/components/material/Material.svelte';
+    import Material from '$lib/components/material/Material.svelte';
+    import type { AlphaMode } from '$lib/components/material/AlphaMode';
 
     import { getCore } from '$lib/core/context/core';
 

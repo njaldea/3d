@@ -18,13 +18,13 @@
         unknown: [0, 0, 100]
     };
 
-    import { request } from './_request';
+    import { request } from './request';
 
-    import Canvas from './_Canvas.svelte';
-    import Box from '../_Box.svelte';
+    import Canvas from './canvas.svelte';
+    import Box from '../components/box.svelte';
     import StandardMaterial from '$lib/components/material/Standard.svelte';
     import TransformNode from '$lib/components/node/TransformNode.svelte';
-    import Features from './_features.svelte';
+    import Features from './features.svelte';
 
     function* gridIndices() {
         for (let x = -1; x <= 1; ++x) {

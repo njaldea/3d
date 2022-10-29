@@ -2,7 +2,7 @@
     import Lines from '$lib/components/map/Lines.svelte';
     import Polygons from '$lib/components/map/Polygons.svelte';
     import StandardMaterial from '$lib/components/material/Standard.svelte';
-    import { AlphaMode } from '$lib/components/material/Material.svelte';
+    import { AlphaMode } from '$lib/components/material/AlphaMode';
     import type { Vector2, Vector3 } from '@babylonjs/core/Maths/math.vector';
 
     export let type: number;
