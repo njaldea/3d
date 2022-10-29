@@ -1,52 +1,46 @@
 <script lang="ts">
-    import Control from '../_Control.svelte';
-    import Canvas from '../_Canvas.svelte';
+    import Control from '../components/control.svelte';
+    import Canvas from '../components/canvas.svelte';
+    import Inspector from '$lib/components/Inspector.svelte';
 
-    let show = true;
-    let target = '';
-    let intensity = 0.3;
-    let direction: [number, number, number] = [0, 1, 0];
-    let position: [number, number, number] = [0, 0.5, 0];
-    let rotation: [number, number, number] = [0, 0, 0];
-    let scaling: [number, number, number] = [5, 5, 5];
-    let color: [number, number, number] = [1, 0, 0];
-    let toggle = false;
-    let materialID = 'standard';
+    import { createData } from '../components/control';
+
+    const control = createData();
 
     function keydown(e: KeyboardEvent) {
         if (e.key === '\\') {
-            show = !show;
+            control.show = !control.show;
         }
     }
 </script>
 
 <svelte:window on:keydown={keydown} />
 
-{#if show}
+{#if control.show}
     <Canvas
         id="main"
-        {target}
-        {intensity}
-        {direction}
-        {position}
-        {rotation}
-        {scaling}
-        {color}
-        {toggle}
-        {materialID}
+        target={control.target}
+        intensity={control.intensity}
+        direction={control.direction}
+        position={control.position}
+        rotation={control.rotation}
+        scaling={control.scaling}
+        color={control.color}
+        toggle={control.toggle}
+        materialID={control.materialID}
     >
-        <slot />
+        <Inspector />
     </Canvas>
 {/if}
 
 <Control
-    bind:target
-    bind:intensity
-    bind:direction
-    bind:position
-    bind:rotation
-    bind:scaling
-    bind:color
-    bind:toggle
-    bind:materialID
+    bind:target={control.target}
+    bind:intensity={control.intensity}
+    bind:direction={control.direction}
+    bind:position={control.rotation}
+    bind:rotation={control.rotation}
+    bind:scaling={control.scaling}
+    bind:color={control.color}
+    bind:toggle={control.toggle}
+    bind:materialID={control.materialID}
 />

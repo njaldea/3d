@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Feature from './_feature.svelte';
+    import Feature from './feature.svelte';
     import { writable } from 'svelte/store';
     import type { Subscriber } from 'svelte/store';
     import type { Vector2, Vector3 } from '@babylonjs/core/Maths/math.vector';

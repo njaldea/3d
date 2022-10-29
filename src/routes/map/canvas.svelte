@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Camera from '../_ArcRotateCamera.svelte';
+    import Camera from '../components/camera.svelte';
     import Canvas from '@nil-/3d/components/Canvas.svelte';
     import HemisphericLight from '@nil-/3d/components/lights/HemisphericLight.svelte';
 
